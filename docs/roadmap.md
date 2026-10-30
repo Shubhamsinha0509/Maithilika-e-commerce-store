@@ -106,9 +106,10 @@ a first-time Google account is created on first sign-in.
 - [x] **DONE** Initialise a git repository and commit the baseline. *Branch `main`, commit `5f74d11`, 198 files.*
 - [x] **DONE** Add baseline lint, type-check, and build checks. *All three pass from clean. `Design/` and `site/` excluded from both ESLint and tsc — linting read-only reference code reported errors we are instructed not to fix.*
 - [ ] **TODO** Add the test runner and a first passing test. *Vitest, per `architecture.md` §1 — still a proposal.*
-- [ ] **TODO** Configure environment variable validation. *Zod at startup; can be built before any real credentials exist.*
-- [ ] **BLOCKED** Configure PostgreSQL connection. *Needs a Neon project and a `DATABASE_URL` the client owns.*
-- [ ] **BLOCKED** Add or configure ORM and migration workflow. *Prisma installs without a database, but no migration can run until the connection exists.*
+- [x] **DONE** Configure environment variable validation. *Zod in `src/env.ts`. Lazy by design — a module-level parse would break `next build`, which imports modules without a populated `.env`.*
+- [x] **DONE** Add or configure ORM. *Prisma 7.10.1, CLI and client pinned to the same exact version, with the `@prisma/adapter-pg` driver adapter v7 requires. Client singleton in `src/lib/prisma.ts`.*
+- [ ] **IN PROGRESS** Configure PostgreSQL connection. *Wiring complete and verifiable: `scripts/setup-neon.sh` captures both URLs, `scripts/check-db.mjs` proves them. Waiting on the client to create the Neon project.*
+- [ ] **BLOCKED** Run the first migration. *Needs both the live connection above and the made-to-order rule (`project.md` §9 item 13), since the schema has no models until then.*
 - [ ] **TODO** Implement shared validation and error conventions.
 - [ ] **TODO** Establish module boundaries and logging approach. *Per `architecture.md` §3: create each area when something needs to live in it, not upfront.*
 

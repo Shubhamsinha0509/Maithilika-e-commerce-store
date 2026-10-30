@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com"></link>
+<link href="https://fonts.googleapis.com/css2?family=Mukta:wght@400;500;600;700&amp;family=Yatra+One&amp;display=swap" rel="stylesheet"></link>
+<script src="./image-slot.js"></script>
+<style>body{margin:0;background:#FBF6EA;color:#1A1410;font-family:'Mukta',sans-serif;-webkit-font-smoothing:antialiased}a{color:#6E1423}a:hover{color:#1B2F7A}*{box-sizing:border-box}</style>
+</helmet>
+<div style="background:#FBF6EA;min-height:100vh">
+  <dc-import name="SiteHeader" active="home" hint-size="100%,108px"></dc-import>
+
+  <section data-screen-label="Hero" style="background:#1B2F7A;color:#FBF6EA;position:relative">
+    <div style="max-width:1360px;margin:0 auto;padding:clamp(40px,6vw,88px) clamp(16px,4vw,40px) clamp(56px,7vw,96px);display:grid;grid-template-columns:{{ heroCols }};gap:clamp(36px,5vw,72px);align-items:center">
+      <div style="display:flex;flex-direction:column;gap:22px;max-width:620px">
+        <div style="display:flex;align-items:center;gap:12px;font-size:14px;font-weight:600;letter-spacing:0.16em;color:#E2C57E">
+          <span style="width:28px;height:7px;border-top:1px solid #C9A24B;border-bottom:1px solid #C9A24B"></span>
+          MITHILA ART · मिथिला चित्रकला
+        </div>
+        <h1 style="margin:0;font-family:'Yatra One',serif;font-weight:400;font-size:clamp(42px,5.6vw,80px);line-height:1.05;letter-spacing:-0.005em;text-wrap:balance">Painted by hand. Worn like a story.</h1>
+        <p style="margin:0;font-size:clamp(17px,1.4vw,20px);line-height:1.6;color:#DCE0F0;max-width:520px;text-wrap:pretty">Every saree, cushion and canvas at Maithilika is a Mithila painting, made line by line by one artist. Each piece carries the artist's name, the meaning of its motif and the number of days it took to paint.</p>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:6px">
+          <a href="Listing.dc.html?section=clothing" style="min-height:52px;padding:0 28px;display:inline-flex;align-items:center;white-space:nowrap;background:#6E1423;color:#FBF6EA;border:1px solid #C9A24B;text-decoration:none;font-size:17px;font-weight:600;letter-spacing:0.02em" style-hover="background:#851A2C">Shop clothing</a>
+          <a href="https://wa.me/" style="min-height:52px;padding:0 24px;display:inline-flex;align-items:center;white-space:nowrap;gap:10px;background:transparent;color:#FBF6EA;border:1px solid #FBF6EA;text-decoration:none;font-size:17px;font-weight:600" style-hover="border-color:#E2C57E;color:#E2C57E">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M4 20 L5.3 16.2 C4.5 14.9 4 13.5 4 12 C4 7.6 7.6 4 12 4 C16.4 4 20 7.6 20 12 C20 16.4 16.4 20 12 20 C10.5 20 9.1 19.6 7.9 18.8 Z"></path></svg>
+            Customise on WhatsApp
+          </a>
+        </div>
+      </div>
+      <div style="position:relative;justify-self:center;width:min(100%,480px)">
+        <div style="aspect-ratio:4/5;border:1px solid #C9A24B;padding:7px;border-radius:999px 999px 0 0">
+          <div style="width:100%;height:100%;border:1.5px dotted #C9A24B;padding:7px;border-radius:999px 999px 0 0">
+            <div style="width:100%;height:100%;border:1px solid #C9A24B;border-radius:999px 999px 0 0;overflow:hidden;background:#24398A">
+              <image-slot id="home-hero" shape="rect" placeholder="[HERO PHOTO: artist painting a saree]"></image-slot>
+            </div>
+          </div>
+        </div>
+        <div style="position:absolute;left:clamp(-28px,-2vw,0px);bottom:-28px;background:#FBF6EA;color:#1A1410;border:1px solid #C9A24B;padding:5px;box-shadow:0 12px 28px rgba(10,16,48,0.35)">
+          <div style="border:1px dotted #C9A24B;padding:14px 18px;display:grid;grid-template-columns:auto auto;gap:6px 18px;font-size:14px">
+            <span style="color:#6B5E52">Artist</span><span style="font-weight:600">[Artist name]</span>
+            <span style="color:#6B5E52">Motif</span><span style="font-weight:600">Fish, for good fortune</span>
+            <span style="color:#6B5E52">Painted over</span><span style="font-weight:600">[N] days</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="height:14px;background:url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='14'%3E%3Cpath d='M0 14 L8 2 L16 14' fill='none' stroke='%23C9A24B' stroke-width='1.2'/%3E%3C/svg%3E&quot;) 0 0 / 16px 14px repeat-x"></div>
+  </section>
+
+  <section data-screen-label="Trust strip" style="border-bottom:1px solid #E3D3A8">
+    <div style="max-width:1360px;margin:0 auto;padding:28px clamp(16px,4vw,40px);display:grid;grid-template-columns:{{ g4 }};gap:20px 32px">
+      <div style="display:flex;gap:14px;align-items:flex-start">
+        <span style="flex:none;width:44px;height:44px;border:1px solid #C9A24B;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#1B2F7A"><dc-import name="Motif" motif="lotus" style="width:26px;height:26px" hint-size="26px,26px"></dc-import></span>
+        <div><div style="font-weight:700;font-size:16px">100% hand-painted</div><div style="font-size:15px;color:#4A3F36;line-height:1.4">No prints, no stencils. Every line is brushwork.</div></div>
+      </div>
+      <div style="display:flex;gap:14px;align-items:flex-start">
+        <span style="flex:none;width:44px;height:44px;border:1px solid #C9A24B;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#1B2F7A"><dc-import name="Motif" motif="sun" style="width:26px;height:26px" hint-size="26px,26px"></dc-import></span>
+        <div><div style="font-weight:700;font-size:16px">Shipping across India</div><div style="font-size:15px;color:#4A3F36;line-height:1.4">Free on orders above [₹ AMOUNT]</div></div>
+      </div>
+      <div style="display:flex;gap:14px;align-items:flex-start">
+        <span style="flex:none;width:44px;height:44px;border:1px solid #C9A24B;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#1B2F7A"><dc-import name="Motif" motif="fish" style="width:26px;height:26px" hint-size="26px,26px"></dc-import></span>
+        <div><div style="font-weight:700;font-size:16px">Easy returns</div><div style="font-size:15px;color:#4A3F36;line-height:1.4">[N]-day returns on ready-to-ship pieces</div></div>
+      </div>
+      <div style="display:flex;gap:14px;align-items:flex-start">
+        <span style="flex:none;width:44px;height:44px;border:1px solid #C9A24B;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#1B2F7A"><dc-import name="Motif" motif="peacock" style="width:26px;height:26px" hint-size="26px,26px"></dc-import></span>
+        <div><div style="font-weight:700;font-size:16px">Made to order</div><div style="font-size:15px;color:#4A3F36;line-height:1.4">Painted for you in [N] days</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section data-screen-label="Four sections" style="max-width:1360px;margin:0 auto;padding:clamp(56px,7vw,96px) clamp(16px,4vw,40px) 0">
+    <div style="display:flex;align-items:center;gap:20px;margin-bottom:clamp(28px,4vw,48px)">
+      <span style="flex:1;height:7px;border-top:1px solid #C9A24B;border-bottom:1px solid #C9A24B;background:radial-gradient(circle, #C9A24B 1.1px, transparent 1.6px) 0 50% / 9px 7px repeat-x"></span>
+      <div style="text-align:center"><h2 style="margin:0;font-family:'Yatra One',serif;font-weight:400;font-size:clamp(30px,3.4vw,44px);color:#1B2F7A;line-height:1.1">Shop the collection</h2><div style="font-family:'Yatra One',serif;font-size:17px;color:#6E1423;margin-top:4px">संग्रह</div></div>
+      <span style="flex:1;height:7px;border-top:1px solid #C9A24B;border-bottom:1px solid #C9A24B;background:radial-gradient(circle, #C9A24B 1.1px, transparent 1.6px) 0 50% / 9px 7px repeat-x"></span>
+    </div>
+
+    <div style="background:#1B2F7A;color:#FBF6EA;border:1px solid #C9A24B;padding:6px">
+      <div style="border:1px dotted #C9A24B;padding:clamp(24px,4vw,48px);display:grid;grid-template-columns:{{ clothingCols }};gap:clamp(28px,4vw,56px);align-items:end">
+        <div style="display:flex;flex-direction:column;gap:16px;max-width:420px;align-self:center">
+          <div style="font-size:14px;font-weight:600;letter-spacing:0.16em;color:#E2C57E">THE MAIN COLLECTION</div>
+          <h3 style="margin:0;font-family:'Yatra One',serif;font-weight:400;font-size:clamp(44px,5vw,72px);line-height:1">Clothing <span style="display:block;font-size:0.42em;color:#E2C57E;margin-top:10px">वस्त्र</span></h3>
+          <p style="margin:0;font-size:17px;line-height:1.6;color:#DCE0F0;text-wrap:pretty">Sarees, dupattas, kurtas and stoles painted directly onto silk and cotton. Each garment is a single painting, signed by the artist who made it.</p>
+          <a href="Listing.dc.html?section=clothing" style="align-self:flex-start;min-height:48px;padding:0 24px;display:inline-flex;align-items:center;white-space:nowrap;background:#6E1423;color:#FBF6EA;border:1px solid #C9A24B;text-decoration:none;font-weight:600;font-size:16px;margin-top:6px">Shop all clothing</a>
+        </div>
+        <div style="display:grid;grid-template-columns:{{ clothSubCols }};gap:clamp(12px,1.6vw,20px)">
+          <sc-for list="{{ clothingSubs }}" as="c" hint-placeholder-count="4">
+            <a href="Listing.dc.html?section=clothing" style="display:flex;flex-direction:column;gap:12px;color:#FBF6EA;text-decoration:none;text-align:center">
+              <div style="aspect-ratio:3/4.4;border:1px solid #C9A24B;padding:4px;border-radius:999px 999px 0 0">
+                <div style="width:100%;height:100%;border:1px dotted #C9A24B;border-radius:999px 999px 0 0;overflow:hidden;background:#24398A">
+                  <image-slot id="home-cl-{{ $index }}" shape="rect" placeholder="{{ c.ph }}"></image-slot>
+                </div>
+              </div>
+              <span style="font-size:17px;font-weight:600">{{ c.label }}</span>
+            </a>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:{{ g3 }};gap:clamp(16px,2vw,24px);margin-top:clamp(16px,2vw,24px)">
+      <sc-for list="{{ otherSections }}" as="s" hint-placeholder-count="3">
+        <div style="border:1px solid #C9A24B;padding:5px;background:#FFFDF6">
+          <div style="border:1px dotted #C9A24B;padding:20px;display:flex;flex-direction:column;gap:16px;height:100%">
+            <a href="{{ s.href }}" style="display:block;aspect-ratio:4/3;border-radius:999px 999px 0 0;overflow:hidden;background:#F1E7D0;border:1px solid #C9A24B">
+              <image-slot id="home-sec-{{ s.key }}" shape="rect" placeholder="{{ s.ph }}"></image-slot>
+            </a>
+            <div style="display:flex;align-items:baseline;justify-content:space-between;gap:12px">
+              <h3 style="margin:0;font-family:'Yatra One',serif;font-weight:400;font-size:28px;color:#1B2F7A">{{ s.label }}</h3>
+              <span style="font-family:'Yatra One',serif;font-size:16px;color:#6E1423">{{ s.deva }}</span>
+            </div>
+            <div style="display:flex;flex-wrap:wrap;gap:8px">
+              <sc-for list="{{ s.subs }}" as="sub" hint-placeholder-count="3">
+                <a href="{{ s.href }}" style="min-height:36px;padding:0 12px;display:inline-flex;align-items:center;white-space:nowrap;border:1px solid #D8C48E;color:#1A1410;text-decoration:none;font-size:15px" style-hover="border-color:#6E1423;color:#6E1423">{{ sub }}</a>
+              </sc-for>
+            </div>
+            <a href="{{ s.href }}" style="margin-top:auto;font-weight:600;font-size:16px;color:#6E1423;min-height:44px;display:flex;align-items:center"><span>Shop {{ s.label }} ›</span></a>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <section id="motifs" data-screen-label="Shop by motif" style="background:#F4EBD6;margin-top:clamp(56px,7vw,96px);border-top:1px solid #E3D3A8;border-bottom:1px solid #E3D3A8">
+    <div style="max-width:1360px;margin:0 auto;padding:clamp(56px,7vw,96px) clamp(16px,4vw,40px)">
+      <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;margin-bottom:clamp(28px,4vw,44px)">
+        <div>
+          <h2 style="margin:0;font-family:'Yatra One',serif;font-weight:400;font-size:clamp(30px,3.4vw,44px);color:#1B2F7A;line-height:1.1">Shop by motif</h2>
+          <p style="margin:8px 0 0;font-size:17px;color:#4A3F36;max-width:520px;line-height:1.5">In Mithila painting, every figure carries a meaning. Choose a piece for what it says.</p>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:{{ g4 }};gap:clamp(16px,2vw,24px)">
+        <sc-for list="{{ motifs }}" as="m" hint-placeholder-count="4">
+          <a href="Listing.dc.html?section=clothing" style="display:flex;flex-direction:column;gap:16px;text-decoration:none;color:#1A1410;background:#FBF6EA;border:1px solid #C9A24B;padding:5px" style-hover="border-color:#6E1423">
+            <div style="aspect-ratio:1;background:#F1E7D0;border:1px dotted #C9A24B;position:relative">
+              <image-slot id="home-motif-{{ m.key }}" shape="rect" placeholder="{{ m.ph }}"></image-slot>
+            </div>
+            <div style="padding:4px 16px 18px;display:flex;flex-direction:column;gap:8px">
+              <div style="display:flex;align-items:center;gap:12px">
+                <span style="color:#1B2F7A"><dc-import name="Motif" motif="{{ m.key }}" style="width:36px;height:36px" hint-size="36px,36px"></dc-import></span>
+                <span style="font-family:'Yatra One',serif;font-size:24px;color:#1B2F7A">{{ m.name }}</span>
+                <span style="font-family:'Yatra One',serif;font-size:16px;color:#6E1423">{{ m.deva }}</span>
+              </div>
+              <div style="font-size:14px;font-weight:700;letter-spacing:0.12em;color:#6E1423;text-transform:uppercase">{{ m.meaning }}</div>
+              <p style="margin:0;font-size:15px;line-height:1.5;color:#4A3F36;text-wrap:pretty">{{ m.note }}</p>
+            </div>
+          </a>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <section data-screen-label="New arrivals" style="max-width:1360px;margin:0 auto;padding:clamp(56px,7vw,96px) clamp(16px,4vw,40px)">
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:32px">
+      <div>
+        <h2 style="margin:0;font-family:'Yatra One',serif;font-weight:400;font-size:clamp(30px,3.4vw,44px);color:#1B2F7A;line-height:1.1">New arrivals</h2>
+        <p style="margin:8px 0 0;font-size:17px;color:#4A3F36">Fresh from the artists' studios, across all four sections.</p>
+      </div>
+      <a href="Listing.dc.html?section=clothing" style="font-weight:600;font-size:16px;min-height:44px;display:flex;align-items:center">View all new pieces ›</a>
+    </div>
+    <div style="display:grid;grid-template-columns:{{ arrivalCols }};gap:clamp(24px,3vw,40px) clamp(12px,2vw,28px)">
+      <sc-for list="{{ arrivals }}" as="item" hint-placeholder-count="8">
+        <dc-import name="ProductCard" p="{{ item }}" hint-size="100%,460px"></dc-import>
+      </sc-for>
+    </div>
+  </section>
+
+  <section id="artists" data-screen-label="Meet the artists" style="background:#1B2F7A;color:#FBF6EA">
+    <div style="max-width:1360px;margin:0 auto;padding:clamp(56px,7vw,96px) clamp(16px,4vw,40px)">
+      <div style="display:grid;grid-template-columns:{{ g4 }};gap:clamp(32px,4vw,56px)">
+        <div style="display:flex;flex-direction:column;gap:16px;max-width:380px">
+          <div style="font-size:14px;font-weight:600;letter-spacing:0.16em;color:#E2C57E">MEET THE ARTISTS · कलाकार</div>
+          <h2 style="margin:0;font-family:'Yatra One',serif;font-weight:400;font-size:clamp(30px,3.4vw,44px);line-height:1.1">Every piece is signed by the hand that painted it</h2>
+          <p style="margin:0;font-size:17px;line-height:1.6;color:#DCE0F0">Our artists paint from their homes and studios in the Mithila region. Each listing names the artist, and every artist has a page with their work.</p>
+          <a href="#all-artists" style="align-self:flex-start;min-height:48px;padding:0 22px;display:inline-flex;align-items:center;white-space:nowrap;border:1px solid #C9A24B;color:#FBF6EA;text-decoration:none;font-weight:600;font-size:16px;margin-top:6px">See all artists</a>
+        </div>
+        <sc-for list="{{ artists }}" as="a" hint-placeholder-count="3">
+          <a href="#artist" style="display:flex;flex-direction:column;gap:14px;color:#FBF6EA;text-decoration:none">
+            <div style="aspect-ratio:4/5;border:1px solid #C9A24B;padding:5px;border-radius:999px 999px 0 0">
+              <div style="width:100%;height:100%;border:1px dotted #C9A24B;border-radius:999px 999px 0 0;overflow:hidden;background:#24398A">
+                <image-slot id="home-artist-{{ $index }}" shape="rect" placeholder="[ARTIST PORTRAIT]"></image-slot>
+              </div>
+            </div>
+            <div>
+              <div style="font-family:'Yatra One',serif;font-size:24px">[Artist name]</div>
+              <div style="font-size:15px;color:#DCE0F0;margin-top:2px">[Village, District]</div>
+              <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">
+                <span style="font-size:13px;letter-spacing:0.06em;color:#E2C57E;border:1px solid #C9A24B;padding:3px 9px 2px">{{ a.style }}</span>
+                <span style="font-size:13px;letter-spacing:0.06em;color:#E2C57E;border:1px solid #C9A24B;padding:3px 9px 2px">[N] pieces</span>
+              </div>
+              <div style="font-size:15px;font-weight:600;color:#E2C57E;margin-top:12px">View their work ›</div>
+            </div>
+          </a>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <section id="story" data-screen-label="Our story: process" style="max-width:1360px;margin:0 auto;padding:clamp(56px,7vw,96px) clamp(16px,4vw,40px)">
+    <div style="display:flex;align-items:center;gap:20px;margin-bottom:16px">
+      <span style="flex:1;height:7px;border-top:1px solid #C9A24B;border-bottom:1px solid #C9A24B;background:radial-gradient(circle, #C9A24B 1.1px, transparent 1.6px) 0 50% / 9px 7px repeat-x"></span>
+      <div style="text-align:center"><h2 style="margin:0;font-family:'Yatra One',serif;font-weight:400;font-size:clamp(30px,3.4vw,44px);color:#1B2F7A;line-height:1.1">How a piece is painted</h2><div style="font-family:'Yatra One',serif;font-size:17px;color:#6E1423;margin-top:4px">चित्र की यात्रा</div></div>
+      <span style="flex:1;height:7px;border-top:1px solid #C9A24B;border-bottom:1px solid #C9A24B;background:radial-gradient(circle, #C9A24B 1.1px, transparent 1.6px) 0 50% / 9px 7px repeat-x"></span>
+    </div>
+    <p style="margin:0 auto clamp(32px,4vw,52px);text-align:center;font-size:17px;color:#4A3F36;max-width:560px;line-height:1.55">Four stages, all by hand. This is why a single saree can take weeks.</p>
+    <div style="display:grid;grid-template-columns:{{ g4 }};gap:clamp(20px,2.4vw,32px)">
+      <sc-for list="{{ steps }}" as="st" hint-placeholder-count="4">
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <div style="aspect-ratio:1;border:1px solid #C9A24B;padding:5px;background:#FFFDF6">
+            <div style="width:100%;height:100%;border:1px dotted #C9A24B;background:#F1E7D0;position:relative">
+              <image-slot id="home-step-{{ $index }}" shape="rect" placeholder="{{ st.ph }}"></image-slot>
+            </div>
+          </div>
+          <div style="display:flex;align-items:baseline;gap:12px">
+            <span style="font-family:'Yatra One',serif;font-size:32px;color:#6E1423;line-height:1">{{ st.num }}</span>
+            <span style="font-family:'Yatra One',serif;font-size:24px;color:#1B2F7A">{{ st.title }}</span>
+          </div>
+          <p style="margin:0;font-size:16px;line-height:1.55;color:#4A3F36;text-wrap:pretty">{{ st.text }}</p>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <section id="custom" data-screen-label="Custom order" style="background:#6E1423;color:#FBF6EA">
+    <div style="max-width:1360px;margin:0 auto;padding:clamp(48px,6vw,80px) clamp(16px,4vw,40px)">
+      <div style="border:1px solid #C9A24B;padding:6px">
+        <div style="border:1px dotted #C9A24B;padding:clamp(28px,4vw,56px);display:flex;align-items:center;justify-content:space-between;gap:32px;flex-wrap:wrap">
+          <div style="display:flex;gap:24px;align-items:center;max-width:720px">
+            <span style="flex:none;width:76px;height:76px;border:1px solid #C9A24B;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#E2C57E"><dc-import name="Motif" motif="peacock" style="width:46px;height:46px" hint-size="46px,46px"></dc-import></span>
+            <div>
+              <h2 style="margin:0;font-family:'Yatra One',serif;font-weight:400;font-size:clamp(28px,3vw,40px);line-height:1.15">Have a story you want painted?</h2>
+              <p style="margin:10px 0 0;font-size:17px;line-height:1.55;color:#F3DDE0;text-wrap:pretty">Tell us the occasion, the motif and the colours. An artist will paint it for you, on a saree, a cushion or a canvas.</p>
+            </div>
+          </div>
+          <a href="https://wa.me/" style="min-height:54px;padding:0 28px;display:inline-flex;align-items:center;white-space:nowrap;gap:10px;background:#FBF6EA;color:#6E1423;border:1px solid #C9A24B;text-decoration:none;font-weight:700;font-size:17px" style-hover="background:#FFFFFF">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M4 20 L5.3 16.2 C4.5 14.9 4 13.5 4 12 C4 7.6 7.6 4 12 4 C16.4 4 20 7.6 20 12 C20 16.4 16.4 20 12 20 C10.5 20 9.1 19.6 7.9 18.8 Z"></path></svg>
+            Start a custom order on WhatsApp
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <dc-import name="SiteFooter" hint-size="100%,420px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { w: window.innerWidth };
+  componentDidMount() { this.onR = () => this.setState({ w: window.innerWidth }); window.addEventListener('resize', this.onR); }
+  componentWillUnmount() { window.removeEventListener('resize', this.onR); }
+  renderVals() {
+    const w = this.state.w, rep = n => 'repeat(' + n + ',minmax(0,1fr))';
+    const layout = {
+      heroCols: w >= 900 ? 'minmax(0,1.1fr) minmax(0,0.9fr)' : '1fr',
+      g4: w >= 1100 ? rep(4) : w >= 600 ? rep(2) : '1fr',
+      g3: w >= 900 ? rep(3) : '1fr',
+      clothingCols: w >= 900 ? 'minmax(0,0.75fr) minmax(0,1.6fr)' : '1fr',
+      clothSubCols: w >= 600 ? rep(4) : rep(2),
+      arrivalCols: w >= 1100 ? rep(4) : w >= 700 ? rep(3) : rep(2)
+    };
+    const P = (id, name, material, style, section, ready) => ({ id, name, material, style, section, ready, artist: '[Artist name]', days: '[N]', price: '[PRICE]' });
+    return {
+      ...layout,
+      clothingSubs: [
+        { label: 'Sarees', ph: '[PRODUCT PHOTO: saree]' },
+        { label: 'Dupattas', ph: '[PRODUCT PHOTO: dupatta]' },
+        { label: 'Kurtas & Kurtis', ph: '[PRODUCT PHOTO: kurta]' },
+        { label: 'Stoles', ph: '[PRODUCT PHOTO: stole]' }
+      ],
+      otherSections: [
+        { key: 'homedecor', label: 'Home Decor', deva: 'गृह सज्जा', href: 'Listing.dc.html?section=homedecor', ph: '[PRODUCT PHOTO: wall hanging]', subs: ['Wall hangings', 'Cushion covers', 'Table linen'] },
+        { key: 'paintings', label: 'Paintings', deva: 'चित्र', href: 'Listing.dc.html?section=paintings', ph: '[PRODUCT PHOTO: painting on paper]', subs: ['On paper', 'On canvas', 'Framed'] },
+        { key: 'accessories', label: 'Accessories', deva: 'सज्जा सामग्री', href: 'Listing.dc.html?section=accessories', ph: '[PRODUCT PHOTO: painted bag]', subs: ['Bags', 'Handkerchiefs'] }
+      ],
+      motifs: [
+        { key: 'fish', name: 'Fish', deva: 'माछ', meaning: 'Good fortune', ph: '[ARTIST SCAN: fish motif]', note: 'Painted in pairs for weddings, the fish is a wish for abundance and luck.' },
+        { key: 'lotus', name: 'Lotus', deva: 'कमल', meaning: 'Purity and prosperity', ph: '[ARTIST SCAN: lotus motif]', note: 'The lotus rises clean from still water, a sign of purity and plenty.' },
+        { key: 'sun', name: 'Sun', deva: 'सूर्य', meaning: 'Life and energy', ph: '[ARTIST SCAN: sun motif]', note: 'Surya is drawn as a radiant face, the source of light and life.' },
+        { key: 'peacock', name: 'Peacock', deva: 'मयूर', meaning: 'Love and devotion', ph: '[ARTIST SCAN: peacock motif]', note: 'Peacocks, often painted facing each other, speak of love and devotion.' }
+      ],
+      arrivals: [
+        P('a1', 'Matsya Tussar Silk Saree', 'Tussar silk', 'Kachni', 'clothing', true),
+        P('a2', 'Kamal Mulmul Dupatta', 'Mulmul cotton', 'Bharni', 'clothing', false),
+        P('a3', 'Surya Wall Hanging', 'Handloom cotton', 'Bharni', 'homedecor', true),
+        P('a4', 'Mayur Pair on Handmade Paper', 'Handmade paper', 'Kachni', 'paintings', true),
+        P('a5', 'Lotus Pond Chanderi Kurta', 'Chanderi', 'Bharni', 'clothing', false),
+        P('a6', 'Fish Border Cushion Cover', 'Cotton canvas', 'Godna', 'homedecor', true),
+        P('a7', 'Surya Mandala on Canvas', 'Canvas', 'Tantrik', 'paintings', false),
+        P('a8', 'Peacock Tote Bag', 'Cotton canvas', 'Kachni', 'accessories', true)
+      ],
+      artists: [{ style: 'Kachni style' }, { style: 'Bharni style' }, { style: 'Godna style' }],
+      steps: [
+        { num: '१', title: 'Sketch', ph: '[PROCESS PHOTO: sketch]', text: 'The artist draws the composition freehand, starting from the central motif and working outwards.' },
+        { num: '२', title: 'Outline', ph: '[PROCESS PHOTO: outline]', text: 'Lines are inked with a fine nib or bamboo pen, usually in black or red.' },
+        { num: '३', title: 'Colour', ph: '[PROCESS PHOTO: colour]', text: 'Shapes are filled with solid colour in Bharni, or with dense hatching in Kachni, one colour at a time.' },
+        { num: '४', title: 'Border', ph: '[PROCESS PHOTO: border]', text: 'A double border closes the painting, often with a pattern of its own.' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

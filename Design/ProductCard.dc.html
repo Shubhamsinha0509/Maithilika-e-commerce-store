@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Mukta:wght@400;500;600;700&family=Yatra+One&display=swap" rel="stylesheet"></helmet>
+<div style="display:flex;flex-direction:column;gap:12px;min-width:0;height:100%;font-family:'Mukta',sans-serif;color:#1A1410">
+  <div style="position:relative">
+    <a href="{{ href }}" onClick="{{ remember }}" style="display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;aspect-ratio:3/4;background:repeating-linear-gradient(135deg,#EFE4CC 0 10px,#F7F0DE 10px 20px);text-decoration:none">
+      <sc-if value="{{ hasImg }}">
+        <img src="{{ p.img }}" alt="{{ p.name }}" loading="lazy" style="position:absolute;left:0;top:0;width:{{ cw }};max-width:none;height:100%;object-fit:{{ fitMode }};object-position:{{ cp }};background:#F1E8D2"></img>
+      </sc-if>
+      <sc-if value="{{ noImg }}" hint-placeholder-val="{{ true }}">
+        <span style="font:500 11px/1.4 ui-monospace,Menlo,monospace;color:#5A4A3E;letter-spacing:.04em;text-align:center;padding:0 14px">[PRODUCT PHOTO]</span>
+      </sc-if>
+      <span style="position:absolute;inset:7px;outline:1px solid #DCC897;pointer-events:none"></span>
+    </a>
+    <span style="position:absolute;left:12px;top:12px;background:#1B2F7A;color:#F1DFA8;font:600 10.5px/1 'Mukta',sans-serif;letter-spacing:.14em;text-transform:uppercase;padding:6px 8px 5px;box-shadow:inset 0 0 0 1px #C9A24B;white-space:nowrap">Hand-painted</span>
+    <button onClick="{{ toggle }}" aria-label="Save to wishlist" aria-pressed="{{ liked }}" style="position:absolute;right:4px;top:4px;width:44px;height:44px;border:none;background:transparent;padding:0;display:flex;align-items:center;justify-content:center;cursor:pointer">
+      <span style="width:34px;height:34px;border-radius:50%;background:#FBF6EA;border:1px solid #DCC897;display:flex;align-items:center;justify-content:center">
+        <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.5s-7.6-4.6-9.4-9.1C1.3 8 3.4 4.8 6.6 4.8c2 0 3.6 1.1 5.4 3.1 1.8-2 3.4-3.1 5.4-3.1 3.2 0 5.3 3.2 4 6.6-1.8 4.5-9.4 9.1-9.4 9.1z" fill="{{ heartFill }}" stroke="#6E1423" stroke-width="1.7" stroke-linejoin="round"></path></svg>
+      </span>
+    </button>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:3px;padding:0 2px;flex:1">
+    <a href="{{ href }}" onClick="{{ remember }}" style="font-weight:600;font-size:16px;line-height:1.3;color:#1A1410;text-decoration:none;text-wrap:pretty">{{ p.name }}</a>
+    <div style="font-size:13.5px;line-height:1.4;color:#5A4A3E;text-wrap:pretty">{{ byline }}</div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:6px 8px;flex-wrap:wrap;margin-top:6px">
+      <span style="font-weight:600;font-size:16.5px;letter-spacing:.01em">{{ priceLabel }}</span>
+      <sc-if value="{{ ready }}" hint-placeholder-val="{{ true }}"><span style="font:600 11px/1 'Mukta',sans-serif;letter-spacing:.08em;text-transform:uppercase;color:#1F5B45;background:#E6EFE8;padding:6px 8px 5px;border-radius:2px;white-space:nowrap">Ready to ship</span></sc-if>
+      <sc-if value="{{ mto }}"><span style="font:600 11px/1 'Mukta',sans-serif;letter-spacing:.08em;text-transform:uppercase;color:#6E1423;background:#F4E4DF;padding:6px 8px 5px;border-radius:2px;white-space:nowrap">Made to order</span></sc-if>
+    </div>
+    <sc-if value="{{ buyable }}">
+      <button onClick="{{ add }}" style="margin-top:10px;min-height:44px;width:100%;border:1.5px solid #6E1423;background:{{ addBg }};color:{{ addFg }};font:600 15px 'Mukta',sans-serif;border-radius:2px;cursor:pointer;white-space:nowrap" style-hover="background:#6E1423;color:#FBF6EA">{{ addLabel }}</button>
+    </sc-if>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:280,&quot;height&quot;:560},&quot;p&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;object&quot;}}">
+const CK = 'maithilika:cart';
+function addToCart(item) {
+  let c = [];
+  try { c = JSON.parse(localStorage.getItem(CK) || '[]'); } catch (e) {}
+  const f = c.find(x => x.key === item.key);
+  if (f) f.qty += 1; else c.push({ ...item, qty: 1 });
+  localStorage.setItem(CK, JSON.stringify(c));
+  window.dispatchEvent(new CustomEvent('maithilika:cart', { detail: { open: true } }));
+}
+class Component extends DCLogic {
+  state = { liked: false, added: false };
+  componentWillUnmount() { clearTimeout(this.t); }
+  renderVals() {
+    const p = this.props.p || { name: 'Fish border Tussar saree', meta: 'Tussar silk · Bharni', artist: '[Artist name]', days: '[N]', ready: true, section: 'clothing' };
+    const buyable = typeof p.price === 'number';
+    const added = this.state.added;
+    return {
+      p,
+      href: p.href || ('Product.dc.html?s=' + (p.section || 'clothing')),
+      remember: () => { try { localStorage.setItem('maithilika:lastProduct', p.id || ''); } catch (e) {} },
+      hasImg: !!p.img, noImg: !p.img, cw: p.section === 'paintings' ? '100%' : (p.cardW || '160.8%'), cp: p.section === 'paintings' ? '50% 50%' : (p.cardPos || '0 3%'), fitMode: p.section === 'paintings' ? 'contain' : 'cover',
+      byline: p.meta,
+      priceLabel: p.priceLabel || '[PRICE]',
+      ready: !!p.ready, mto: !p.ready,
+      buyable,
+      addLabel: added ? 'Added to bag' : 'Add to bag',
+      addBg: added ? '#6E1423' : 'transparent', addFg: added ? '#FBF6EA' : '#6E1423',
+      add: () => {
+        const o = p.defaultOpt || 'Unstitched blouse piece';
+        addToCart({ key: p.id + '|' + o, id: p.id, name: p.name, option: o, price: p.price, img: p.img, href: p.href });
+        this.setState({ added: true });
+        clearTimeout(this.t); this.t = setTimeout(() => this.setState({ added: false }), 1800);
+      },
+      liked: this.state.liked,
+      heartFill: this.state.liked ? '#6E1423' : 'none',
+      toggle: () => this.setState(s => ({ liked: !s.liked }))
+    };
+  }
+}
+</script>
+</body>
+</html>

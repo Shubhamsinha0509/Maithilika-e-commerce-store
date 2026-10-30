@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet><title>Product · Maithilika</title><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Mukta:wght@400;500;600;700&family=Yatra+One&display=swap" rel="stylesheet"><style>body{margin:0;background:#FBF6EA;color:#1A1410;-webkit-font-smoothing:antialiased}a{color:#6E1423}a:hover{color:#4F0E19}*{box-sizing:border-box}</style><script src="sarees.js"></script></helmet>
+<div style="font-family:'Mukta',sans-serif;background:#FBF6EA;color:#1A1410;min-height:100vh">
+  <dc-import name="SiteHeader" active="{{ key }}" hint-size="100%,100px"></dc-import>
+
+  <nav aria-label="Breadcrumb" style="max-width:1360px;margin:0 auto;padding:18px 20px 0;font-size:14px;display:flex;flex-wrap:wrap;gap:8px;color:#5A4A3E">
+    <a href="Home.dc.html" style="color:#6E1423;text-decoration:none">Home</a><span aria-hidden="true">/</span>
+    <a href="{{ sectionHref }}" style="color:#6E1423;text-decoration:none">{{ d.sectionLabel }}</a><span aria-hidden="true">/</span>
+    <a href="{{ subHref }}" style="color:#6E1423;text-decoration:none">{{ d.sub }}</a><span aria-hidden="true">/</span>
+    <span aria-current="page">{{ d.name }}</span>
+  </nav>
+
+  <section style="max-width:1360px;margin:0 auto;padding:20px 20px 56px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,460px),1fr));gap:clamp(28px,4vw,64px);align-items:start">
+    <div style="display:flex;flex-direction:{{ galleryDir }};gap:14px;min-width:0">
+      <div role="tablist" aria-label="Product images" style="display:flex;flex-direction:{{ thumbDir }};gap:10px;flex:none;overflow-x:auto">
+        <sc-for list="{{ thumbs }}" as="t" hint-placeholder-count="5">
+          <button role="tab" aria-selected="{{ t.on }}" aria-label="{{ t.label }}" onClick="{{ t.pick }}" style="flex:none;width:76px;aspect-ratio:{{ thumbAspect }};padding:3px;border:{{ t.ring }};background:#FBF6EA;cursor:pointer;border-radius:0">
+            <sc-if value="{{ t.crop }}"><span style="{{ t.crop }}"></span></sc-if><sc-if value="{{ t.noCrop }}"><span style="display:flex;width:100%;height:100%;background:repeating-linear-gradient(135deg,#EFE4CC 0 6px,#F7F0DE 6px 12px);align-items:center;justify-content:center;font:500 8.5px/1.2 ui-monospace,Menlo,monospace;color:#5A4A3E">{{ t.n }}</span></sc-if>
+          </button>
+        </sc-for>
+      </div>
+      <div style="flex:1;min-width:0;position:relative;border:1.5px solid #C9A24B;padding:8px">
+        <sc-if value="{{ mainCrop }}"><div role="img" aria-label="{{ mainImg }}" style="{{ mainCrop }}"></div></sc-if>
+        <sc-if value="{{ noMainCrop }}" hint-placeholder-val="{{ true }}"><div style="aspect-ratio:3/3.7;background:repeating-linear-gradient(135deg,#EFE4CC 0 12px,#F7F0DE 12px 24px);outline:1px dashed #C9A24B;outline-offset:-10px;display:flex;align-items:center;justify-content:center;padding:28px;text-align:center;font:500 12px/1.5 ui-monospace,Menlo,monospace;color:#5A4A3E">{{ mainImg }}</div></sc-if>
+        <sc-if value="{{ mainCrop }}"><span style="position:absolute;right:20px;bottom:20px;background:#FBF6EA;color:#1A1410;font:500 13px/1 'Mukta',sans-serif;padding:7px 10px 6px;box-shadow:inset 0 0 0 1px #C9A24B">{{ mainImg }}</span></sc-if>
+        <span style="position:absolute;left:20px;top:20px;background:#1B2F7A;color:#F1DFA8;font:600 11px/1 'Mukta',sans-serif;letter-spacing:.14em;text-transform:uppercase;padding:7px 10px 6px;box-shadow:inset 0 0 0 1px #C9A24B;white-space:nowrap">Hand-painted</span>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:20px;min-width:0">
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <span style="font-size:13px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#6E1423">{{ d.sectionLabel }} · {{ d.sub }}</span>
+        <h1 style="margin:0;font-family:'Yatra One',serif;font-weight:400;font-size:clamp(30px,3.4vw,44px);line-height:1.12;color:#1B2F7A;text-wrap:balance">{{ d.name }}</h1>
+        <span style="font-size:16px;color:#5A4A3E">Painted by <a href="#artist" style="color:#6E1423;font-weight:600">[Artist name]</a>, [Village], Bihar</span>
+      </div>
+      <dl style="margin:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border:3px double #C9A24B">
+        <div style="padding:12px 14px;border-right:1px solid #E3D3AE;display:flex;flex-direction:column;gap:2px"><dt style="font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#5A4A3E">Motif</dt><dd style="margin:0;font-weight:600;font-size:16px">{{ d.motif }} <span style="font-family:'Yatra One',serif;font-weight:400;color:#6E1423">{{ d.motifHi }}</span></dd></div>
+        <div style="padding:12px 14px;border-right:1px solid #E3D3AE;display:flex;flex-direction:column;gap:2px"><dt style="font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#5A4A3E">Style</dt><dd style="margin:0;font-weight:600;font-size:16px">{{ d.style }}</dd></div>
+        <div style="padding:12px 14px;display:flex;flex-direction:column;gap:2px"><dt style="font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#5A4A3E">Painted over</dt><dd style="margin:0;font-weight:600;font-size:16px">[N] days</dd></div>
+      </dl>
+      <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+        <span style="font-size:28px;font-weight:600">{{ priceLabel }}</span>
+        <sc-if value="{{ ready }}" hint-placeholder-val="{{ true }}"><span style="font:600 12px/1 'Mukta',sans-serif;letter-spacing:.08em;text-transform:uppercase;color:#1F5B45;background:#E6EFE8;padding:7px 10px 6px;border-radius:2px">Ready to ship</span></sc-if>
+        <sc-if value="{{ mto }}"><span style="font:600 12px/1 'Mukta',sans-serif;letter-spacing:.08em;text-transform:uppercase;color:#6E1423;background:#F4E4DF;padding:7px 10px 6px;border-radius:2px">Made to order · ships in [N] days</span></sc-if>
+        <span style="font-size:14px;color:#5A4A3E">[Tax and shipping note]</span>
+      </div>
+      <fieldset style="border:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px">
+        <legend style="font-weight:600;font-size:15.5px;padding:0;margin-bottom:10px;display:flex;gap:12px;align-items:baseline;width:100%;justify-content:space-between">{{ d.optTitle }} <sc-if value="{{ d.sizeLink }}"><a href="#details" onClick="{{ openFit }}" style="font-weight:500;font-size:14.5px;color:#6E1423">Size chart</a></sc-if></legend>
+        <div style="display:flex;flex-wrap:wrap;gap:8px">
+          <sc-for list="{{ opts }}" as="o" hint-placeholder-count="5">
+            <button onClick="{{ o.pick }}" aria-pressed="{{ o.on }}" style="min-width:52px;min-height:46px;padding:0 16px;border:{{ o.ring }};background:{{ o.bg }};color:{{ o.fg }};font:500 15.5px 'Mukta',sans-serif;cursor:pointer;border-radius:2px">{{ o.label }}</button>
+          </sc-for>
+        </div>
+      </fieldset>
+      <div style="display:flex;gap:10px">
+        <button onClick="{{ addToBag }}" style="flex:1;min-height:54px;border:none;background:#6E1423;color:#FBF6EA;font:600 17px 'Mukta',sans-serif;border-radius:2px;cursor:pointer;box-shadow:inset 0 0 0 1px #C9A24B" style-hover="background:#5A0F1C">{{ bagLabel }}</button>
+        <button onClick="{{ toggleLike }}" aria-pressed="{{ liked }}" aria-label="Save to wishlist" style="width:54px;min-height:54px;border:1.5px solid #6E1423;background:transparent;border-radius:2px;cursor:pointer;display:flex;align-items:center;justify-content:center">
+          <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.5s-7.6-4.6-9.4-9.1C1.3 8 3.4 4.8 6.6 4.8c2 0 3.6 1.1 5.4 3.1 1.8-2 3.4-3.1 5.4-3.1 3.2 0 5.3 3.2 4 6.6-1.8 4.5-9.4 9.1-9.4 9.1z" fill="{{ heartFill }}" stroke="#6E1423" stroke-width="1.7" stroke-linejoin="round"></path></svg>
+        </button>
+      </div>
+      <a href="https://wa.me/" style="min-height:52px;display:flex;align-items:center;justify-content:center;gap:10px;border:1.5px solid #1B2F7A;color:#1B2F7A;font-weight:600;font-size:16.5px;text-decoration:none;border-radius:2px" style-hover="background:#1B2F7A;color:#FBF6EA">
+        <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20 L5.3 16.2 A8.5 8.5 0 1 1 8 18.8 Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"></path></svg>
+        Customise on WhatsApp
+      </a>
+      <p style="margin:-8px 0 0;font-size:14px;line-height:1.5;color:#5A4A3E;text-align:center">{{ d.customNote }}</p>
+
+      <form onSubmit="{{ checkPin }}" style="display:flex;flex-direction:column;gap:10px;padding:16px;background:#F3EAD3;border:1px solid #E3D3AE">
+        <label for="pin" style="font-weight:600;font-size:15.5px">Check delivery</label>
+        <div style="display:flex;gap:8px">
+          <input id="pin" inputMode="numeric" maxLength="6" placeholder="Enter 6-digit pincode" value="{{ pin }}" onChange="{{ onPin }}" style="flex:1;min-width:0;height:46px;padding:0 14px;border:1px solid #DCC897;background:#FBF6EA;color:#1A1410;font:400 16px 'Mukta',sans-serif;border-radius:2px"></input>
+          <button type="submit" style="height:46px;padding:0 20px;border:1.5px solid #6E1423;background:transparent;color:#6E1423;font:600 15.5px 'Mukta',sans-serif;border-radius:2px;cursor:pointer">Check</button>
+        </div>
+        <sc-if value="{{ pinOk }}"><span role="status" style="font-size:14.5px;color:#1F5B45;font-weight:500">Delivers to {{ pin }} by [delivery date]. Cash on delivery [available / not available].</span></sc-if>
+        <sc-if value="{{ pinErr }}"><span role="alert" style="font-size:14.5px;color:#6E1423;font-weight:500">Please enter a valid 6-digit pincode.</span></sc-if>
+      </form>
+
+      <div id="details" style="display:flex;flex-direction:column;border-top:1.5px solid #C9A24B">
+        <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="4">
+          <div style="border-bottom:1px solid #E3D3AE">
+            <button onClick="{{ t.toggle }}" aria-expanded="{{ t.open }}" style="width:100%;min-height:56px;display:flex;align-items:center;justify-content:space-between;border:none;background:transparent;padding:0;cursor:pointer;font:600 16.5px 'Mukta',sans-serif;color:#1A1410">{{ t.title }}<span style="font-size:22px;color:#6E1423">{{ t.sign }}</span></button>
+            <sc-if value="{{ t.open }}">
+              <div style="padding:0 0 18px;display:flex;flex-direction:column;gap:12px">
+                <sc-if value="{{ t.rows }}">
+                  <dl style="margin:0;display:grid;grid-template-columns:minmax(120px,auto) 1fr;gap:8px 20px;font-size:15px">
+                    <sc-for list="{{ t.rows }}" as="r"><dt style="color:#5A4A3E">{{ r.k }}</dt><dd style="margin:0">{{ r.v }}</dd></sc-for>
+                  </dl>
+                </sc-if>
+                <sc-if value="{{ t.table }}">
+                  <div style="overflow-x:auto">
+                    <table style="border-collapse:collapse;width:100%;font-size:14.5px;min-width:380px">
+                      <thead><tr><sc-for list="{{ t.table.head }}" as="h"><th style="text-align:left;padding:9px 12px;background:#1B2F7A;color:#FBF6EA;font-weight:600">{{ h }}</th></sc-for></tr></thead>
+                      <tbody><sc-for list="{{ t.table.rows }}" as="row"><tr><sc-for list="{{ row }}" as="c"><td style="padding:9px 12px;border-bottom:1px solid #E3D3AE">{{ c }}</td></sc-for></tr></sc-for></tbody>
+                    </table>
+                  </div>
+                </sc-if>
+                <sc-if value="{{ t.text }}"><p style="margin:0;font-size:15px;line-height:1.6;color:#1A1410">{{ t.text }}</p></sc-if>
+              </div>
+            </sc-if>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <section style="background:#F3EAD3">
+    <div style="height:9px;border-top:1.5px solid #C9A24B;border-bottom:1.5px solid #C9A24B;background-image:radial-gradient(circle,#C9A24B 1.3px,transparent 1.7px);background-size:9px 9px;background-position:center;background-repeat:repeat-x"></div>
+    <div style="max-width:1360px;margin:0 auto;padding:clamp(40px,5vw,64px) 20px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,440px),1fr));gap:24px">
+      <article id="artist" aria-labelledby="artist-name" style="background:#FBF6EA;border:3px double #C9A24B;padding:24px;display:flex;gap:24px;flex-wrap:wrap;align-items:flex-start">
+        <div style="width:150px;flex:none;border-radius:999px 999px 0 0;border:1.5px solid #C9A24B;padding:5px;display:flex">
+          <div style="flex:1;aspect-ratio:3/3.8;border-radius:999px 999px 0 0;background:repeating-linear-gradient(135deg,#EFE4CC 0 9px,#F7F0DE 9px 18px);display:flex;align-items:center;justify-content:center;font:500 10px/1.4 ui-monospace,Menlo,monospace;color:#5A4A3E;text-align:center;padding:10px">[ARTIST PORTRAIT]</div>
+        </div>
+        <div style="flex:1 1 220px;display:flex;flex-direction:column;gap:8px">
+          <span style="font-size:12.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#6E1423">The artist</span>
+          <h2 id="artist-name" style="margin:0;font-family:'Yatra One',serif;font-weight:400;font-size:28px;color:#1B2F7A">[Artist name]</h2>
+          <span style="font-size:15px;color:#5A4A3E">[Village], Bihar · Painting since [year] · {{ d.style }} style</span>
+          <p style="margin:4px 0 0;font-size:15.5px;line-height:1.6;text-wrap:pretty">[Short artist bio in their own words: who taught them, what they like to paint, and what this piece means to them.]</p>
+          <a href="{{ sectionHref }}" style="margin-top:4px;font-weight:600;font-size:15.5px;color:#6E1423;min-height:40px;display:flex;align-items:center">See all pieces by [Artist name] →</a>
+        </div>
+      </article>
+      <article aria-labelledby="motif-name" style="background:#1B2F7A;color:#FBF6EA;border:1.5px solid #C9A24B;outline:1px solid #C9A24B;outline-offset:-8px;padding:28px;display:flex;gap:24px;flex-wrap:wrap;align-items:center">
+        <div style="width:150px;aspect-ratio:1;flex:none;border-radius:50%;border:3px double #C9A24B;padding:6px;display:flex">
+          <div style="flex:1;border-radius:50%;background:repeating-linear-gradient(135deg,#22388A 0 8px,#1E3380 8px 16px);display:flex;align-items:center;justify-content:center;font:500 10px/1.4 ui-monospace,Menlo,monospace;color:#E9D9AE;text-align:center;padding:12px">{{ motifArt }}</div>
+        </div>
+        <div style="flex:1 1 220px;display:flex;flex-direction:column;gap:8px">
+          <span style="font-size:12.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#F1DFA8">What the motif means</span>
+          <h2 id="motif-name" style="margin:0;display:flex;gap:12px;align-items:baseline"><span style="font-family:'Yatra One',serif;font-weight:400;font-size:30px">{{ d.motif }}</span><span style="font-family:'Yatra One',serif;font-weight:400;font-size:22px;color:#F1DFA8">{{ d.motifHi }}</span></h2>
+          <p style="margin:0;font-size:15.5px;line-height:1.6;color:#E4DDCB;text-wrap:pretty">{{ d.motifText }}</p>
+          <a href="{{ motifHref }}" style="margin-top:4px;font-weight:600;font-size:15.5px;color:#F1DFA8;min-height:40px;display:flex;align-items:center">More pieces with this motif →</a>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section aria-labelledby="more-title" style="max-width:1360px;margin:0 auto;padding:clamp(48px,6vw,80px) 20px;display:flex;flex-direction:column;gap:24px">
+    <h2 id="more-title" style="margin:0;font-family:'Yatra One',serif;font-weight:400;font-size:clamp(28px,3vw,38px);color:#1B2F7A">More by [Artist name]</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(max(150px,calc((100% - 72px) / 4)),1fr));gap:36px 24px">
+      <sc-for list="{{ more }}" as="item" hint-placeholder-count="4">
+        <dc-import name="ProductCard" p="{{ item }}" hint-size="100%,420px"></dc-import>
+      </sc-for>
+    </div>
+  </section>
+
+  <dc-import name="SiteFooter" hint-size="100%,420px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;section&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;clothing&quot;,&quot;paintings&quot;,&quot;homedecor&quot;,&quot;accessories&quot;],&quot;tsType&quot;:&quot;string&quot;}}">
+const CARE_TEXTILE = [
+  { k: 'First wash', v: 'Dry clean only for the first wash.' },
+  { k: 'After that', v: 'Hand wash cold, inside out, with mild detergent. Do not soak, wring or bleach.' },
+  { k: 'Drying', v: 'Dry flat in the shade.' },
+  { k: 'Ironing', v: 'Iron on the reverse, on a low setting.' }
+];
+const SHIP = { title: 'Shipping and returns', text: 'Ready-to-ship pieces leave the studio in [dispatch time]. Made-to-order pieces are painted after you order and ship in [N] days. Returns are accepted within [return window] on unworn, ready-to-ship pieces.' };
+const D = {
+  clothing: {
+    sectionLabel: 'Clothing', sub: 'Kurtas & Kurtis', name: 'Peacock vine Kachni kurta', motif: 'Peacock', motifHi: 'मोर', style: 'Kachni',
+    motifText: 'In Mithila painting the peacock stands for love and devotion. Pairs of peacocks facing each other are a common wedding image.',
+    optTitle: 'Size', sizeLink: true, opts: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
+    customNote: 'Ask for a different colour, motif or fit. The artist confirms with a sketch before painting.',
+    gallery: ['[PRODUCT PHOTO: front]', '[PRODUCT PHOTO: back]', '[DETAIL: peacock close-up]', '[ON MODEL]', '[ARTIST painting this kurta]'],
+    tabs: [
+      { title: 'Details', rows: [{ k: 'Fabric', v: 'Cotton' }, { k: 'Painting', v: 'Kachni line work in fabric paint' }, { k: 'Fit', v: '[Fit description]' }, { k: 'Length', v: '[N] in' }, { k: 'Sleeves', v: '[Sleeve length]' }, { k: 'Each piece', v: 'Hand-painted, so lines and colours vary slightly from the photos.' }] },
+      { title: 'Size chart', fit: true, table: { head: ['Size', 'Bust (in)', 'Waist (in)', 'Hip (in)', 'Length (in)'], rows: ['XS', 'S', 'M', 'L', 'XL', 'XXL'].map(s => [s, '[N]', '[N]', '[N]', '[N]']) } },
+      { title: 'Care', rows: CARE_TEXTILE },
+      SHIP
+    ]
+  },
+  paintings: {
+    sectionLabel: 'Paintings', sub: 'On paper', name: 'Sun face on handmade paper', motif: 'Sun', motifHi: 'सूर्य', style: 'Bharni',
+    motifText: 'The sun stands for life and energy. It is often painted with a human face and radiating rays at the centre of the composition.',
+    optTitle: 'Framing', sizeLink: false, opts: ['Unframed', 'Framed: [frame type]'],
+    customNote: 'Ask for a different size or palette. The artist confirms with a sketch before painting.',
+    gallery: ['[PAINTING: full view]', '[DETAIL: sun face]', '[DETAIL: border]', '[IN A ROOM, for scale]', '[ARTIST SIGNATURE on reverse]'],
+    tabs: [
+      { title: 'Details', rows: [{ k: 'Medium', v: 'Natural and acrylic colours on handmade paper' }, { k: 'Style', v: 'Bharni (filled colour)' }, { k: 'Signed', v: 'By the artist, on the reverse' }, { k: 'Each piece', v: 'An original. No two are the same.' }] },
+      { title: 'Dimensions and mounting', fit: true, rows: [{ k: 'Painting', v: '[W] × [H] in ([W] × [H] cm)' }, { k: 'Framed size', v: '[W] × [H] in, [frame depth] deep' }, { k: 'Unframed', v: 'Ships rolled in a tube. Mount with acid-free board.' }, { k: 'Framed', v: 'Ships ready to hang with [hanging fixture].' }] },
+      { title: 'Care', rows: [{ k: 'Light', v: 'Hang away from direct sunlight.' }, { k: 'Moisture', v: 'Keep away from damp walls and bathrooms.' }, { k: 'Cleaning', v: 'Dust gently with a dry, soft brush. Do not use water.' }] },
+      SHIP
+    ]
+  },
+  homedecor: {
+    sectionLabel: 'Home Decor', sub: 'Wall hangings', name: 'Lotus pond wall hanging', motif: 'Lotus', motifHi: 'कमल', style: 'Bharni',
+    motifText: 'The lotus stands for purity and prosperity, and is painted in kohbar art made for weddings.',
+    optTitle: 'Size', sizeLink: false, opts: ['Small', 'Medium', 'Large'],
+    customNote: 'Ask for a different size or colours. The artist confirms with a sketch before painting.',
+    gallery: ['[PRODUCT PHOTO: full view]', '[DETAIL: lotus]', '[DETAIL: border]', '[ON A WALL, for scale]', '[ARTIST at work]'],
+    tabs: [
+      { title: 'Details', rows: [{ k: 'Material', v: 'Cotton' }, { k: 'Style', v: 'Bharni' }] },
+      { title: 'Dimensions and mounting', fit: true, rows: [{ k: 'Size', v: '[W] × [H] in' }, { k: 'Mounting', v: '[Rod pocket / loops]. Rod not included.' }] },
+      { title: 'Care', rows: CARE_TEXTILE }, SHIP
+    ]
+  },
+  accessories: {
+    sectionLabel: 'Accessories', sub: 'Bags', name: 'Fish pair tote bag', motif: 'Fish', motifHi: 'मछली', style: 'Bharni',
+    motifText: 'Fish stand for good fortune and fertility. They are painted in pairs for weddings and new beginnings.',
+    optTitle: 'Strap colour', sizeLink: false, opts: ['[Colour 1]', '[Colour 2]'],
+    customNote: 'Ask for a name or a different motif. The artist confirms before painting.',
+    gallery: ['[PRODUCT PHOTO: front]', '[PRODUCT PHOTO: back]', '[DETAIL: fish]', '[CARRIED, for scale]', '[ARTIST at work]'],
+    tabs: [
+      { title: 'Details', rows: [{ k: 'Material', v: 'Canvas' }, { k: 'Lining', v: '[Lining]' }] },
+      { title: 'Dimensions', fit: true, rows: [{ k: 'Size', v: '[W] × [H] × [D] in' }, { k: 'Strap drop', v: '[N] in' }] },
+      { title: 'Care', rows: CARE_TEXTILE }, SHIP
+    ]
+  }
+};
+
+const SAREES = () => window.MAITHILIKA_SAREES || [];
+const CK = 'maithilika:cart';
+function addToCart(item) {
+  let c = [];
+  try { c = JSON.parse(localStorage.getItem(CK) || '[]'); } catch (e) {}
+  const f = c.find(x => x.key === item.key);
+  if (f) f.qty += 1; else c.push({ ...item, qty: 1 });
+  localStorage.setItem(CK, JSON.stringify(c));
+  window.dispatchEvent(new CustomEvent('maithilika:cart', { detail: { open: true } }));
+}
+const IW = 1145, IH = 1374;
+const VIEWS = [['Full look', 0, 0, 1145, 1374], ['Pallu painting', 300, 380, 410, 492], ['Motif close-up', 738, 462, 380, 456], ['Border detail', 738, 928, 372, 446], ['Pleats and fall', 738, 0, 376, 452]];
+function crop(p, v, extra) {
+  const W0 = p.iw || IW, H0 = p.ih || IH, A = p.ar || IW / IH, BG = '#DAC9B5';
+  let [, x, y, w, h] = v; const ox = x, oy = y, ow = w, oh = h;
+  if (w / h < A - 0.005) { const nw = h * A; x -= (nw - w) / 2; w = nw; }
+  else if (w / h > A + 0.005) { const nh = w / A; y -= (nh - h) / 2; h = nh; }
+  const pos = (o, s, S) => Math.abs(S - s) < 0.5 ? 0 : o / (S - s) * 100;
+  const L = [], S = [], P = [];
+  const band = 'linear-gradient(to bottom,' + (p.bands || [BG, BG]).join(',') + ')';
+  if (ow !== w) { const a = (ox - x) / w * 100, b = (ox + ow - x) / w * 100; if (a > 0) { L.push(band); S.push((a + 0.2) + '% 100%'); P.push('0 0'); } if (b < 100) { L.push(band); S.push((100 - b + 0.2) + '% 100%'); P.push('100% 0'); } }
+  if (oh !== h) { const a = (oy - y) / h * 100, b = (oy + oh - y) / h * 100; L.push('linear-gradient(to bottom,' + BG + ' ' + a + '%,transparent ' + a + '%,transparent ' + b + '%,' + BG + ' ' + b + '%)'); S.push('100% 100%'); P.push('0 0'); }
+  L.push('url("' + p.img + '")'); S.push((W0 / w * 100) + '% ' + (H0 / h * 100) + '%'); P.push(pos(x, w, W0) + '% ' + pos(y, h, H0) + '%');
+  return { display: 'block', width: '100%', aspectRatio: String(A), backgroundImage: L.join(','), backgroundRepeat: 'no-repeat', backgroundColor: L.length > 1 ? (p.bands ? p.bands[1] : BG) : '#F3EAD3',
+    backgroundSize: S.join(','), backgroundPosition: P.join(','), ...(extra || {}) };
+}
+function sareeDetail(s, base) {
+  return {
+    ...base, sub: s.sub, name: s.name, motif: s.motif, motifHi: s.motifHi, style: s.style, motifText: s.motifText,
+    optTitle: s.optTitle || 'Blouse', sizeLink: !!s.sizeLink, opts: s.opts || ['Unstitched blouse piece', 'Stitched to measure'],
+    customNote: s.sub === 'Sarees' ? 'Ask for a different colour, motif or a stitched blouse. The artist confirms with a sketch before painting.' : 'Ask for a different colour or motif. The artist confirms with a sketch before painting.',
+    gallery: (s.views || VIEWS).map(v => v[0]),
+    tabs: s.sub === 'Bags' ? base.tabs : s.section === 'paintings' ? [
+      { title: 'Details', rows: [{ k: 'Medium', v: 'Natural and acrylic colours on ' + s.fabric.toLowerCase() }, { k: 'Style', v: s.style + ' (filled colour)' }, { k: 'Framing', v: s.frame }, { k: 'Signed', v: 'By the artist, on the reverse' }, { k: 'Each piece', v: 'An original. No two are the same.' }] },
+      base.tabs[1], base.tabs[2], base.tabs[3]
+    ] : s.sub === 'Bed linen' ? [
+      { title: 'Details', rows: [{ k: 'Fabric', v: s.fabric }, { k: 'Painting', v: s.style + ' (filled colour), painted by hand in fabric colours' }, { k: 'Colour', v: s.colour + ' ground' }, { k: 'Includes', v: s.includes }, { k: 'Each piece', v: 'Hand-painted, so lines and colours vary slightly from the photos.' }] },
+      { title: 'Dimensions', fit: true, rows: [{ k: 'Bedsheet', v: '[N] × [N] in' }, { k: 'Pillow covers', v: '[N] × [N] in each' }] },
+      base.tabs[2], base.tabs[3]
+    ] : s.section === 'homedecor' ? [
+      { title: 'Details', rows: [{ k: 'Fabric', v: s.fabric }, { k: 'Painting', v: s.style + ' (filled colour), painted by hand in fabric colours' }, { k: 'Colour', v: s.colour + ' ground' }].concat(s.includes ? [{ k: 'Includes', v: s.includes }] : []).concat([{ k: 'Each piece', v: 'Hand-painted, so lines and colours vary slightly from the photos.' }]) },
+      { title: 'Dimensions', fit: true, rows: s.sub === 'Wall hangings' ? [{ k: 'Size', v: '[W] × [H] in' }, { k: 'Mounting', v: 'Wooden rod and hanging cord included' }] : [{ k: 'Size', v: '[N] × [N] in' }] },
+      base.tabs[2], base.tabs[3]
+    ] : s.sub === 'Kurtas & Kurtis' ? [
+      { title: 'Details', rows: [{ k: 'Fabric', v: s.fabric }, { k: 'Painting', v: s.style + ' (filled colour), painted by hand in fabric colours' }, { k: 'Colour', v: s.colour + ' ground' }, { k: 'Includes', v: s.includes || 'Kurta' }, { k: 'Fit', v: '[Fit description]' }, { k: 'Sleeves', v: 'Three-quarter' }, { k: 'Each piece', v: 'Hand-painted, so lines and colours vary slightly from the photos.' }] },
+      base.tabs[1], base.tabs[2], base.tabs[3]
+    ] : s.sub === 'Jewellery' ? [
+      { title: 'Details', rows: [{ k: 'Material', v: s.fabric }, { k: 'Painting', v: s.style + ' (filled colour), painted by hand' }, { k: 'Drops', v: 'Pearl beads and gold-tone balls' }, { k: 'Fastening', v: 'Push-back post' }, { k: 'Each piece', v: 'Hand-painted, so the two earrings differ slightly from each other and from the photos.' }] },
+      { title: 'Dimensions', fit: true, rows: [{ k: 'Length', v: '[N] cm' }, { k: 'Width', v: '[N] cm' }, { k: 'Weight', v: '[N] g each' }] },
+      { title: 'Care', rows: [{ k: 'Water', v: 'Keep dry. Remove before bathing or swimming.' }, { k: 'Cleaning', v: 'Wipe gently with a soft dry cloth.' }, { k: 'Storage', v: 'Store flat in the pouch, away from perfume.' }] },
+      base.tabs[3]
+    ] : (s.sub === 'Dupattas' || s.sub === 'Stoles' || s.sub === 'Scarves' || s.sub === 'Handkerchiefs') ? [
+      { title: 'Details', rows: [{ k: 'Fabric', v: s.fabric }, { k: 'Painting', v: s.style + ' (filled colour), painted by hand in fabric colours' }, { k: 'Colour', v: s.colour + ' ground' }, { k: 'Edge', v: s.edge || 'Tassels in red, green and ivory' }, { k: 'Each piece', v: 'Hand-painted, so lines and colours vary slightly from the photos.' }] },
+      { title: 'Size', fit: true, rows: (s.sub === 'Scarves' || s.sub === 'Handkerchiefs') ? [{ k: 'Size', v: '[N] × [N] cm' }, { k: 'Fit', v: 'Free size' }] : [{ k: 'Length', v: '[N] m' }, { k: 'Width', v: '[N] in' }, { k: 'Fit', v: 'Free size' }] },
+      base.tabs[2], base.tabs[3]
+    ] : [
+      { title: 'Details', rows: [{ k: 'Fabric', v: s.fabric }, { k: 'Painting', v: s.style + ' (filled colour), painted by hand in fabric colours' }, { k: 'Colour', v: s.colour + ' ground' }, { k: 'Blouse piece', v: 'Included, unstitched' }, { k: 'Each piece', v: 'Hand-painted, so lines and colours vary slightly from the photos.' }] },
+      { title: 'Size and drape', fit: true, rows: [{ k: 'Saree length', v: '[N] m' }, { k: 'Width', v: '[N] in' }, { k: 'Blouse piece', v: '[N] m' }, { k: 'Fit', v: 'Free size' }] },
+      base.tabs[2], base.tabs[3]
+    ]
+  };
+}
+class Component extends DCLogic {
+  componentDidMount() {
+    this.r = () => this.setState({ w: window.innerWidth }); window.addEventListener('resize', this.r);
+    this.dl = () => this.forceUpdate(); window.addEventListener('maithilika:data', this.dl);
+  }
+  componentWillUnmount() { window.removeEventListener('resize', this.r); window.removeEventListener('maithilika:data', this.dl); }
+  state = { w: typeof window !== 'undefined' ? window.innerWidth : 1280, img: 0, opt: null, open: 0, pin: '', pinState: null, liked: false, added: false };
+  renderVals() {
+    const q = typeof location !== 'undefined' ? new URLSearchParams(location.search).get('s') : null;
+    let key = q || this.props.section || 'clothing';
+    if (!D[key]) key = 'clothing';
+    const usp = typeof location !== 'undefined' ? new URLSearchParams(location.search) : new URLSearchParams();
+    let sid = usp.get('id');
+    if (!sid && !q) { try { sid = localStorage.getItem('maithilika:lastProduct'); } catch (e) {} }
+    const saree = SAREES().find(s => s.id === sid) || (key === 'clothing' && !q ? null : null);
+    if (saree) key = saree.section;
+    const d = saree ? sareeDetail(saree, D[key]) : D[key];
+    const { w, img, opt, open, pin, pinState, liked, added } = this.state;
+    const narrow = w < 760;
+    const fitIndex = d.tabs.findIndex(t => t.fit);
+    const L = (x) => ({clothing:'Clothing',homedecor:'HomeDecor',paintings:'Paintings',accessories:'Accessories'})[key] + '.dc.html' + (x ? '?' + x : '');
+    return {
+      key, d,
+      sectionHref: L(), subHref: L('sub=' + encodeURIComponent(d.sub)), motifHref: L('motif=' + d.motif),
+      motifArt: '[' + d.motif.toUpperCase() + ' ARTWORK]',
+      galleryDir: narrow ? 'column-reverse' : 'row', thumbDir: narrow ? 'row' : 'column',
+      thumbAspect: saree ? String(saree.ar || IW / IH) : '3/4',
+      mainCrop: saree ? crop(saree, (saree.views || VIEWS)[img] || (saree.views || VIEWS)[0]) : null, noMainCrop: !saree,
+      priceLabel: saree ? saree.priceLabel : '[PRICE]', ready: saree ? saree.ready : true, mto: saree ? !saree.ready : false,
+      thumbs: d.gallery.map((g, i) => ({ crop: saree ? crop(saree, (saree.views || VIEWS)[i], { height: '100%' }) : null, noCrop: !saree, n: i + 1, label: g, on: i === img ? 'true' : 'false', ring: i === img ? '2px solid #6E1423' : '1px solid #DCC897', pick: () => this.setState({ img: i }) })),
+      mainImg: d.gallery[img],
+      opts: d.opts.map((o, i) => { const on = opt === i; return { label: o, on: on ? 'true' : 'false', ring: on ? '1.5px solid #1B2F7A' : '1px solid #DCC897', bg: on ? '#1B2F7A' : 'transparent', fg: on ? '#FBF6EA' : '#1A1410', pick: () => this.setState({ opt: i }) }; }),
+      openFit: () => this.setState({ open: fitIndex }),
+      bagLabel: added ? 'Added to bag' : (opt === null && d.sizeLink ? 'Select a size' : 'Add to bag'),
+      addToBag: () => {
+        if (opt === null && d.sizeLink) return;
+        if (saree) { const o = d.opts[opt === null ? 0 : opt]; addToCart({ key: saree.id + '|' + o, id: saree.id, name: saree.name, option: o, price: saree.price, img: saree.img, href: saree.href }); }
+        this.setState({ added: true });
+      },
+      liked: liked ? 'true' : 'false', heartFill: liked ? '#6E1423' : 'none', toggleLike: () => this.setState({ liked: !liked }),
+      pin, onPin: e => this.setState({ pin: e.target.value.replace(/\D/g, '').slice(0, 6), pinState: null }),
+      checkPin: e => { e.preventDefault(); this.setState({ pinState: /^\d{6}$/.test(pin) ? 'ok' : 'err' }); },
+      pinOk: pinState === 'ok', pinErr: pinState === 'err',
+      tabs: d.tabs.map((t, i) => ({ ...t, rows: t.rows || null, table: t.table || null, text: t.text || '', open: open === i, sign: open === i ? '−' : '+', toggle: () => this.setState({ open: open === i ? -1 : i }) })),
+      more: saree ? SAREES().filter(s => s.id !== saree.id).sort((a, b) => (b.section === saree.section) - (a.section === saree.section)).slice(0, 4) : [0, 1, 2, 3].map(i => ({ section: key, name: ['Fish border Tussar saree', 'Lotus medallion dupatta', 'Sun and peacock stole', 'Peacock pair on paper'][i], meta: ['Tussar silk · ' + d.style, 'Chanderi · ' + d.style, 'Mulberry silk · ' + d.style, 'Handmade paper · ' + d.style][i], artist: '[Artist name]', days: '[N]', ready: i % 2 === 0 }))
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Mukta:wght@400;500;600;700&family=Yatra+One&display=swap" rel="stylesheet"></helmet>
+<div style="font-family:'Mukta',sans-serif;position:relative;z-index:60" onMouseLeave="{{ closeMenu }}">
+  <div style="background:#6E1423;color:#FBF6EA;font-size:13.5px;line-height:1.3">
+    <div style="max-width:1360px;margin:0 auto;padding:8px 20px;display:flex;justify-content:center;align-items:center;gap:6px 24px;flex-wrap:wrap;text-align:center">
+      <sc-if value="{{ wide }}" hint-placeholder-val="{{ true }}">
+        <span style="white-space:nowrap">Free shipping across India on orders above [₹ threshold]</span>
+        <span style="width:5px;height:5px;transform:rotate(45deg);background:#C9A24B"></span>
+      </sc-if>
+      <span style="white-space:nowrap">Every piece painted by hand, never printed</span>
+      <span style="width:5px;height:5px;transform:rotate(45deg);background:#C9A24B"></span>
+      <a href="https://wa.me/" style="color:#F1DFA8;font-weight:600;text-decoration:underline;text-underline-offset:3px;white-space:nowrap">Order on WhatsApp</a>
+    </div>
+  </div>
+  <header style="background:#1B2F7A;border-bottom:1px solid #C9A24B;position:relative">
+    <div style="max-width:1360px;margin:0 auto;padding:0 12px 0 16px;height:64px;display:flex;align-items:center;gap:12px">
+      <sc-if value="{{ mobile }}">
+        <button onClick="{{ openDrawer }}" aria-label="Open menu" style="width:44px;height:44px;margin-left:-8px;border:none;background:transparent;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;cursor:pointer">
+          <span style="width:20px;height:1.5px;background:#FBF6EA"></span><span style="width:20px;height:1.5px;background:#FBF6EA"></span><span style="width:14px;height:1.5px;background:#C9A24B;align-self:center;margin-right:6px"></span>
+        </button>
+      </sc-if>
+      <a href="Home.dc.html" aria-label="Maithilika home" style="display:flex;align-items:center;gap:10px;text-decoration:none;flex:none">
+        <svg width="34" height="26" viewBox="0 0 40 30" aria-hidden="true"><path d="M3 15 Q15 3 27 15 Q15 27 3 15 Z" fill="none" stroke="#C9A24B" stroke-width="2"></path><path d="M27 15 L37 7 L37 23 Z" fill="none" stroke="#C9A24B" stroke-width="2" stroke-linejoin="round"></path><circle cx="10" cy="14" r="1.8" fill="#C9A24B"></circle><path d="M15 9.5 Q19 15 15 20.5" fill="none" stroke="#C9A24B" stroke-width="1.4"></path></svg>
+        <span style="display:flex;flex-direction:column;line-height:1">
+          <span style="font-family:'Yatra One',serif;font-size:23px;color:#FBF6EA;line-height:1.05">Maithilika</span>
+          <span style="font-family:'Yatra One',serif;font-size:13px;color:#F1DFA8;line-height:1.2">मैथिलिका</span>
+        </span>
+      </a>
+      <sc-if value="{{ desktop }}" hint-placeholder-val="{{ true }}">
+        <nav aria-label="Shop sections" style="display:flex;flex:1;justify-content:center;align-self:stretch;gap:2px">
+          <sc-for list="{{ navItems }}" as="n" hint-placeholder-count="6">
+            <a href="{{ n.href }}" onPointerEnter="{{ n.enter }}" onClick="{{ n.click }}" aria-haspopup="{{ n.pop }}" aria-expanded="{{ n.expanded }}" style="display:flex;align-items:center;padding:3px 14px 0;color:#FBF6EA;text-decoration:none;font-size:15.5px;font-weight:500;letter-spacing:.01em;border-bottom:3px solid {{ n.line }}" style-hover="color:#F1DFA8">{{ n.label }}</a>
+          </sc-for>
+        </nav>
+      </sc-if>
+      <sc-if value="{{ mobile }}"><span style="flex:1"></span></sc-if>
+      <div style="display:flex;align-items:center;gap:2px;flex:none">
+        <button onClick="{{ toggleSearch }}" aria-label="Search" aria-expanded="{{ searchOpen }}" style="width:44px;height:44px;border:none;background:transparent;display:flex;align-items:center;justify-content:center;cursor:pointer;border-radius:50%" style-hover="background:#24398C">
+          <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="#FBF6EA" stroke-width="1.7"></circle><path d="M15.5 15.5 L21 21" stroke="#FBF6EA" stroke-width="1.7" stroke-linecap="round"></path></svg>
+        </button>
+        <a href="#wishlist" aria-label="Wishlist" style="width:44px;height:44px;display:flex;align-items:center;justify-content:center;border-radius:50%" style-hover="background:#24398C">
+          <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.5s-7.6-4.6-9.4-9.1C1.3 8 3.4 4.8 6.6 4.8c2 0 3.6 1.1 5.4 3.1 1.8-2 3.4-3.1 5.4-3.1 3.2 0 5.3 3.2 4 6.6-1.8 4.5-9.4 9.1-9.4 9.1z" fill="none" stroke="#FBF6EA" stroke-width="1.7" stroke-linejoin="round"></path></svg>
+        </a>
+        <button onClick="{{ openCart }}" aria-label="{{ bagAria }}" style="position:relative;width:44px;height:44px;border:none;background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;border-radius:50%" style-hover="background:#24398C">
+          <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 8 H19.5 L18.5 21 H5.5 Z" fill="none" stroke="#FBF6EA" stroke-width="1.7" stroke-linejoin="round"></path><path d="M8.5 10 V7 a3.5 3.5 0 0 1 7 0 V10" fill="none" stroke="#FBF6EA" stroke-width="1.7"></path></svg>
+          <sc-if value="{{ cartCount }}"><span style="position:absolute;top:4px;right:2px;min-width:19px;height:19px;padding:0 5px;border-radius:10px;background:#C9A24B;color:#1A1410;font:700 11.5px/19px 'Mukta',sans-serif;text-align:center">{{ cartCount }}</span></sc-if>
+        </button>
+      </div>
+    </div>
+    <sc-if value="{{ searchOpen }}">
+      <form onSubmit="{{ submitSearch }}" role="search" style="max-width:1360px;margin:0 auto;padding:0 16px 14px;display:flex;gap:8px">
+        <input type="search" aria-label="Search Maithilika" placeholder="Search sarees, motifs, artists" style="flex:1;min-width:0;height:44px;padding:0 14px;border:1px solid #C9A24B;background:#FBF6EA;color:#1A1410;font:400 16px 'Mukta',sans-serif;border-radius:2px;outline-color:#C9A24B"></input>
+        <button type="submit" style="height:44px;padding:0 20px;border:1px solid #C9A24B;background:#6E1423;color:#FBF6EA;font:600 15px 'Mukta',sans-serif;border-radius:2px;cursor:pointer">Search</button>
+      </form>
+    </sc-if>
+  </header>
+  <sc-if value="{{ menuOpen }}">
+    <div style="position:absolute;left:0;right:0;top:100%;background:#FBF6EA;box-shadow:0 24px 32px -24px rgba(26,20,16,.45)">
+      <div style="max-width:1360px;margin:0 auto;padding:30px 20px 34px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.6fr) 200px;gap:44px">
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <div style="display:flex;align-items:baseline;gap:10px"><span style="font-family:'Yatra One',serif;font-size:28px;color:#1B2F7A;line-height:1.1">{{ menu.label }}</span><span style="font-family:'Yatra One',serif;font-size:17px;color:#6E1423">{{ menu.hi }}</span></div>
+          <div style="display:flex;flex-direction:column">
+            <sc-for list="{{ menu.subs }}" as="s" hint-placeholder-count="4">
+              <a href="{{ s.href }}" style="display:flex;align-items:center;min-height:40px;font-size:16px;color:#1A1410;text-decoration:none;border-bottom:1px solid #EADFC4" style-hover="color:#6E1423">{{ s.label }}</a>
+            </sc-for>
+          </div>
+          <a href="{{ menu.href }}" style="font-weight:600;font-size:15px;color:#6E1423;text-decoration:none" style-hover="text-decoration:underline">{{ menu.cta }}</a>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <span style="font-size:12.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#6E1423">Featured pieces</span>
+          <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px">
+            <sc-for list="{{ menu.motifs }}" as="m" hint-placeholder-count="3">
+              <a href="{{ m.href }}" style="display:flex;flex-direction:column;gap:8px;text-decoration:none;color:#1A1410">
+                <span style="aspect-ratio:1;border-radius:50%;border:3px double #C9A24B;padding:4px;display:flex;background:#FBF6EA"><span style="flex:1;position:relative;overflow:hidden;border-radius:50%;background:#F1E8D2"><sc-if value="{{ m.img }}" hint-placeholder-val="{{ false }}"><img src="{{ m.img }}" alt="{{ m.pname }}" style="position:absolute;left:0;top:0;width:{{ m.cw }};max-width:none;height:100%;object-fit:cover;object-position:{{ m.cp }}"></img></sc-if></span></span>
+                <span style="font-weight:600;font-size:15.5px;line-height:1.3;text-wrap:pretty">{{ m.pname }}</span>
+                <span style="font-size:14px;line-height:1.4;color:#5A4A3E">{{ m.price }}</span>
+              </a>
+            </sc-for>
+          </div>
+        </div>
+        <div style="border-radius:999px 999px 0 0;border:1.5px solid #C9A24B;padding:7px;display:flex">
+          <img src="{{ menu.photo }}" alt="{{ menu.label }}" style="flex:1;width:100%;min-width:0;min-height:220px;height:100%;border-radius:999px 999px 0 0;object-fit:cover;display:block;background:#F7F0DE">
+        </div>
+      </div>
+      <div style="height:9px;border-top:1.5px solid #C9A24B;border-bottom:1.5px solid #C9A24B;background-image:radial-gradient(circle,#C9A24B 1.3px,transparent 1.7px);background-size:9px 9px;background-position:center;background-repeat:repeat-x;background-color:#FBF6EA"></div>
+    </div>
+  </sc-if>
+  <sc-if value="{{ drawer }}">
+    <div style="position:fixed;inset:0;z-index:100;display:flex">
+      <div style="width:min(88vw,380px);height:100%;background:#FBF6EA;display:flex;flex-direction:column;overflow-y:auto;box-shadow:8px 0 30px rgba(26,20,16,.25)">
+        <div style="background:#1B2F7A;display:flex;align-items:center;justify-content:space-between;padding:0 8px 0 18px;height:64px;border-bottom:1px solid #C9A24B;flex:none">
+          <span style="display:flex;align-items:baseline;gap:8px"><span style="font-family:'Yatra One',serif;font-size:22px;color:#FBF6EA">Maithilika</span><span style="font-family:'Yatra One',serif;font-size:14px;color:#F1DFA8">मैथिलिका</span></span>
+          <button onClick="{{ closeDrawer }}" aria-label="Close menu" style="width:44px;height:44px;border:none;background:transparent;color:#FBF6EA;font-size:26px;line-height:1;cursor:pointer">×</button>
+        </div>
+        <div style="display:flex;flex-direction:column;padding:8px 18px">
+          <sc-for list="{{ drawerItems }}" as="d" hint-placeholder-count="4">
+            <div style="border-bottom:1px solid #EADFC4">
+              <button onClick="{{ d.toggle }}" aria-expanded="{{ d.open }}" style="width:100%;min-height:56px;display:flex;align-items:center;justify-content:space-between;gap:10px;border:none;background:transparent;padding:0;cursor:pointer;font-family:'Mukta',sans-serif;color:#1A1410">
+                <span style="display:flex;align-items:baseline;gap:10px"><span style="font-size:18px;font-weight:600">{{ d.label }}</span><span style="font-family:'Yatra One',serif;font-size:14px;color:#6E1423">{{ d.hi }}</span></span>
+                <span style="font-size:22px;color:#6E1423;width:24px;text-align:center">{{ d.sign }}</span>
+              </button>
+              <sc-if value="{{ d.open }}">
+                <div style="display:flex;flex-direction:column;padding:0 0 12px 12px;border-left:1.5px solid #C9A24B;margin-bottom:12px">
+                  <sc-for list="{{ d.subs }}" as="s"><a href="{{ s.href }}" style="min-height:44px;display:flex;align-items:center;font-size:16px;color:#1A1410;text-decoration:none">{{ s.label }}</a></sc-for>
+                  <a href="{{ d.href }}" style="min-height:44px;display:flex;align-items:center;font-size:15px;font-weight:600;color:#6E1423;text-decoration:none">{{ d.cta }}</a>
+                </div>
+              </sc-if>
+            </div>
+          </sc-for>
+          <a href="Home.dc.html#artists" onClick="{{ closeDrawer }}" style="min-height:56px;display:flex;align-items:center;font-size:18px;font-weight:600;color:#1A1410;text-decoration:none;border-bottom:1px solid #EADFC4">Artists</a>
+          <a href="Home.dc.html#story" onClick="{{ closeDrawer }}" style="min-height:56px;display:flex;align-items:center;font-size:18px;font-weight:600;color:#1A1410;text-decoration:none;border-bottom:1px solid #EADFC4">Our Story</a>
+        </div>
+        <div style="margin-top:auto;padding:18px;display:flex;flex-direction:column;gap:10px">
+          <a href="https://wa.me/" style="min-height:48px;display:flex;align-items:center;justify-content:center;background:#6E1423;color:#FBF6EA;font-weight:600;font-size:16px;text-decoration:none;border-radius:2px;box-shadow:inset 0 0 0 1px #C9A24B">Order on WhatsApp</a>
+          <span style="font-size:13.5px;color:#5A4A3E;text-align:center">Every piece painted by hand, never printed</span>
+        </div>
+      </div>
+      <button onClick="{{ closeDrawer }}" aria-label="Close menu" style="flex:1;border:none;background:rgba(26,20,16,.55);cursor:pointer"></button>
+    </div>
+  </sc-if>
+<sc-if value="{{ cartOpen }}">
+    <div style="position:fixed;inset:0;z-index:110;display:flex">
+      <button onClick="{{ closeCart }}" aria-label="Close bag" style="flex:1;border:none;background:rgba(26,20,16,.55);cursor:pointer"></button>
+      <aside role="dialog" aria-label="Your bag" style="width:min(94vw,430px);height:100%;background:#FBF6EA;display:flex;flex-direction:column;box-shadow:-8px 0 30px rgba(26,20,16,.25)">
+        <div style="background:#1B2F7A;display:flex;align-items:center;justify-content:space-between;padding:0 8px 0 20px;height:64px;border-bottom:1px solid #C9A24B;flex:none">
+          <span style="display:flex;align-items:baseline;gap:10px;color:#FBF6EA"><span style="font-family:'Yatra One',serif;font-size:24px">Your bag</span><span style="font-size:14px;color:#F1DFA8">{{ cartSummary }}</span></span>
+          <button onClick="{{ closeCart }}" aria-label="Close bag" style="width:44px;height:44px;border:none;background:transparent;color:#FBF6EA;font-size:26px;line-height:1;cursor:pointer">×</button>
+        </div>
+        <div style="height:9px;border-bottom:1.5px solid #C9A24B;background-image:radial-gradient(circle,#C9A24B 1.3px,transparent 1.7px);background-size:9px 9px;background-position:center;background-repeat:repeat-x;flex:none"></div>
+        <sc-if value="{{ cartEmpty }}">
+          <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:32px;text-align:center">
+            <span style="font-family:'Yatra One',serif;font-size:24px;color:#1B2F7A">Your bag is empty</span>
+            <span style="font-size:15.5px;color:#5A4A3E;max-width:30ch">Every saree is painted by hand. Find the one with your story.</span>
+            <a href="Clothing.dc.html?sub=Sarees" style="margin-top:6px;min-height:48px;padding:0 24px;display:flex;align-items:center;background:#6E1423;color:#FBF6EA;font-weight:600;font-size:16px;text-decoration:none;border-radius:2px;box-shadow:inset 0 0 0 1px #C9A24B">Shop sarees</a>
+          </div>
+        </sc-if>
+        <sc-if value="{{ cartHas }}">
+          <ul style="list-style:none;margin:0;padding:8px 20px;flex:1;overflow-y:auto;display:flex;flex-direction:column">
+            <sc-for list="{{ cartItems }}" as="c">
+              <li style="display:grid;grid-template-columns:78px minmax(0,1fr);gap:14px;padding:16px 0;border-bottom:1px solid #E3D3AE">
+                <a href="{{ c.href }}" style="position:relative;display:block;width:78px;aspect-ratio:3/4;overflow:hidden;background:#F3EAD3;outline:1px solid #DCC897">
+                  <sc-if value="{{ c.img }}"><img src="{{ c.img }}" alt="" style="position:absolute;left:0;top:0;width:160.8%;max-width:none;height:100%;object-fit:cover;object-position:0 3%"></img></sc-if>
+                </a>
+                <div style="display:flex;flex-direction:column;gap:3px;min-width:0">
+                  <a href="{{ c.href }}" style="font-weight:600;font-size:15.5px;line-height:1.3;color:#1A1410;text-decoration:none">{{ c.name }}</a>
+                  <span style="font-size:13.5px;color:#5A4A3E">{{ c.option }}</span>
+                  <span style="font-weight:600;font-size:15.5px">{{ c.lineLabel }}</span>
+                  <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:6px">
+                    <div role="group" aria-label="Quantity" style="display:flex;align-items:center;border:1px solid #DCC897;border-radius:2px">
+                      <button onClick="{{ c.dec }}" aria-label="Decrease quantity" style="width:44px;height:40px;border:none;background:transparent;font-size:19px;color:#1A1410;cursor:pointer">−</button>
+                      <span aria-live="polite" style="min-width:28px;text-align:center;font-weight:600;font-size:15px">{{ c.qty }}</span>
+                      <button onClick="{{ c.inc }}" aria-label="Increase quantity" style="width:44px;height:40px;border:none;background:transparent;font-size:19px;color:#1A1410;cursor:pointer">+</button>
+                    </div>
+                    <button onClick="{{ c.remove }}" style="min-height:40px;border:none;background:transparent;color:#6E1423;font:600 14px 'Mukta',sans-serif;text-decoration:underline;text-underline-offset:3px;cursor:pointer">Remove</button>
+                  </div>
+                </div>
+              </li>
+            </sc-for>
+          </ul>
+          <div style="flex:none;border-top:1.5px solid #C9A24B;padding:16px 20px 20px;display:flex;flex-direction:column;gap:10px;background:#F3EAD3">
+            <div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font-size:16px;font-weight:600">Subtotal</span><span style="font-size:20px;font-weight:700">{{ cartTotal }}</span></div>
+            <span style="font-size:13.5px;color:#5A4A3E">[Shipping and tax note]</span>
+            <a href="#checkout" style="min-height:52px;display:flex;align-items:center;justify-content:center;background:#6E1423;color:#FBF6EA;font-weight:600;font-size:17px;text-decoration:none;border-radius:2px;box-shadow:inset 0 0 0 1px #C9A24B" style-hover="background:#5A0F1C">Checkout</a>
+            <a href="{{ waHref }}" target="_blank" rel="noopener" style="min-height:48px;display:flex;align-items:center;justify-content:center;border:1.5px solid #1B2F7A;color:#1B2F7A;font-weight:600;font-size:15.5px;text-decoration:none;border-radius:2px" style-hover="background:#1B2F7A;color:#FBF6EA">Order this bag on WhatsApp</a>
+          </div>
+        </sc-if>
+      </aside>
+    </div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:480},&quot;active&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;home&quot;,&quot;clothing&quot;,&quot;homedecor&quot;,&quot;paintings&quot;,&quot;accessories&quot;,&quot;artists&quot;,&quot;story&quot;],&quot;default&quot;:&quot;home&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+const MOTIFS = {
+  fish: { en: 'Fish', hi: 'मछली', meaning: 'Good fortune and fertility' },
+  lotus: { en: 'Lotus', hi: 'कमल', meaning: 'Purity and prosperity' },
+  sun: { en: 'Sun', hi: 'सूर्य', meaning: 'Life and energy' },
+  peacock: { en: 'Peacock', hi: 'मोर', meaning: 'Love and devotion' },
+  elephant: { en: 'Elephant', hi: 'हाथी', meaning: 'Prosperity and royal blessing' },
+  parrot: { en: 'Parrot', hi: 'तोता', meaning: 'Love and messages' },
+  bird: { en: 'Bird', hi: 'चिड़िया', meaning: 'Love and joy' }
+};
+const RES = p => { const r = window.__resources, id = 'r-' + p.replace(/^images\//, '').replace(/[^a-z0-9]+/gi, '-'); return (r && r[id]) || p; };
+const PICK = { clothing: { fish: 'saree-7', peacock: 'saree-3', lotus: 'saree-2' }, homedecor: { lotus: 'tablelinen-1', peacock: 'wallhanging-1', elephant: 'bedsheet-2' }, paintings: { sun: 'painting-3', peacock: 'painting-4', fish: 'painting-1' }, accessories: { fish: 'tote-1', parrot: 'scarf-1', bird: 'earrings-1' } };
+function motifImg(sec, m) { const all = window.MAITHILIKA_SAREES || []; const p = all.find(x => x.id === (PICK[sec] || {})[m]) || all.find(x => x.section === sec && x.motif.toLowerCase() === m); if (!p) return { img: '', cw: '100%', cp: '50% 50%', pname: '', price: '' }; const fit = p.section === 'paintings'; return { img: p.img, pname: p.name, price: p.priceLabel, href: p.href, cw: Math.max(100, fit ? 100 * p.ar : parseFloat(p.cardW || '160.8') * 0.75) + '%', cp: fit ? '50% 50%' : (p.cardPos || '0 3%') }; }
+const SECTIONS = [
+  { key: 'clothing', label: 'Clothing', hi: 'वस्त्र', subs: ['Sarees', 'Dupattas', 'Kurtas & Kurtis', 'Stoles'], motifs: ['fish', 'peacock', 'lotus'] },
+  { key: 'homedecor', label: 'Home Decor', hi: 'गृह सज्जा', subs: ['Wall hangings', 'Cushion covers', 'Table linen', 'Bed linen'], motifs: ['lotus', 'peacock', 'elephant'] },
+  { key: 'paintings', label: 'Paintings', hi: 'चित्र', subs: ['On paper', 'On canvas', 'Framed'], motifs: ['sun', 'peacock', 'fish'] },
+  { key: 'accessories', label: 'Accessories', hi: 'एक्सेसरीज़', subs: ['Bags', 'Handkerchiefs', 'Jewellery', 'Scarves'], motifs: ['fish', 'parrot', 'bird'] }
+];
+const CK = 'maithilika:cart';
+const readCart = () => { try { return JSON.parse(localStorage.getItem(CK) || '[]'); } catch (e) { return []; } };
+const inr = n => '₹' + Number(n).toLocaleString('en-IN');
+const href = (k, q) => ({clothing:'Clothing',homedecor:'HomeDecor',paintings:'Paintings',accessories:'Accessories'})[k] + '.dc.html' + (q ? '?' + q : '');
+
+class Component extends DCLogic {
+  state = { w: typeof window !== 'undefined' ? window.innerWidth : 1280, open: null, drawer: false, acc: null, search: false, cart: readCart(), cartOpen: false };
+  componentDidMount() {
+    this.r = () => this.setState({ w: window.innerWidth });
+    this.m = () => this.setState({ drawer: true });
+    window.addEventListener('resize', this.r);
+    window.addEventListener('maithilika:menu', this.m);
+    this.c = e => this.setState({ cart: readCart(), cartOpen: (e && e.detail && e.detail.open) || this.state.cartOpen });
+    window.addEventListener('maithilika:cart', this.c);
+    this.st = e => { if (e.key === CK) this.setState({ cart: readCart() }); };
+    window.addEventListener('storage', this.st);
+    this.dl = () => this.forceUpdate(); window.addEventListener('maithilika:data', this.dl);
+  }
+  saveCart(c) { localStorage.setItem(CK, JSON.stringify(c)); this.setState({ cart: c }); }
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.r);
+    window.removeEventListener('maithilika:menu', this.m);
+    window.removeEventListener('maithilika:cart', this.c);
+    window.removeEventListener('storage', this.st);
+  }
+  sec(s) {
+    return {
+      label: s.label, hi: s.hi, photo: RES({ clothing: 'images/home/arrival-kurta.jpg', homedecor: 'images/home/section-homedecor.jpg', paintings: 'images/home/section-paintings.jpg', accessories: 'images/home/section-accessories.jpg' }[s.key]), lower: s.label.toLowerCase(), cta: 'Shop all ' + s.label.toLowerCase() + ' →', href: href(s.key),
+      subs: s.subs.map(x => ({ label: x, href: href(s.key, 'sub=' + encodeURIComponent(x)) })),
+      motifs: s.motifs.map(m => { const pi = motifImg(s.key, m); return { ...MOTIFS[m], ...pi, href: pi.href || href(s.key, 'motif=' + MOTIFS[m].en) }; })
+    };
+  }
+  renderVals() {
+    const active = this.props.active || '';
+    const { w, open, drawer, acc, search } = this.state;
+    const mobile = w < 960;
+    const navItems = SECTIONS.map(s => ({
+      label: s.label, href: href(s.key), pop: 'true', expanded: open === s.key ? 'true' : 'false',
+      line: (open === s.key || (!open && active === s.key)) ? '#C9A24B' : 'transparent',
+      enter: e => { if (!e || e.pointerType === 'mouse') this.setState({ open: s.key }); },
+      click: e => { if (this.state.open !== s.key) { e.preventDefault(); this.setState({ open: s.key }); } }
+    })).concat([
+      { label: 'Artists', href: 'Home.dc.html#artists', pop: 'false', expanded: 'false', line: active === 'artists' ? '#C9A24B' : 'transparent', enter: () => this.setState({ open: null }), click: () => this.setState({ open: null }) },
+      { label: 'Our Story', href: 'Home.dc.html#story', pop: 'false', expanded: 'false', line: active === 'story' ? '#C9A24B' : 'transparent', enter: () => this.setState({ open: null }), click: () => this.setState({ open: null }) }
+    ]);
+    const openSec = SECTIONS.find(s => s.key === open);
+    const cart = this.state.cart;
+    const count = cart.reduce((n, c) => n + c.qty, 0);
+    const total = cart.reduce((n, c) => n + c.qty * c.price, 0);
+    const wa = 'Hello Maithilika, I would like to order:\n' + cart.map(c => '- ' + c.name + ' (' + c.option + ') x' + c.qty + ' = ' + inr(c.qty * c.price)).join('\n') + '\nSubtotal: ' + inr(total);
+    const upd = (key, d) => this.saveCart(cart.map(c => c.key === key ? { ...c, qty: c.qty + d } : c).filter(c => c.qty > 0));
+    return {
+      wide: w >= 1100, mobile, desktop: !mobile, navItems,
+      menuOpen: !mobile && !!openSec, menu: openSec ? this.sec(openSec) : this.sec(SECTIONS[0]),
+      closeMenu: () => this.state.open && this.setState({ open: null }),
+      searchOpen: search, toggleSearch: () => this.setState(s => ({ search: !s.search, open: null })),
+      submitSearch: e => e.preventDefault(),
+      cartCount: count || '', bagAria: count ? 'Bag, ' + count + ' items' : 'Bag',
+      cartOpen: this.state.cartOpen, openCart: () => this.setState({ cartOpen: true, cart: readCart(), open: null }), closeCart: () => this.setState({ cartOpen: false }),
+      cartEmpty: !cart.length, cartHas: cart.length > 0, cartSummary: count === 1 ? '1 piece' : count + ' pieces', cartTotal: inr(total),
+      waHref: 'https://wa.me/?text=' + encodeURIComponent(wa),
+      cartItems: cart.map(c => ({ ...c, img: ((window.MAITHILIKA_SAREES || []).find(x => x.id === c.id) || {}).img || c.img, href: c.href || 'Product.dc.html?id=' + c.id, lineLabel: c.qty > 1 ? inr(c.price) + ' × ' + c.qty + ' = ' + inr(c.price * c.qty) : inr(c.price), inc: () => upd(c.key, 1), dec: () => upd(c.key, -1), remove: () => upd(c.key, -c.qty) })),
+      drawer, openDrawer: () => this.setState({ drawer: true }), closeDrawer: () => this.setState({ drawer: false }),
+      drawerItems: SECTIONS.map(s => ({ ...this.sec(s), open: acc === s.key, sign: acc === s.key ? '−' : '+', toggle: () => this.setState({ acc: acc === s.key ? null : s.key }) }))
+    };
+  }
+}
+</script>
+</body>
+</html>

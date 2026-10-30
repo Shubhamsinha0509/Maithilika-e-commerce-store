@@ -1,7 +1,11 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Get a free hosted Postgres database in seconds: `npx create-db`
+// Maithilika — Prisma schema.
+//
+// Availability model: two kinds (project.md §9 item 13, confirmed 2026-10-31).
+// 40 products are a single physical object; the 4 made-to-order products are
+// painted on demand, always purchasable, and carry a lead time.
+//
+// The kind/status pairing is enforced by a CHECK constraint that Prisma cannot
+// express — see the note on Product. It MUST be added to the first migration.
 
 generator client {
   provider = "prisma-client"
@@ -11,3 +15,419 @@ generator client {
 datasource db {
   provider = "postgresql"
 }
+
+// ─── Availability ──────────────────────────────────────────────────────────
+
+/// UNIQUE: one physical object that exists now, and retires when sold.
+/// MADE_TO_ORDER: painted on demand, never retires, has a lead time.
+enum ProductKind {
+  UNIQUE
+  MADE_TO_ORDER
+}
+
+/// Meaningful ONLY when kind = UNIQUE. For MADE_TO_ORDER it is always
+/// AVAILABLE and must be ignored — see the check constraint note on Product.
+enum ProductStatus {
+  AVAILABLE
+  RESERVED
+  SOLD
+}
+
+// ─── Catalogue ─────────────────────────────────────────────────────────────
+
+model Artist {
+  id          String    @id @default(cuid())
+  name        String
+  slug        String    @unique
+  village     String?
+  bio         String?
+  portraitUrl String?
+  activeSince Int?
+  isActive    Boolean   @default(true)
+  products    Product[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+/// The four storefront sections: clothing, paintings, homedecor, accessories.
+model Category {
+  id            String        @id @default(cuid())
+  name          String
+  slug          String        @unique
+  position      Int           @default(0)
+  isActive      Boolean       @default(true)
+  subcategories Subcategory[]
+  products      Product[]
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+}
+
+/// Sarees, Stoles, On paper, Cushion covers, Jewellery, and so on.
+model Subcategory {
+  id         String    @id @default(cuid())
+  name       String
+  slug       String
+  position   Int       @default(0)
+  categoryId String
+  category   Category  @relation(fields: [categoryId], references: [id])
+  products   Product[]
+
+  @@unique([categoryId, slug])
+}
+
+/// Controlled vocabulary. The homepage "Shop by motif" section reads meaning.
+model Motif {
+  id       String    @id @default(cuid())
+  name     String    @unique
+  nameHi   String
+  meaning  String
+  products Product[]
+}
+
+model Product {
+  id          String  @id @default(cuid())
+  name        String
+  slug        String  @unique
+  description String?
+
+  /// Why this motif matters on this piece. Shown on the product page.
+  motifText String?
+
+  /// Integer paise. Never a float.
+  priceInPaise Int
+
+  // ── Availability: two kinds, two sets of rules ──
+  //
+  // Enforce the pairing in the migration, or the model permits nonsense
+  // such as a MADE_TO_ORDER piece marked SOLD:
+  //
+  //   ALTER TABLE "Product" ADD CONSTRAINT product_kind_consistent CHECK (
+  //     (kind = 'UNIQUE')
+  //     OR (status = 'AVAILABLE' AND "reservedUntil" IS NULL
+  //         AND "leadTimeDays" IS NOT NULL)
+  //   );
+  //
+  // Prisma cannot express this, so it goes in raw SQL in the migration.
+  kind ProductKind @default(UNIQUE)
+
+  /// Only consulted when kind = UNIQUE. The "Ready to ship" filter is
+  /// (kind = UNIQUE AND status = AVAILABLE); "Made to order first" sorts
+  /// on kind. No separate readyToShip flag is needed.
+  status ProductStatus @default(AVAILABLE)
+
+  /// Required when kind = MADE_TO_ORDER — it is the delivery promise.
+  /// Optional for UNIQUE pieces, which ship as-is.
+  leadTimeDays Int?
+
+  /// Set when a checkout claims a UNIQUE piece; cleared on payment or
+  /// expiry. Always null for MADE_TO_ORDER: there is nothing to contend over.
+  reservedUntil DateTime?
+
+  // ── Attributes the storefront filters on ──
+  fabric String?
+  style  String?
+  colour String?
+  medium String?
+  frame  String?
+  edge   String?
+
+  /// "Kurta and painted dupatta (pants not included)".
+  includes String?
+
+  // ── Dimensions, so the paintings size filter can be real ──
+  widthCm  Decimal? @db.Decimal(6, 2)
+  heightCm Decimal? @db.Decimal(6, 2)
+  depthCm  Decimal? @db.Decimal(6, 2)
+
+  // ── The single option group the design renders ──
+  /// "Size", "Framing", "Edge", "Bed size", "Set". Null when there is none.
+  optionLabel String?
+  /// ["XS","S","M","L","XL","XXL"]. Empty when optionLabel is null.
+  optionValues String[]
+
+  // ── Merchandising ──
+  featured       Boolean @default(false)
+  position       Int     @default(0)
+  isActive       Boolean @default(true)
+  seoTitle       String?
+  seoDescription String?
+
+  // ── Relations ──
+  artistId      String
+  artist        Artist       @relation(fields: [artistId], references: [id])
+  categoryId    String
+  category      Category     @relation(fields: [categoryId], references: [id])
+  subcategoryId String?
+  subcategory   Subcategory? @relation(fields: [subcategoryId], references: [id])
+  motifId       String?
+  motif         Motif?       @relation(fields: [motifId], references: [id])
+
+  images     ProductImage[]
+  cartItems  CartItem[]
+  orderItems OrderItem[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([categoryId, kind, status])
+  @@index([kind, status, featured])
+  @@index([motifId])
+}
+
+model ProductImage {
+  id        String   @id @default(cuid())
+  productId String
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  url       String
+  altText   String?
+  sortOrder Int      @default(0)
+  createdAt DateTime @default(now())
+
+  @@index([productId, sortOrder])
+}
+
+// ─── Identity ──────────────────────────────────────────────────────────────
+
+enum UserRole {
+  CUSTOMER
+  ADMIN
+}
+
+/// Google sign-in only. No password, no OTP: we store no credential.
+/// Optional — guest checkout is supported, so Order.userId is nullable.
+model User {
+  id String @id @default(cuid())
+
+  /// Google's subject identifier. The real account key.
+  googleSub String @unique
+
+  /// Verified by Google. Safe to match guest orders against.
+  email String @unique
+  name  String?
+
+  /// Delivery contact. NOT verified and NOT an identifier.
+  phone String?
+
+  /// Never granted by signing in. Set server-side only.
+  role UserRole @default(CUSTOMER)
+
+  addresses Address[]
+  orders    Order[]
+  carts     Cart[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+/// Saved addresses, for signed-in customers only. Orders snapshot separately.
+model Address {
+  id            String   @id @default(cuid())
+  userId        String
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  recipientName String
+  phone         String
+  line1         String
+  line2         String?
+  landmark      String?
+  city          String
+  state         String
+  postalCode    String
+  countryCode   String   @default("IN")
+  isDefault     Boolean  @default(false)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@index([userId])
+}
+
+// ─── Cart ──────────────────────────────────────────────────────────────────
+
+/// Exists before a User does, and may never get one.
+model Cart {
+  id     String  @id @default(cuid())
+  userId String?
+  user   User?   @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  /// Opaque token for anonymous carts, merged into the account on sign-in.
+  sessionToken String @unique
+
+  items     CartItem[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+
+  @@index([userId])
+}
+
+model CartItem {
+  id        String  @id @default(cuid())
+  cartId    String
+  cart      Cart    @relation(fields: [cartId], references: [id], onDelete: Cascade)
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  /// Chosen value from Product.optionValues, e.g. "M" or "Framed".
+  optionValue String?
+
+  /// 1 for a UNIQUE piece, which cannot be bought twice. May exceed 1 for
+  /// MADE_TO_ORDER, where the artist can paint several.
+  ///
+  /// CONSEQUENCE FOR THE DESIGN: the Phase 0B correction that removes the
+  /// cart quantity stepper is then wrong for these 4 products. The stepper
+  /// has to stay, shown only when kind = MADE_TO_ORDER.
+  quantity Int @default(1)
+
+  createdAt DateTime @default(now())
+
+  @@unique([cartId, productId])
+}
+
+// ─── Orders ────────────────────────────────────────────────────────────────
+
+enum OrderStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+  COMPLETED
+}
+
+enum PaymentStatus {
+  PENDING
+  PAID
+  FAILED
+  REFUNDED
+}
+
+enum ShipmentStatus {
+  NOT_SHIPPED
+  SHIPPED
+  DELIVERED
+  RETURNED
+}
+
+model Order {
+  id String @id @default(cuid())
+
+  /// Safely generated, non-sequential. Half of the guest lookup key.
+  orderNumber String @unique
+
+  /// Nullable: guest checkout is supported.
+  userId String?
+  user   User?   @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  // ── Contact snapshot. Not a join: a guest has no User to join to. ──
+  contactName  String
+  contactEmail String
+  contactPhone String
+
+  // ── Address snapshot, so later edits never rewrite history ──
+  shipRecipientName String
+  shipLine1         String
+  shipLine2         String?
+  shipLandmark      String?
+  shipCity          String
+  shipState         String
+  shipPostalCode    String
+  shipCountryCode   String  @default("IN")
+
+  // ── Money, all integer paise ──
+  subtotalInPaise      Int
+  discountTotalInPaise Int    @default(0)
+  shippingTotalInPaise Int    @default(0)
+  taxTotalInPaise      Int    @default(0)
+  grandTotalInPaise    Int
+  currency             String @default("INR")
+
+  orderStatus    OrderStatus    @default(PENDING)
+  paymentStatus  PaymentStatus  @default(PENDING)
+  shipmentStatus ShipmentStatus @default(NOT_SHIPPED)
+
+  items     OrderItem[]
+  payments  Payment[]
+  shipments Shipment[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  /// Guest order lookup. Rate-limit the endpoint; this index makes it fast,
+  /// which also makes it a usable enumeration oracle if left unthrottled.
+  @@index([orderNumber, contactEmail])
+  @@index([userId])
+}
+
+/// Immutable snapshot. Must stay readable even if the product is deleted.
+model OrderItem {
+  id        String   @id @default(cuid())
+  orderId   String
+  order     Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId String?
+  product   Product? @relation(fields: [productId], references: [id], onDelete: SetNull)
+
+  productName  String
+  sku          String?
+  optionLabel  String?
+  optionValue  String?
+  artistName   String?
+  unitPriceInPaise Int
+  quantity         Int @default(1)
+  lineTotalInPaise Int
+
+  @@index([orderId])
+}
+
+model Payment {
+  id      String @id @default(cuid())
+  orderId String
+  order   Order  @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  provider        String  @default("razorpay")
+  providerOrderId String?
+  /// Unique where present, so a replayed webhook cannot double-record.
+  providerPaymentId String? @unique
+
+  amountInPaise Int
+  currency      String        @default("INR")
+  status        PaymentStatus @default(PENDING)
+  method        String?
+  verifiedAt    DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([orderId])
+}
+
+model Shipment {
+  id      String @id @default(cuid())
+  orderId String
+  order   Order  @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  provider    String?
+  awb         String?        @unique
+  status      ShipmentStatus @default(NOT_SHIPPED)
+  trackingUrl String?
+  chargeInPaise Int?
+  shippedAt   DateTime?
+  deliveredAt DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([orderId])
+}
+
+/// Deduplication for provider webhooks. Insert before processing; a unique
+/// violation means the event was already handled.
+model WebhookEvent {
+  id          String   @id @default(cuid())
+  provider    String
+  eventId     String
+  processedAt DateTime @default(now())
+
+  @@unique([provider, eventId])
+}
+
+// ─── Still blocked, deliberately absent ────────────────────────────────────
+// Coupon           — out of scope unless approved (project.md §8)
+// tax breakdown    — awaiting the tax/invoice decision (§9 item 8)
+// InventoryMovement — only if the client wants an audit trail
+// Wishlist         — confirmed out of scope

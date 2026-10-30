@@ -259,18 +259,19 @@ ones. Each blocks work that the answers otherwise unblocked.
 11. ~~Which authentication method?~~ **Answered: Google sign-in.**
 12. ~~Where does the login wall sit?~~ **Answered: there is no wall —
     sign-in is optional and guest checkout is available.**
-13. **Are the 4 made-to-order products single-unit too?** *Client
-    undecided as of 2026-10-30.* See the proposed default below.
+13. ~~Are the 4 made-to-order products single-unit too?~~ **Answered
+    2026-10-31: no — Option B, two availability kinds.** Implemented in
+    `prisma/schema.prisma`; see below.
 14. ~~With WhatsApp removed, how do custom orders work?~~ **Answered:
     the custom-order path is removed.**
 15. ~~Is wishlist in scope?~~ **Answered: no, removed.**
 
-### Proposed default for item 13 — awaiting confirmation
+### Item 13, confirmed 2026-10-31 — two availability kinds
 
-Not a confirmed decision. Recorded so work is not blocked, and marked so
-it is not mistaken for an approved business rule.
+**Confirmed by the client. Implemented in `prisma/schema.prisma`.**
 
-**Proposal: two availability kinds, not one.**
+Both options were drafted in full as validated schemas before deciding;
+the comparison is in `database-schema.md`. The chosen model:
 
 - `UNIQUE` — the 40 ready-to-ship pieces. One physical object. Status
   `available` → `reserved` → `sold`. Retires from sale when sold.
@@ -292,12 +293,19 @@ nothing to contend over. The reservation machinery applies only to the
 checkout, and the `[N]` days lead-time placeholder becomes required
 content for those 4 products.
 
-**If this is wrong**, the reversal is small: drop the enum, treat all 44
-as `UNIQUE`. But the design argues against it — `Listing.dc.html`
-implements a "Made to order first" sort and a "Ready to ship" filter, so
-the distinction is already load-bearing in the approved UI.
+**Two consequences, both now live:**
 
-**Must be settled before:** the Phase 2 schema is written.
+1. **A `CHECK` constraint carries the invariant.** `status`,
+   `reservedUntil` and `leadTimeDays` mean different things per `kind`,
+   and Prisma cannot express that. The constraint lives in the first
+   migration and was verified against a real Postgres 17: it accepts all
+   three valid shapes and rejects a made-to-order piece marked `SOLD`,
+   one with no lead time, and one holding a reservation.
+2. **Cart quantity is no longer always 1.** A customer may order two of
+   a made-to-order piece. This *reverses part of a Phase 0B design
+   correction*: the cart quantity stepper cannot be removed outright —
+   it must stay, shown only when `kind = MADE_TO_ORDER`. See
+   `roadmap.md` Phase 0B.
 
 ### Raised by the authentication decisions
 

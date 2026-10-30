@@ -26,7 +26,7 @@ Audit findings: [`docs/audit.md`](audit.md). Confirmed decisions: [`docs/project
 - [x] **DONE** Confirm login-wall placement and anonymous-cart merge. *Revised: no wall. Sign-in optional; guest checkout available; anonymous cart merges on sign-in.*
 - [x] **DONE** Confirm the replacement for the WhatsApp custom-order path. *None — the custom-order section is removed.*
 - [x] **DONE** Confirm whether wishlist is in scope. *No. Remove the header affordance.*
-- [ ] **BLOCKED** Confirm whether the 4 made-to-order products are single-unit or repeatable. *`project.md` §9 item 13. Client undecided; a proposed default is recorded there. Must be settled before the Phase 2 schema.*
+- [x] **DONE** Confirm whether the 4 made-to-order products are single-unit or repeatable. *Repeatable — two availability kinds. Schema written, migration prepared and verified.*
 - [x] **DONE** ~~Choose an SMS provider and start DLT registration.~~ *Void — Google sign-in needs no SMS. This retired the only blocker with a multi-week external lead time.*
 - [ ] **BLOCKED** Name the Google accounts that are administrators. *`project.md` §9 item 17. Role granted server-side, never by signing in.*
 - [ ] **BLOCKED** Create the Google Cloud OAuth project under client ownership, and publish the consent screen to Production. *`project.md` §9 item 19. Testing mode caps sign-ins at ~100 accounts — a launch gotcha, not a coding task.*
@@ -51,7 +51,7 @@ New phase. The store needs screens the design does not have, and the confirmed d
 ### Corrections to existing screens
 
 - [ ] Remove "Order this bag on WhatsApp" from the `SiteHeader` cart drawer. *Confirmed: WhatsApp is not a channel.*
-- [ ] Lock cart line quantity to 1 and remove the +/− stepper from the cart drawer. *Forced by one-of-a-kind stock: a quantity control that cannot exceed 1 is misleading.*
+- [ ] Make the cart quantity stepper conditional: hidden for `UNIQUE` pieces (quantity is always 1), shown for `MADE_TO_ORDER` pieces (the artist can paint several). *Revised 2026-10-31. The earlier instruction was to remove the stepper outright, which the confirmed two-kind availability model makes wrong for 4 of the 44 products — see `project.md` §9 item 13.*
 - [ ] Remove the homepage custom-order section. *Its only action was the WhatsApp link and no replacement was chosen. Reversible if the business still takes custom orders by phone or email.*
 - [ ] Remove the wishlist affordance from `SiteHeader` and the `#wishlist` anchor. *Confirmed out of scope.*
 
@@ -109,7 +109,8 @@ a first-time Google account is created on first sign-in.
 - [x] **DONE** Configure environment variable validation. *Zod in `src/env.ts`. Lazy by design — a module-level parse would break `next build`, which imports modules without a populated `.env`.*
 - [x] **DONE** Add or configure ORM. *Prisma 7.10.1, CLI and client pinned to the same exact version, with the `@prisma/adapter-pg` driver adapter v7 requires. Client singleton in `src/lib/prisma.ts`.*
 - [ ] **IN PROGRESS** Configure PostgreSQL connection. *Wiring complete and verifiable: `scripts/setup-neon.sh` captures both URLs, `scripts/check-db.mjs` proves them. Waiting on the client to create the Neon project.*
-- [ ] **BLOCKED** Run the first migration. *Needs both the live connection above and the made-to-order rule (`project.md` §9 item 13), since the schema has no models until then.*
+- [x] **DONE** Write the schema and prepare the first migration. *15 models, 6 enums. `prisma/migrations/20261031033613_init` includes the raw `CHECK` constraint Prisma cannot express. Applied and verified against a local Postgres 17 — 6/6 constraint assertions passed, then torn down.*
+- [ ] **IN PROGRESS** Apply the first migration to Neon. *Everything is ready: `npx prisma migrate deploy` once `DIRECT_URL` points at the real database. Waiting only on the Neon project.*
 - [ ] **TODO** Implement shared validation and error conventions.
 - [ ] **TODO** Establish module boundaries and logging approach. *Per `architecture.md` §3: create each area when something needs to live in it, not upfront.*
 

@@ -79,21 +79,22 @@ state are all **no longer needed**.
   guest path. Rate-limit it; without that, the lookup endpoint is an
   order-enumeration oracle.
 
-### Proposed, not confirmed — product availability kind
+### Decided 2026-10-31 — Option B, two availability kinds
 
-Pending `project.md` §9 item 13. **Both options are drafted in full** as
-validated Prisma schemas, so the decision can be read rather than
-imagined:
+`project.md` §9 item 13 is **confirmed**. The live schema is
+`prisma/schema.prisma`; the migration is
+`prisma/migrations/20261031033613_init`.
 
-- `prisma/drafts/option-a-all-unique.prisma`
-- `prisma/drafts/option-b-two-kinds.prisma`
+Both options were drafted in full as validated schemas before deciding.
+They have been removed now that the choice is made — recover them from
+history if the reasoning needs re-reading:
 
 ```bash
-git diff --no-index prisma/drafts/option-a-all-unique.prisma \
-                    prisma/drafts/option-b-two-kinds.prisma
+git show 7f67011 -- prisma/drafts/
 ```
 
-Both pass `prisma validate`. 15 models each; B adds one enum.
+The comparison that informed the decision is kept below, because the
+costs of Option B are now costs the implementation carries.
 
 #### The schema delta is four lines
 
@@ -130,10 +131,16 @@ understated:
    to stay, shown only when `kind = MADE_TO_ORDER`. That is a conditional
    control in the design, which is worse than either "always" or "never".
 
-The recommendation stands, because the commercial cost of A is
-permanent while B's costs are one constraint and one conditional
-control. But it is closer than it first appeared, and if the client says
-they would never re-paint a sold design, Option A is the better schema.
+The client chose B. Both of its costs are therefore now obligations:
+
+- The `CHECK` constraint is in the first migration, and was verified
+  against a real Postgres 17 before being committed — it accepts the
+  three valid shapes and rejects a made-to-order piece marked `SOLD`,
+  one with no lead time to quote, and one holding a reservation.
+  **If a later migration recreates the `Product` table, that constraint
+  must be re-added.** Prisma will not regenerate it.
+- The cart quantity stepper is conditional, not removed. Tracked in
+  `roadmap.md` Phase 0B.
 
 #### Both drafts are deliberately incomplete
 

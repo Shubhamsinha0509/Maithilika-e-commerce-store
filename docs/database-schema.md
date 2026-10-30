@@ -81,15 +81,66 @@ state are all **no longer needed**.
 
 ### Proposed, not confirmed — product availability kind
 
-Pending `project.md` §9 item 13. If approved, `Product` carries a `kind`
-enum:
+Pending `project.md` §9 item 13. **Both options are drafted in full** as
+validated Prisma schemas, so the decision can be read rather than
+imagined:
 
-- `UNIQUE` (40 products) — availability state machine, reservation with
-  expiry, retires when sold.
-- `MADE_TO_ORDER` (4 products) — no availability state, no reservation,
-  always purchasable, carries a lead time in days.
+- `prisma/drafts/option-a-all-unique.prisma`
+- `prisma/drafts/option-b-two-kinds.prisma`
 
-If rejected, drop the enum and treat all 44 as `UNIQUE`.
+```bash
+git diff --no-index prisma/drafts/option-a-all-unique.prisma \
+                    prisma/drafts/option-b-two-kinds.prisma
+```
+
+Both pass `prisma validate`. 15 models each; B adds one enum.
+
+#### The schema delta is four lines
+
+| | Option A — all unique | Option B — two kinds |
+|---|---|---|
+| Enum | — | `+ enum ProductKind { UNIQUE, MADE_TO_ORDER }` |
+| Field | `readyToShip Boolean` | `kind ProductKind` *(replaces it)* |
+| Indexes | `[categoryId, status]` | `[categoryId, kind, status]` |
+| Constraint | none | a `CHECK` enforcing the kind/status pairing |
+
+**Net field count is identical** — `kind` replaces `readyToShip`, which
+Option B does not need: "Ready to ship" becomes
+`kind = UNIQUE AND status = AVAILABLE`, and "Made to order first" sorts
+on `kind`.
+
+#### What each costs
+
+**Option A** is simpler to enforce: one state machine, no conditional
+validity, cart quantity always 1. Its cost is commercial, not technical
+— a made-to-order design can be sold exactly once and then disappears,
+which is not what "made to order" offers a customer.
+
+**Option B** carries two real costs that the earlier recommendation
+understated:
+
+1. **Conditional validity.** `status`, `reservedUntil` and
+   `leadTimeDays` mean different things per `kind`, and Prisma cannot
+   express that. It needs a raw `CHECK` constraint in the migration, or
+   the table permits nonsense such as a `MADE_TO_ORDER` piece marked
+   `SOLD`. The constraint is written out in the draft.
+2. **It partly reverses a Phase 0B design correction.** Cart quantity is
+   no longer always 1: a customer could order two of a made-to-order
+   kurta. So the cart quantity stepper cannot simply be removed — it has
+   to stay, shown only when `kind = MADE_TO_ORDER`. That is a conditional
+   control in the design, which is worse than either "always" or "never".
+
+The recommendation stands, because the commercial cost of A is
+permanent while B's costs are one constraint and one conditional
+control. But it is closer than it first appeared, and if the client says
+they would never re-paint a sold design, Option A is the better schema.
+
+#### Both drafts are deliberately incomplete
+
+Absent from both, pending decisions: tax breakdown fields (§9 item 8),
+`Coupon` (out of scope unless approved), `InventoryMovement` (only if an
+audit trail is wanted), and multiple shipments per order (§4 of this
+document).
 
 ## 1. Candidate entities
 

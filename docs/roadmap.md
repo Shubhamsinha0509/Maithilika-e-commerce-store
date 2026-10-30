@@ -101,15 +101,16 @@ a first-time Google account is created on first sign-in.
 
 ## Phase 1 — Foundation
 
-- [ ] Confirm final technology choices based on the audit.
-- [ ] Scaffold the Next.js App Router + TypeScript application.
-- [ ] Initialise a git repository and commit the baseline.
-- [ ] Configure environment variable validation.
-- [ ] Configure PostgreSQL connection.
-- [ ] Add or configure ORM and migration workflow.
-- [ ] Implement shared validation and error conventions.
-- [ ] Establish module boundaries and logging approach.
-- [ ] Add baseline lint, type-check, test, and build checks.
+- [x] **DONE** Confirm final technology choices based on the audit. *Next.js 16.4.3, React 19.3, TypeScript strict, Tailwind 4 — in use. The four `architecture.md` §1 proposals other than Tailwind are still unconfirmed.*
+- [x] **DONE** Scaffold the Next.js App Router + TypeScript application. *`src/` layout; `Design/`, `docs/`, `site/` remain siblings at the root.*
+- [x] **DONE** Initialise a git repository and commit the baseline. *Branch `main`, commit `5f74d11`, 198 files.*
+- [x] **DONE** Add baseline lint, type-check, and build checks. *All three pass from clean. `Design/` and `site/` excluded from both ESLint and tsc — linting read-only reference code reported errors we are instructed not to fix.*
+- [ ] **TODO** Add the test runner and a first passing test. *Vitest, per `architecture.md` §1 — still a proposal.*
+- [ ] **TODO** Configure environment variable validation. *Zod at startup; can be built before any real credentials exist.*
+- [ ] **BLOCKED** Configure PostgreSQL connection. *Needs a Neon project and a `DATABASE_URL` the client owns.*
+- [ ] **BLOCKED** Add or configure ORM and migration workflow. *Prisma installs without a database, but no migration can run until the connection exists.*
+- [ ] **TODO** Implement shared validation and error conventions.
+- [ ] **TODO** Establish module boundaries and logging approach. *Per `architecture.md` §3: create each area when something needs to live in it, not upfront.*
 
 **Exit criteria:** Application starts, database connectivity works, migrations run safely, and baseline checks pass.
 

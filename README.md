@@ -64,8 +64,23 @@ the reference for verifying desktop and 390px parity.
 
 ## Local development
 
-No commands exist yet — there is no `package.json`. Document the verified
-commands here once the application is scaffolded in Phase 1.
+Requires Node 18.18+ (developed on 22.20).
+
+```bash
+npm install
+npm run dev        # http://localhost:3000
+npm run lint       # eslint; Design/ and site/ are ignored
+npm run typecheck  # next typegen && tsc --noEmit
+npm run build      # production build
+```
+
+All four verified passing on 2026-10-31. `typecheck` runs `next typegen`
+first because Next 16 generates types such as `LayoutProps` into
+`.next/types`; without it, a cold `tsc --noEmit` fails.
+
+**`Design/` and `site/` are excluded from ESLint and TypeScript.** They
+are read-only reference material, and linting them reports errors that
+must not be fixed.
 
 ## Environment variables
 

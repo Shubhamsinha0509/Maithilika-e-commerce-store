@@ -50,8 +50,7 @@ export function serverEnv(): ServerEnv {
 
     throw new Error(
       `Invalid server environment:\n${problems}\n\n` +
-        `Copy .env.example to .env and fill it in. ` +
-        `Run scripts/setup-neon.sh to provision the database values.`,
+        `Copy .env.example to .env and fill it in. See README.md.`,
     );
   }
 

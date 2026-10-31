@@ -15,7 +15,6 @@ const eslintConfig = defineConfig([
     // Read-only design reference and its canvas runtime — not our source.
     // See Design/CLAUDE.md. Linting it reports errors we must not fix.
     "Design/**",
-    "site/**",
   ]),
 ]);
 

@@ -2,8 +2,8 @@
 /**
  * Verifies both Neon connection strings.
  *
- * Run after scripts/setup-neon.sh, or any time the database seems unreachable:
- *   node scripts/check-db.mjs
+ * Run after filling in .env, or any time the database seems unreachable:
+ *   npm run db:check
  *
  * Checks each URL separately, because they fail in different ways: the app can
  * work fine while migrations hang, or the reverse, if the two are swapped.

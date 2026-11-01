@@ -360,6 +360,11 @@ button {
   text-decoration: none;
   flex: none;
 }
+.logo-badge {
+  border-radius: 50%;
+  box-shadow: 0 0 0 2px var(--gold);
+  flex: none;
+}
 .brand-words {
   display: flex;
   flex-direction: column;

@@ -72,6 +72,10 @@ threshold) are constants in code, not tables.
 - Owner's admin can manage orders and edit price, sold/available and
   hidden. Adding products with photos comes later.
 - Hosting: Vercel and Neon, Singapore region.
+- Logo (2026-11-01): the owner's peacock "M" logo. The full logo is in
+  `public/brand/logo.jpg`. The cropped mark is the header/footer badge and
+  the browser icon, and the full logo is the link-preview image
+  (`src/app/opengraph-image.jpg`).
 
 ## Storefront preview (before checkout)
 

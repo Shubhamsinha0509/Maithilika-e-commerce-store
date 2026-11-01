@@ -72,7 +72,7 @@ export function SiteHeader({ featured, paymentsEnabled }: Props) {
             <span /><span /><span className="short" />
           </button>
           <Link href="/" aria-label="Maithilika home" className="brand">
-            <Logo size={34} />
+            <Logo size={44} />
             <span className="brand-words">
               <span className="display brand-en">Maithilika</span>
               <span className="display brand-hi">मैथिलिका</span>

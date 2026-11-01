@@ -13,7 +13,7 @@ export function SiteFooter() {
       <div className="wrap footer-grid">
         <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-            <Logo size={40} />
+            <Logo size={56} />
             <span style={{ display: "flex", flexDirection: "column", lineHeight: 1.1 }}>
               <span className="display" style={{ fontSize: 26 }}>Maithilika</span>
               <span className="display" style={{ fontSize: 15, color: "var(--gold-light)" }}>मैथिलिका</span>

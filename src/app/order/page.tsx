@@ -84,7 +84,7 @@ async function OrderView({ query }: { query: Promise<Query> }) {
 
       <div className="order-columns">
         <div className="checkout-summary">
-          <h2 className="display" style={{ margin: 0, fontSize: 22, color: "var(--indigo)" }}>Items</h2>
+          <h2 className="display" style={{ margin: 0, fontSize: 22, color: "var(--brand)" }}>Items</h2>
           <ul style={{ listStyle: "none", margin: 0, padding: 0 }}>
             {items.map((i) => (
               <li key={i.productId + (i.option ?? "")} className="summary-line">
@@ -105,7 +105,7 @@ async function OrderView({ query }: { query: Promise<Query> }) {
           </dl>
         </div>
         <div className="checkout-summary">
-          <h2 className="display" style={{ margin: 0, fontSize: 22, color: "var(--indigo)" }}>Delivering to</h2>
+          <h2 className="display" style={{ margin: 0, fontSize: 22, color: "var(--brand)" }}>Delivering to</h2>
           <address style={{ fontStyle: "normal", fontSize: 15.5, lineHeight: 1.6 }}>
             {order.name}<br />
             {order.addressLine1}<br />

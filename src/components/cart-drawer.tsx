@@ -23,7 +23,7 @@ export function CartDrawer({ paymentsEnabled }: { paymentsEnabled: boolean }) {
 
         {lines.length === 0 ? (
           <div className="cart-empty">
-            <span className="display" style={{ fontSize: 24, color: "var(--indigo)" }}>Your bag is empty</span>
+            <span className="display" style={{ fontSize: 24, color: "var(--brand)" }}>Your bag is empty</span>
             <span style={{ fontSize: 15.5, color: "var(--muted)", maxWidth: "30ch" }}>Every saree is painted by hand. Find the one with your story.</span>
             <Link href="/clothing?sub=Sarees" onClick={close} className="btn btn-primary" style={{ marginTop: 6, minHeight: 48 }}>
               Shop sarees

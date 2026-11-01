@@ -159,7 +159,7 @@ function ListingInner({ section, products, initialSub, initialMotif }: { section
         {sheet && <button className="overlay" style={{ zIndex: 70 }} onClick={() => setSheet(false)} aria-label="Close filters" />}
         <aside aria-label="Filters" className={sheet ? "filters is-sheet" : "filters"}>
           <div className="sheet-head">
-            <span className="display" style={{ fontSize: 22, color: "var(--indigo)" }}>Filter</span>
+            <span className="display" style={{ fontSize: 22, color: "var(--brand)" }}>Filter</span>
             <button onClick={() => setSheet(false)} aria-label="Close filters" className="panel-close" style={{ color: "var(--ink)" }}>×</button>
           </div>
           <div className="filters-panel">
@@ -217,7 +217,7 @@ function ListingInner({ section, products, initialSub, initialMotif }: { section
 
           {items.length === 0 ? (
             <div className="empty-state">
-              <span className="display" style={{ fontSize: 26, color: "var(--indigo)" }}>No pieces match these filters</span>
+              <span className="display" style={{ fontSize: 26, color: "var(--brand)" }}>No pieces match these filters</span>
               <span style={{ fontSize: 15.5, color: "var(--muted)", maxWidth: "46ch" }}>Remove a filter to see more pieces.</span>
               <button onClick={clearAll} className="btn btn-outline" style={{ minHeight: 46, marginTop: 6 }}>Clear filters</button>
             </div>
@@ -259,7 +259,7 @@ function ListingInner({ section, products, initialSub, initialMotif }: { section
           <button className="drawer-scrim" onClick={() => setSortSheet(false)} aria-label="Close sort" />
           <div role="radiogroup" aria-label="Sort by" className="sort-sheet">
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", minHeight: 52 }}>
-              <span className="display" style={{ fontSize: 22, color: "var(--indigo)" }}>Sort by</span>
+              <span className="display" style={{ fontSize: 22, color: "var(--brand)" }}>Sort by</span>
               <button onClick={() => setSortSheet(false)} aria-label="Close sort" className="panel-close" style={{ color: "var(--ink)" }}>×</button>
             </div>
             {SORTS.map(([v, l]) => (

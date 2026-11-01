@@ -133,7 +133,7 @@ export function SiteHeader({ featured, paymentsEnabled }: Props) {
           <div className="wrap mega-grid">
             <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
               <div style={{ display: "flex", alignItems: "baseline", gap: 10 }}>
-                <span className="display" style={{ fontSize: 28, color: "var(--indigo)", lineHeight: 1.1 }}>{openSection.label}</span>
+                <span className="display" style={{ fontSize: 28, color: "var(--brand)", lineHeight: 1.1 }}>{openSection.label}</span>
                 <span className="display" style={{ fontSize: 17, color: "var(--maroon)" }}>{openSection.hi}</span>
               </div>
               <div style={{ display: "flex", flexDirection: "column" }}>

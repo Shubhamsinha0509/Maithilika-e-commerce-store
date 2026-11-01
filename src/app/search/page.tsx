@@ -43,7 +43,7 @@ async function Results({ query }: { query: Promise<string> }) {
       </div>
       {q && matches.length === 0 && (
         <div className="empty-state">
-          <span className="display" style={{ fontSize: 26, color: "var(--indigo)" }}>Nothing matched</span>
+          <span className="display" style={{ fontSize: 26, color: "var(--brand)" }}>Nothing matched</span>
           <span style={{ fontSize: 15.5, color: "var(--muted)" }}>Try a motif such as “peacock” or a fabric such as “silk”.</span>
           <Link href="/clothing" className="btn btn-outline" style={{ minHeight: 46, marginTop: 6 }}>Browse clothing</Link>
         </div>

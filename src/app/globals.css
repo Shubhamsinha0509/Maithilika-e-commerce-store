@@ -7,10 +7,12 @@
   --sand-2: #f7f0de;
   --ink: #1a1410;
   --muted: #5a4a3e;
-  --indigo: #1b2f7a;
-  --indigo-hover: #24398c;
-  --indigo-line: #3a4e98;
-  --indigo-stripe: #22388a;
+  /* The owner's theme colour (2026-11-01): maroon and white. */
+  --brand: #6e1423;
+  --brand-hover: #7e1d2f;
+  --brand-line: #933a49;
+  --brand-stripe: #7a1a2b;
+  --brand-deep: #4c0b17;
   --maroon: #6e1423;
   --maroon-hover: #5a0f1c;
   --gold: #c9a24b;
@@ -82,7 +84,7 @@ button {
   font-weight: 400;
   font-size: clamp(30px, 3.6vw, 46px);
   line-height: 1.15;
-  color: var(--indigo);
+  color: var(--brand);
   text-wrap: balance;
 }
 .on-dark .section-title {
@@ -166,6 +168,15 @@ button {
   background: var(--maroon-hover);
   color: var(--ivory);
 }
+/* On maroon sections a maroon button would disappear. */
+.on-dark .btn-primary {
+  background: var(--ivory);
+  color: var(--maroon);
+}
+.on-dark .btn-primary:hover {
+  background: var(--gold-light);
+  color: var(--maroon);
+}
 .btn-primary:disabled {
   background: #9a7a7f;
   cursor: not-allowed;
@@ -185,7 +196,7 @@ button {
   border: 1px solid var(--gold);
 }
 .btn-ghost-gold:hover {
-  background: var(--indigo-hover);
+  background: var(--brand-hover);
   color: var(--gold-light);
 }
 
@@ -220,8 +231,8 @@ button {
 }
 .pill[aria-pressed="true"],
 .pill[aria-selected="true"] {
-  border-color: var(--indigo);
-  background: var(--indigo);
+  border-color: var(--brand);
+  background: var(--brand);
   color: var(--ivory);
 }
 
@@ -251,7 +262,7 @@ button {
   position: absolute;
   left: 12px;
   top: 12px;
-  background: var(--indigo);
+  background: var(--brand);
   color: var(--gold-light);
   font-weight: 600;
   font-size: 10.5px;
@@ -320,7 +331,7 @@ button {
   z-index: 60;
 }
 .announce {
-  background: var(--maroon);
+  background: var(--brand-deep);
   color: var(--ivory);
   font-size: 13.5px;
   line-height: 1.3;
@@ -341,7 +352,7 @@ button {
   background: var(--gold);
 }
 .header-bar {
-  background: var(--indigo);
+  background: var(--brand);
   border-bottom: 1px solid var(--gold);
 }
 .header-row {
@@ -421,7 +432,7 @@ button {
   border-radius: 50%;
 }
 .icon-btn:hover {
-  background: var(--indigo-hover);
+  background: var(--brand-hover);
 }
 .menu-btn {
   margin-left: -8px;
@@ -535,7 +546,7 @@ button {
   box-shadow: -8px 0 30px rgba(26, 20, 16, 0.25);
 }
 .panel-head {
-  background: var(--indigo);
+  background: var(--brand);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -695,7 +706,7 @@ button {
 /* ── Footer ─────────────────────────────────────────────────────────────── */
 
 .site-footer {
-  background: var(--indigo);
+  background: var(--brand);
   color: var(--ivory);
 }
 .footer-grid {
@@ -730,7 +741,7 @@ button {
 }
 .footer-base {
   padding-block: 18px 28px;
-  border-top: 1px solid var(--indigo-line);
+  border-top: 1px solid var(--brand-line);
   font-size: 13.5px;
   color: #d8d1bf;
 }
@@ -872,7 +883,7 @@ button {
   text-align: center;
 }
 .clothing-feature {
-  background: var(--indigo);
+  background: var(--brand);
   color: var(--ivory);
   border: 1.5px solid var(--gold);
   outline: 1px solid var(--gold);
@@ -1150,9 +1161,9 @@ button {
 .applied-chip {
   min-height: 36px;
   padding: 0 10px 0 14px;
-  border: 1px solid var(--indigo);
+  border: 1px solid var(--brand);
   background: var(--chip-bg);
-  color: var(--indigo);
+  color: var(--brand);
   border-radius: 999px;
   font-weight: 500;
   font-size: 14px;
@@ -1257,7 +1268,7 @@ button {
     right: 0;
     bottom: 0;
     z-index: 65;
-    background: var(--indigo);
+    background: var(--brand);
     border-top: 1.5px solid var(--gold);
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -1275,7 +1286,7 @@ button {
     gap: 9px;
   }
   .listing-bar button + button {
-    border-left: 1px solid var(--indigo-line);
+    border-left: 1px solid var(--brand-line);
   }
 }
 .bar-line {
@@ -1358,7 +1369,7 @@ button {
   margin: 0;
   font-size: clamp(30px, 3.4vw, 44px);
   line-height: 1.12;
-  color: var(--indigo);
+  color: var(--brand);
   text-wrap: balance;
 }
 .facts {
@@ -1400,8 +1411,8 @@ button {
   border-radius: 2px;
 }
 .option-btn[aria-pressed="true"] {
-  border: 1.5px solid var(--indigo);
-  background: var(--indigo);
+  border: 1.5px solid var(--brand);
+  background: var(--brand);
   color: var(--ivory);
 }
 .sold-note {
@@ -1474,7 +1485,7 @@ button {
 .checkout-legend {
   font-family: var(--font-yatra), serif;
   font-size: 22px;
-  color: var(--indigo);
+  color: var(--brand);
   padding: 0;
   margin-bottom: 4px;
 }
@@ -1661,7 +1672,7 @@ button {
 .admin-table th {
   text-align: left;
   padding: 10px 12px;
-  background: var(--indigo);
+  background: var(--brand);
   color: var(--ivory);
   font-weight: 600;
   white-space: nowrap;
@@ -1700,7 +1711,7 @@ button {
 }
 .status-shipped {
   background: var(--chip-bg);
-  color: var(--indigo);
+  color: var(--brand);
 }
 .status-delivered {
   background: var(--ready-bg);
@@ -1716,7 +1727,7 @@ button {
   font-family: var(--font-yatra), serif;
   font-weight: 400;
   font-size: 22px;
-  color: var(--indigo);
+  color: var(--brand);
 }
 .admin-saved {
   margin: 0;
@@ -1728,7 +1739,7 @@ button {
 }
 
 .motif-feature {
-  background: var(--indigo);
+  background: var(--brand);
   color: var(--ivory);
   border: 1.5px solid var(--gold);
   outline: 1px solid var(--gold);

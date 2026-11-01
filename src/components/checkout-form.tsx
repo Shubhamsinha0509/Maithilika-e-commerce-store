@@ -43,7 +43,7 @@ export function CheckoutForm({ paymentsEnabled }: { paymentsEnabled: boolean }) 
   if (cart.lines.length === 0 && status === "idle") {
     return (
       <div className="empty-state">
-        <span className="display" style={{ fontSize: 26, color: "var(--indigo)" }}>Your bag is empty</span>
+        <span className="display" style={{ fontSize: 26, color: "var(--brand)" }}>Your bag is empty</span>
         <span style={{ fontSize: 15.5, color: "var(--muted)" }}>Add a piece to your bag, then come back here to check out.</span>
         <Link href="/clothing" className="btn btn-primary" style={{ marginTop: 6 }}>Browse clothing</Link>
       </div>
@@ -100,7 +100,7 @@ export function CheckoutForm({ paymentsEnabled }: { paymentsEnabled: boolean }) 
       name: "Maithilika",
       description: `Order ${orderNumber}`,
       prefill: { name: field("name"), email, contact: field("phone") },
-      theme: { color: "#1B2F7A" },
+      theme: { color: "#6E1423" },
       modal: {
         ondismiss: () => {
           setStatus("idle");
@@ -195,7 +195,7 @@ export function CheckoutForm({ paymentsEnabled }: { paymentsEnabled: boolean }) 
       </form>
 
       <aside className="checkout-summary" aria-label="Order summary">
-        <h2 className="display" style={{ margin: 0, fontSize: 24, color: "var(--indigo)" }}>Your order</h2>
+        <h2 className="display" style={{ margin: 0, fontSize: 24, color: "var(--brand)" }}>Your order</h2>
         <ul style={{ listStyle: "none", margin: 0, padding: 0 }}>
           {cart.lines.map((l) => (
             <li key={l.key} className="summary-line">

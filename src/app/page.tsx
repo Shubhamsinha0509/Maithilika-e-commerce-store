@@ -24,7 +24,7 @@ export default async function HomePage() {
 
   return (
     <>
-      <section aria-label="Featured piece" className="on-dark" style={{ background: "var(--indigo)", color: "var(--ivory)" }}>
+      <section aria-label="Featured piece" className="on-dark" style={{ background: "var(--brand)", color: "var(--ivory)" }}>
         <div className="wrap hero-grid">
           <div style={{ display: "flex", flexDirection: "column", gap: 22, maxWidth: 620 }}>
             <span className="eyebrow" style={{ display: "flex", alignItems: "center", gap: 12 }}>
@@ -104,7 +104,7 @@ export default async function HomePage() {
               return (
                 <Link key={sub} href={sectionHref("clothing", { sub })} className="clothing-tile">
                   <span className="arch">
-                    <span className="arch-inner" style={{ aspectRatio: "3 / 4.4", background: "var(--indigo-stripe)" }}>
+                    <span className="arch-inner" style={{ aspectRatio: "3 / 4.4", background: "var(--brand-stripe)" }}>
                       {p && crop && (
                         // eslint-disable-next-line @next/next/no-img-element -- collage crop needs width > 100%
                         <img src={p.image} alt={sub} className="crop-img" style={{ width: crop.width, objectPosition: crop.position }} />
@@ -127,7 +127,7 @@ export default async function HomePage() {
                 </span>
               </Link>
               <h3 style={{ margin: 0, display: "flex", alignItems: "baseline", gap: 10 }}>
-                <span className="display" style={{ fontSize: 30, lineHeight: 1.1, color: "var(--indigo)" }}>{s.label}</span>
+                <span className="display" style={{ fontSize: 30, lineHeight: 1.1, color: "var(--brand)" }}>{s.label}</span>
                 <span className="display" style={{ fontSize: 17, color: "var(--maroon)" }}>{s.hi}</span>
               </h3>
               <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
@@ -178,7 +178,7 @@ export default async function HomePage() {
         <Link href="/clothing" className="btn btn-outline" style={{ alignSelf: "center", padding: "0 28px" }}>See all new pieces</Link>
       </section>
 
-      <section id="story" aria-labelledby="story-title" className="on-dark" style={{ background: "var(--indigo)", color: "var(--ivory)", scrollMarginTop: 20 }}>
+      <section id="story" aria-labelledby="story-title" className="on-dark" style={{ background: "var(--brand)", color: "var(--ivory)", scrollMarginTop: 20 }}>
         <div className="dot-band" />
         <div className="wrap" style={{ paddingBlock: "clamp(56px, 7vw, 96px)", display: "flex", flexDirection: "column", gap: 40 }}>
           <div style={{ display: "flex", flexDirection: "column", gap: 8, maxWidth: 640 }}>
@@ -194,7 +194,7 @@ export default async function HomePage() {
                 <div style={{ border: "1.5px solid var(--gold)", padding: 6 }}>
                   <Image src={s.img} alt={`${s.title} step`} width={384} height={300} sizes="(max-width: 760px) 90vw, 320px" style={{ display: "block", width: "100%", height: "auto", aspectRatio: "4 / 3", objectFit: "cover" }} />
                 </div>
-                <div style={{ display: "flex", alignItems: "baseline", gap: 12, borderBottom: "1px solid var(--indigo-line)", paddingBottom: 10 }}>
+                <div style={{ display: "flex", alignItems: "baseline", gap: 12, borderBottom: "1px solid var(--brand-line)", paddingBottom: 10 }}>
                   <span className="display" style={{ fontSize: 34, lineHeight: 1, color: "var(--gold-light)" }}>{s.num}</span>
                   <h3 className="display" style={{ margin: 0, fontSize: 26 }}>{s.title}</h3>
                 </div>

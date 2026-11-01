@@ -76,6 +76,8 @@ threshold) are constants in code, not tables.
   `public/brand/logo.jpg`. The cropped mark is the header/footer badge and
   the browser icon, and the full logo is the link-preview image
   (`src/app/opengraph-image.jpg`).
+- Theme (2026-11-01): maroon (#6E1423) and white, replacing the design's
+  indigo. The colour lives in the `--brand` tokens in `globals.css`.
 
 ## Storefront preview (before checkout)
 

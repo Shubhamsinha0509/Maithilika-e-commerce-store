@@ -1582,6 +1582,146 @@ button {
   align-items: start;
 }
 
+/* ── Admin ──────────────────────────────────────────────────────────────── */
+
+.admin-page {
+  padding-block: 28px 72px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-height: 60vh;
+}
+.admin-nav {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding-bottom: 14px;
+  border-bottom: 1.5px solid var(--gold);
+}
+.admin-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: space-between;
+  align-items: center;
+}
+.admin-search {
+  display: flex;
+  gap: 8px;
+  flex: 1 1 320px;
+  max-width: 480px;
+}
+.admin-search input,
+.admin-price,
+.admin-textarea {
+  border: 1px solid var(--line-2);
+  background: #fffdf7;
+  color: var(--ink);
+  font-size: 15px;
+  border-radius: 2px;
+}
+.admin-search input {
+  flex: 1;
+  min-width: 0;
+  height: 44px;
+  padding: 0 12px;
+}
+.admin-price {
+  width: 110px;
+  height: 38px;
+  padding: 0 10px;
+}
+.admin-textarea {
+  padding: 10px 12px;
+  font-family: inherit;
+  font-weight: 400;
+  resize: vertical;
+}
+.admin-check {
+  width: 20px;
+  height: 20px;
+  accent-color: var(--maroon);
+}
+.admin-table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--line);
+}
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14.5px;
+  min-width: 720px;
+}
+.admin-table th {
+  text-align: left;
+  padding: 10px 12px;
+  background: var(--indigo);
+  color: var(--ivory);
+  font-weight: 600;
+  white-space: nowrap;
+}
+.admin-table td {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--line);
+  vertical-align: middle;
+}
+.admin-table tr.is-saved td {
+  background: var(--ready-bg);
+}
+.admin-flag {
+  margin-left: 8px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--maroon);
+  background: var(--mto-bg);
+  padding: 3px 6px;
+  border-radius: 2px;
+}
+.status {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 5px 8px 4px;
+  border-radius: 2px;
+  white-space: nowrap;
+}
+.status-paid {
+  background: var(--gold-light);
+  color: var(--ink);
+}
+.status-shipped {
+  background: var(--chip-bg);
+  color: var(--indigo);
+}
+.status-delivered {
+  background: var(--ready-bg);
+  color: var(--ready);
+}
+.status-pending_payment,
+.status-cancelled {
+  background: #ece7dc;
+  color: var(--muted);
+}
+.admin-h2 {
+  margin: 0;
+  font-family: var(--font-yatra), serif;
+  font-weight: 400;
+  font-size: 22px;
+  color: var(--indigo);
+}
+.admin-saved {
+  margin: 0;
+  padding: 10px 14px;
+  background: var(--ready-bg);
+  border-left: 3px solid var(--ready);
+  color: var(--ready);
+  font-weight: 600;
+}
+
 .motif-feature {
   background: var(--indigo);
   color: var(--ivory);

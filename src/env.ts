@@ -33,6 +33,10 @@ const serverSchema = z.object({
   RAZORPAY_KEY_ID: z.string().optional(),
   RAZORPAY_KEY_SECRET: z.string().optional(),
   RAZORPAY_WEBHOOK_SECRET: z.string().optional(),
+
+  /** Admin login. Optional: until both are set, /admin cannot be signed into. */
+  ADMIN_PASSWORD: z.string().optional(),
+  ADMIN_SESSION_SECRET: z.string().optional(),
 });
 
 export type ServerEnv = z.infer<typeof serverSchema>;

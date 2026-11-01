@@ -101,7 +101,11 @@ with checkout.
       `RAZORPAY_WEBHOOK_SECRET` to `.env` and to Vercel, add the webhook
       (`https://<site>/api/razorpay/webhook`, event `payment.captured`),
       then redeploy
-- [ ] **3. Admin:** login, orders, product edits
+- [x] **3. Admin:** `/admin` with one password. Orders by status with
+      search; order detail (status, tracking link, note; unpaid orders can
+      only be cancelled); products (price, sold, hidden). Tested end to end
+      through the real forms. To switch on: set `ADMIN_PASSWORD` and
+      `ADMIN_SESSION_SECRET` in `.env` and on Vercel
 - [ ] **4. Launch:** Razorpay live keys, policy pages (Terms, Privacy and
       Refund are needed for Razorpay activation), real shipping numbers,
       remove `noindex`, connect the domain, move the Neon project and

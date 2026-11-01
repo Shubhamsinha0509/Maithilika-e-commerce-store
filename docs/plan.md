@@ -110,7 +110,12 @@ with checkout.
 | Checkout | Shipping fee and free-shipping threshold |
 | Policy pages | Return window, shipping time, contact email/phone, address |
 | Product pages | Artist names, villages and painting days (pages hide these until filled), lead time for the 4 made-to-order pieces |
-| Domain | Domain name, if they have one |
+| Domain | Bought at GoDaddy, with business email included. Need the domain name and which address to show as the shop's contact email |
+
+**Connecting the domain (at launch):** keep the domain at GoDaddy and add
+only the website records Vercel asks for (an `A` record and a `CNAME` for
+`www`). Do **not** switch the nameservers to Vercel, and do not touch the
+existing `MX`/`TXT` records, or the GoDaddy business email stops working.
 
 ## Later (not needed to launch)
 

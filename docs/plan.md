@@ -89,9 +89,9 @@ with checkout.
 - [x] Neon database created (Singapore), tables made, 44 products loaded
 - [x] **1. Storefront:** port the design (header, cart drawer, footer, home,
       listing, product page, search), reading products from the database
-- [ ] Deploy the preview to Vercel (needs the owner's Vercel account;
-      add `DATABASE_URL` and `DIRECT_URL` as environment variables; the
-      Singapore region is set in `vercel.json`)
+- [x] Preview deployed: https://maithilika.vercel.app (developer's Vercel
+      Hobby account for now; `DATABASE_URL` and `DIRECT_URL` set there;
+      Singapore region in `vercel.json`)
 - [ ] **2. Checkout and payment:** checkout page, Razorpay, verify,
       webhook, confirmation page, order lookup
 - [ ] **3. Admin:** login, orders, product edits

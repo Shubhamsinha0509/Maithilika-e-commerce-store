@@ -15,7 +15,17 @@ export async function generateMetadata({ params }: PageProps<"/[section]">) {
   return section ? { title: section.label, description: section.intro } : {};
 }
 
-export default async function SectionPage({ params }: PageProps<"/[section]">) {
+// params is read inside <Suspense> (in SectionContent), not here: a refresh
+// after a sale re-renders this route, and a top-level read makes that fail.
+export default function SectionPage(props: PageProps<"/[section]">) {
+  return (
+    <Suspense fallback={<div className="wrap" style={{ minHeight: "60vh" }} />}>
+      <SectionContent {...props} />
+    </Suspense>
+  );
+}
+
+async function SectionContent({ params }: PageProps<"/[section]">) {
   const section = sectionBySlug((await params).section);
   if (!section) notFound();
   const products = await getSectionProducts(section.key);

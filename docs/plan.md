@@ -92,8 +92,15 @@ with checkout.
 - [x] Preview deployed: https://maithilika.vercel.app (developer's Vercel
       Hobby account for now; `DATABASE_URL` and `DIRECT_URL` set there;
       Singapore region in `vercel.json`)
-- [ ] **2. Checkout and payment:** checkout page, Razorpay, verify,
-      webhook, confirmation page, order lookup
+- [x] **2. Checkout and payment:** checkout page, Razorpay, verify,
+      webhook, confirmation page, order lookup (`/order`). Built and
+      tested without Razorpay (validation; webhook signature, wrong amount,
+      double delivery, sold marking). Switches on when the keys are set.
+- [ ] **2b. Test a real payment in Razorpay test mode.** Needs the owner's
+      test keys: add `RAZORPAY_KEY_ID`, `RAZORPAY_KEY_SECRET` and
+      `RAZORPAY_WEBHOOK_SECRET` to `.env` and to Vercel, add the webhook
+      (`https://<site>/api/razorpay/webhook`, event `payment.captured`),
+      then redeploy
 - [ ] **3. Admin:** login, orders, product edits
 - [ ] **4. Launch:** Razorpay live keys, policy pages (Terms, Privacy and
       Refund are needed for Razorpay activation), real shipping numbers,

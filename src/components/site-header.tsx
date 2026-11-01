@@ -16,12 +16,12 @@ export type MenuPiece = {
   crop: { width: string; position: string };
 };
 
-type Props = { featured: Record<SectionKey, MenuPiece[]> };
+type Props = { featured: Record<SectionKey, MenuPiece[]>; paymentsEnabled: boolean };
 
 /** Opened by the listing page's mobile "Menu" button. */
 export const OPEN_MENU_EVENT = "maithilika:menu";
 
-export function SiteHeader({ featured }: Props) {
+export function SiteHeader({ featured, paymentsEnabled }: Props) {
   const router = useRouter();
   const cart = useCart();
   const [menu, setMenu] = useState<SectionKey | null>(null);
@@ -218,7 +218,7 @@ export function SiteHeader({ featured }: Props) {
         </div>
       )}
 
-      <CartDrawer />
+      <CartDrawer paymentsEnabled={paymentsEnabled} />
     </div>
   );
 }

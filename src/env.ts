@@ -25,6 +25,14 @@ const serverSchema = z.object({
   NODE_ENV: z
     .enum(["development", "test", "production"])
     .default("development"),
+
+  /**
+   * Razorpay. Optional: until both keys are set, checkout shows
+   * "Checkout opens soon" instead of taking payment.
+   */
+  RAZORPAY_KEY_ID: z.string().optional(),
+  RAZORPAY_KEY_SECRET: z.string().optional(),
+  RAZORPAY_WEBHOOK_SECRET: z.string().optional(),
 });
 
 export type ServerEnv = z.infer<typeof serverSchema>;

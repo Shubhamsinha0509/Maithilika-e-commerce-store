@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useCart } from "@/components/cart";
 import { inr, productHref, SHIPPING } from "@/lib/store";
 
-export function CartDrawer() {
+export function CartDrawer({ paymentsEnabled }: { paymentsEnabled: boolean }) {
   const { lines, count, subtotal, isOpen, close, setQty, remove } = useCart();
   if (!isOpen) return null;
 
@@ -68,9 +68,15 @@ export function CartDrawer() {
               <span style={{ fontSize: 13.5, color: "var(--muted)" }}>
                 Free shipping across India above {inr(SHIPPING.freeAboveRupees)}.
               </span>
-              <button className="btn btn-primary" disabled style={{ minHeight: 52, fontSize: 17 }}>
-                Checkout opens soon
-              </button>
+              {paymentsEnabled ? (
+                <Link href="/checkout" onClick={close} className="btn btn-primary" style={{ minHeight: 52, fontSize: 17 }}>
+                  Checkout
+                </Link>
+              ) : (
+                <button className="btn btn-primary" disabled style={{ minHeight: 52, fontSize: 17 }}>
+                  Checkout opens soon
+                </button>
+              )}
             </div>
           </>
         )}

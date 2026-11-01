@@ -4,6 +4,7 @@ import { CartProvider } from "@/components/cart";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader, type MenuPiece } from "@/components/site-header";
 import { getProducts } from "@/lib/catalog";
+import { paymentsEnabled } from "@/lib/razorpay";
 import { SECTIONS, circleCrop, type SectionKey } from "@/lib/store";
 import "./globals.css";
 
@@ -46,7 +47,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
     <html lang="en" className={`${mukta.variable} ${yatra.variable}`}>
       <body>
         <CartProvider>
-          <SiteHeader featured={await menuPieces()} />
+          <SiteHeader featured={await menuPieces()} paymentsEnabled={paymentsEnabled()} />
           <main>{children}</main>
           <SiteFooter />
         </CartProvider>

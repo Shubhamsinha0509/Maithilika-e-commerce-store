@@ -33,6 +33,7 @@ export function SiteFooter() {
           <span className="footer-head">Maithilika</span>
           <Link href="/#story">Our Story</Link>
           <Link href="/#motifs">Motif meanings</Link>
+          <Link href="/order">Track your order</Link>
         </nav>
       </div>
       <div className="wrap footer-base">

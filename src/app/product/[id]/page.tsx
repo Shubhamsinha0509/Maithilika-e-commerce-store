@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
 import { ProductCard } from "@/components/product-card";
 import { BuyBox, DetailsAccordion, Gallery } from "@/components/product-detail";
 import { getProduct, getProducts } from "@/lib/catalog";
@@ -16,7 +17,17 @@ export async function generateMetadata({ params }: PageProps<"/product/[id]">) {
   return p ? { title: p.name, description: p.motifText ?? undefined } : {};
 }
 
-export default async function ProductPage({ params }: PageProps<"/product/[id]">) {
+// params is read inside <Suspense> (in ProductContent), not here: a refresh
+// after a sale re-renders this route, and a top-level read makes that fail.
+export default function ProductPage(props: PageProps<"/product/[id]">) {
+  return (
+    <Suspense fallback={<div className="wrap" style={{ minHeight: "60vh" }} />}>
+      <ProductContent {...props} />
+    </Suspense>
+  );
+}
+
+async function ProductContent({ params }: PageProps<"/product/[id]">) {
   const p = await getProduct((await params).id);
   if (!p) notFound();
 

@@ -30,6 +30,9 @@ type CartContextValue = {
   add: (p: Product, option: string | null) => void;
   setQty: (key: string, qty: number) => void;
   remove: (key: string) => void;
+  /** Removes every line for these product ids, e.g. pieces that just sold. */
+  removeProducts: (ids: string[]) => void;
+  clear: () => void;
 };
 
 // ── localStorage as an external store ──────────────────────────────────────
@@ -112,6 +115,8 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const remove = useCallback((key: string) => writeLines((current) => current.filter((l) => l.key !== key)), []);
+  const removeProducts = useCallback((ids: string[]) => writeLines((current) => current.filter((l) => !ids.includes(l.id))), []);
+  const clear = useCallback(() => writeLines(() => []), []);
 
   const value = useMemo<CartContextValue>(
     () => ({
@@ -124,8 +129,10 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       add,
       setQty,
       remove,
+      removeProducts,
+      clear,
     }),
-    [lines, isOpen, add, setQty, remove],
+    [lines, isOpen, add, setQty, remove, removeProducts, clear],
   );
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;

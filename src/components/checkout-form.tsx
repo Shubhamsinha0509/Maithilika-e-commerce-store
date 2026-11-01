@@ -35,10 +35,31 @@ export function CheckoutForm({ paymentsEnabled }: { paymentsEnabled: boolean }) 
   const [status, setStatus] = useState<Status>("idle");
   const [message, setMessage] = useState<string | null>(null);
   const [errors, setErrors] = useState<FieldErrors>({});
+  // Paid, but this page couldn't confirm it. The bag is already cleared so
+  // the customer can't pay twice; the webhook will still mark the order paid.
+  const [unconfirmed, setUnconfirmed] = useState<{ orderNumber: string; email: string } | null>(null);
 
   const shipping = shippingFor(cart.subtotal);
   const total = cart.subtotal + shipping;
   const busy = status !== "idle";
+
+  if (unconfirmed) {
+    return (
+      <div className="empty-state">
+        <span className="display" style={{ fontSize: 26, color: "var(--brand)" }}>We received your payment</span>
+        <span style={{ fontSize: 15.5, color: "var(--muted)", maxWidth: "52ch" }}>
+          This page couldn&apos;t confirm it, but there&apos;s no need to pay again. Your order number is <strong>{unconfirmed.orderNumber}</strong>. It will show as paid on the tracking page within a few minutes.
+        </span>
+        <Link
+          href={`/order?n=${encodeURIComponent(unconfirmed.orderNumber)}&e=${encodeURIComponent(unconfirmed.email)}`}
+          className="btn btn-primary"
+          style={{ marginTop: 6 }}
+        >
+          Track your order
+        </Link>
+      </div>
+    );
+  }
 
   if (cart.lines.length === 0 && status === "idle") {
     return (
@@ -61,6 +82,7 @@ export function CheckoutForm({ paymentsEnabled }: { paymentsEnabled: boolean }) 
 
     const result = await startCheckout({
       lines: cart.lines.map((l) => ({ id: l.id, option: l.option, qty: l.qty })),
+      expectedTotal: total,
       name: field("name"),
       email: field("email"),
       phone: field("phone"),
@@ -75,6 +97,7 @@ export function CheckoutForm({ paymentsEnabled }: { paymentsEnabled: boolean }) 
       setStatus("idle");
       setMessage(result.error);
       if ("fieldErrors" in result) setErrors(result.fieldErrors);
+      if ("prices" in result && result.prices) cart.updatePrices(result.prices);
       if ("soldIds" in result && result.soldIds?.length) {
         const names = cart.lines.filter((l) => result.soldIds!.includes(l.id)).map((l) => l.name);
         cart.removeProducts(result.soldIds);
@@ -110,13 +133,11 @@ export function CheckoutForm({ paymentsEnabled }: { paymentsEnabled: boolean }) 
       handler: async (response: RazorpayResponse) => {
         setStatus("confirming");
         const confirmed = await confirmPayment(response).catch(() => null);
+        cart.clear();
         if (confirmed?.ok) {
-          cart.clear();
           router.push(`/order?n=${encodeURIComponent(orderNumber)}&e=${encodeURIComponent(email)}&new=1`);
         } else {
-          // The payment went through; the webhook will still mark the order paid.
-          setStatus("idle");
-          setMessage(`We received your payment but couldn't confirm it on this page. Please keep your order number, ${orderNumber}, and check it on the Track your order page in a few minutes.`);
+          setUnconfirmed({ orderNumber, email });
         }
       },
     }).open();

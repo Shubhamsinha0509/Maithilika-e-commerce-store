@@ -28,7 +28,7 @@ async function OrderDetail({ params, searchParams }: PageProps<"/admin/orders/[n
   const order = await prisma.order.findUnique({ where: { orderNumber: decodeURIComponent(number) } });
   if (!order) notFound();
   const items = order.items as unknown as OrderItem[];
-  const unpaid = order.status === "PENDING_PAYMENT";
+  const neverPaid = order.paidAt === null;
 
   return (
     <>
@@ -90,7 +90,9 @@ async function OrderDetail({ params, searchParams }: PageProps<"/admin/orders/[n
 
       <div className="checkout-summary" style={{ maxWidth: 720 }}>
         <h2 className="admin-h2">Update</h2>
-        {unpaid ? (
+        {neverPaid && order.status === "CANCELLED" ? (
+          <p className="field-help">This order was cancelled and never paid. Nothing needs shipping. If the customer pays later, it moves to To ship by itself.</p>
+        ) : neverPaid ? (
           <>
             <p className="field-help">This order was never paid, usually because the customer closed the payment window. Nothing needs shipping. You can cancel it to tidy the list.</p>
             <form action={cancelUnpaidOrder}>

@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useCart } from "@/components/cart";
+import { MAX_QTY, useCart } from "@/components/cart";
 import { inr, productHref, SHIPPING } from "@/lib/store";
 
 export function CartDrawer({ paymentsEnabled }: { paymentsEnabled: boolean }) {
@@ -49,7 +49,7 @@ export function CartDrawer({ paymentsEnabled }: { paymentsEnabled: boolean }) {
                         <div role="group" aria-label="Quantity" className="stepper">
                           <button onClick={() => setQty(l.key, l.qty - 1)} aria-label="Decrease quantity">−</button>
                           <span aria-live="polite">{l.qty}</span>
-                          <button onClick={() => setQty(l.key, l.qty + 1)} aria-label="Increase quantity">+</button>
+                          <button onClick={() => setQty(l.key, l.qty + 1)} disabled={l.qty >= MAX_QTY} aria-label="Increase quantity">+</button>
                         </div>
                       ) : (
                         <span style={{ fontSize: 13, color: "var(--muted)" }}>One of a kind</span>

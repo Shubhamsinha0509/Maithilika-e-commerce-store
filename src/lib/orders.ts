@@ -3,7 +3,7 @@ import { revalidateTag } from "next/cache";
 import { Prisma } from "@/generated/prisma/client";
 import { prisma } from "@/lib/prisma";
 import { createRazorpayOrder } from "@/lib/razorpay";
-import { shippingFor } from "@/lib/store";
+import { inr, shippingFor } from "@/lib/store";
 import type { z } from "zod";
 import type { checkoutSchema } from "@/lib/checkout";
 
@@ -22,7 +22,7 @@ type ValidCheckout = z.output<typeof checkoutSchema>;
 
 export type PlaceOrderResult =
   | { ok: true; orderNumber: string; razorpay: { keyId: string; orderId: string; amount: number } }
-  | { ok: false; error: string; soldIds?: string[] };
+  | { ok: false; error: string; soldIds?: string[]; prices?: Record<string, number> };
 
 // No 0/O or 1/I, so a number read over the phone is unambiguous.
 const ALPHABET = "23456789ABCDEFGHJKLMNPQRSTUVWXYZ";
@@ -37,16 +37,20 @@ function newOrderNumber() {
  * only says which products and options it wants.
  */
 export async function placeOrder(input: ValidCheckout): Promise<PlaceOrderResult> {
-  // Merge repeated lines for the same product and option.
+  const products = await prisma.product.findMany({ where: { id: { in: input.lines.map((l) => l.id) } } });
+  const byId = new Map(products.map((p) => [p.id, p]));
+
+  // Merge repeated lines. Made-to-order lines merge per option; a one-of-a-kind
+  // piece is a single line whatever options were picked (the first one wins),
+  // so it can never be charged twice.
   const wanted = new Map<string, { id: string; option: string | null; qty: number }>();
   for (const l of input.lines) {
-    const key = `${l.id}|${l.option ?? ""}`;
+    const madeToOrder = byId.get(l.id)?.madeToOrder ?? false;
+    const key = madeToOrder ? `${l.id}|${l.option ?? ""}` : l.id;
     const prev = wanted.get(key);
+    if (prev && !madeToOrder) continue;
     wanted.set(key, { ...l, qty: (prev?.qty ?? 0) + l.qty });
   }
-
-  const products = await prisma.product.findMany({ where: { id: { in: [...wanted.values()].map((l) => l.id) } } });
-  const byId = new Map(products.map((p) => [p.id, p]));
 
   const items: OrderItem[] = [];
   const soldIds: string[] = [];
@@ -79,6 +83,16 @@ export async function placeOrder(input: ValidCheckout): Promise<PlaceOrderResult
   const subtotal = items.reduce((n, i) => n + i.price * i.qty, 0);
   const shipping = shippingFor(subtotal);
   const total = subtotal + shipping;
+
+  // The bag shows prices saved when each piece was added. If any changed
+  // since, stop before creating anything so the customer sees the new total.
+  if (total !== input.expectedTotal) {
+    return {
+      ok: false,
+      error: `Prices have changed since you added these pieces. Your total is now ${inr(total)}. Please check your order and pay again.`,
+      prices: Object.fromEntries(items.map((i) => [i.productId, i.price])),
+    };
+  }
 
   const data = {
     name: input.name,
@@ -119,29 +133,33 @@ export async function placeOrder(input: ValidCheckout): Promise<PlaceOrderResult
 export type MarkPaidResult =
   | { status: "paid"; orderNumber: string; soldToSomeoneElse: string[] }
   | { status: "already-paid"; orderNumber: string }
-  | { status: "unknown-order" }
-  | { status: "amount-mismatch"; orderNumber: string };
+  | { status: "unknown-order" };
 
 /**
  * Called by both the checkout callback and the Razorpay webhook, in either
  * order and possibly at the same time. Only the first call changes anything:
- * the status update is conditional on PENDING_PAYMENT, so a second call
- * matches no row and returns "already-paid".
+ * the update is conditional on the order never having been paid (paidAt is
+ * null), so a second call matches no row and returns "already-paid".
+ *
+ * Money that arrived is always recorded, even on an order the owner had
+ * cancelled while it was unpaid; anything unusual goes in the order's note.
  */
 export async function markPaid(razorpayOrderId: string, razorpayPaymentId: string, amountPaise?: number): Promise<MarkPaidResult> {
   const result = await prisma.$transaction(async (tx): Promise<MarkPaidResult> => {
     const order = await tx.order.findUnique({ where: { razorpayOrderId } });
     if (!order) return { status: "unknown-order" };
-    if (amountPaise !== undefined && amountPaise !== order.total * 100) {
-      await tx.order.update({ where: { id: order.id }, data: { note: `Razorpay reported ₹${amountPaise / 100} paid, but the order total is ₹${order.total}. Check before shipping.` } });
-      return { status: "amount-mismatch", orderNumber: order.orderNumber };
-    }
 
     const claimed = await tx.order.updateMany({
-      where: { id: order.id, status: "PENDING_PAYMENT" },
+      where: { id: order.id, paidAt: null },
       data: { status: "PAID", razorpayPaymentId, paidAt: new Date() },
     });
     if (claimed.count === 0) return { status: "already-paid", orderNumber: order.orderNumber };
+
+    const notes: string[] = [];
+    if (order.status === "CANCELLED") notes.push("The payment arrived after this order was cancelled, so it is marked paid again.");
+    if (amountPaise !== undefined && amountPaise !== order.total * 100) {
+      notes.push(`Razorpay reported ₹${amountPaise / 100} paid, but the order total is ₹${order.total}. Check before shipping.`);
+    }
 
     // Mark one-of-a-kind pieces sold. If someone else's payment got there
     // first, keep this order paid and tell the owner to refund (docs/plan.md).
@@ -152,10 +170,10 @@ export async function markPaid(razorpayOrderId: string, razorpayPaymentId: strin
       if (updated.count === 0) soldToSomeoneElse.push(item.name);
     }
     if (soldToSomeoneElse.length) {
-      await tx.order.update({
-        where: { id: order.id },
-        data: { note: `Paid, but already sold to another customer: ${soldToSomeoneElse.join(", ")}. Refund this from the Razorpay dashboard and tell the customer.` },
-      });
+      notes.push(`Paid, but already sold to another customer: ${soldToSomeoneElse.join(", ")}. Refund this from the Razorpay dashboard and tell the customer.`);
+    }
+    if (notes.length) {
+      await tx.order.update({ where: { id: order.id }, data: { note: [order.note, ...notes].filter(Boolean).join(" ") } });
     }
     return { status: "paid", orderNumber: order.orderNumber, soldToSomeoneElse };
   });

@@ -31,6 +31,8 @@ export const checkoutSchema = z.object({
     )
     .min(1, "Your bag is empty")
     .max(50),
+  /** The total the customer saw, in rupees. Checked against the server's own total. */
+  expectedTotal: z.number().int().min(0),
   name: text(2, 100, "Please enter your full name"),
   email: z.string().trim().toLowerCase().pipe(z.email("Please enter a valid email address")),
   phone: z.string().transform((v, ctx) => {

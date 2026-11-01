@@ -35,24 +35,26 @@ async function Orders({ query }: { query: PageProps<"/admin">["searchParams"] })
   const tab = TABS.find((t) => t.key === params.tab) ?? TABS[0];
   const q = typeof params.q === "string" ? params.q.trim() : "";
 
-  const orders = await prisma.order.findMany({
-    where: {
-      ...(tab.statuses && !q ? { status: { in: tab.statuses } } : {}),
-      ...(q
-        ? {
-            OR: [
-              { orderNumber: { contains: q, mode: "insensitive" } },
-              { name: { contains: q, mode: "insensitive" } },
-              { email: { contains: q, mode: "insensitive" } },
-              { phone: { contains: q.replace(/\s/g, "") } },
-            ],
-          }
-        : {}),
-    },
-    orderBy: { createdAt: "desc" },
-    take: 200,
-  });
-  const counts = await prisma.order.groupBy({ by: ["status"], _count: true });
+  const [orders, counts] = await Promise.all([
+    prisma.order.findMany({
+      where: {
+        ...(tab.statuses && !q ? { status: { in: tab.statuses } } : {}),
+        ...(q
+          ? {
+              OR: [
+                { orderNumber: { contains: q, mode: "insensitive" } },
+                { name: { contains: q, mode: "insensitive" } },
+                { email: { contains: q, mode: "insensitive" } },
+                { phone: { contains: q.replace(/\s/g, "") } },
+              ],
+            }
+          : {}),
+      },
+      orderBy: { createdAt: "desc" },
+      take: 200,
+    }),
+    prisma.order.groupBy({ by: ["status"], _count: true }),
+  ]);
   const countFor = (statuses?: OrderStatus[]) =>
     counts.filter((c) => !statuses || statuses.includes(c.status)).reduce((n, c) => n + c._count, 0);
 

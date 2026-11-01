@@ -45,8 +45,9 @@ export async function updateOrder(form: FormData) {
 
   const order = await prisma.order.findUnique({ where: { orderNumber } });
   if (!order) redirect("/admin");
-  // An unpaid order can only be cancelled; it was never paid, so it can't ship.
-  if (order.status === "PENDING_PAYMENT" && status !== "CANCELLED") {
+  // An order that was never paid (pending, or cancelled before payment) can
+  // only be cancelled. Only a real payment can make it paid.
+  if (order.paidAt === null && status !== "CANCELLED") {
     redirect(`/admin/orders/${orderNumber}?error=${encodeURIComponent("This order was never paid. It can only be cancelled.")}`);
   }
 
@@ -54,10 +55,14 @@ export async function updateOrder(form: FormData) {
   redirect(`/admin/orders/${orderNumber}?saved=1`);
 }
 
+const orderRef = z.object({ orderNumber: z.string().min(1).max(40) });
+
 export async function cancelUnpaidOrder(form: FormData) {
   await requireAdmin();
-  const orderNumber = String(form.get("orderNumber") ?? "");
-  await prisma.order.updateMany({ where: { orderNumber, status: "PENDING_PAYMENT" }, data: { status: "CANCELLED" } });
+  const parsed = orderRef.safeParse(Object.fromEntries(form));
+  if (!parsed.success) redirect("/admin");
+  const { orderNumber } = parsed.data;
+  await prisma.order.updateMany({ where: { orderNumber, status: "PENDING_PAYMENT", paidAt: null }, data: { status: "CANCELLED" } });
   redirect(`/admin/orders/${encodeURIComponent(orderNumber)}?saved=1`);
 }
 

@@ -32,12 +32,16 @@ type CartContextValue = {
   remove: (key: string) => void;
   /** Removes every line for these product ids, e.g. pieces that just sold. */
   removeProducts: (ids: string[]) => void;
+  /** Replaces saved prices with current ones from checkout. */
+  updatePrices: (prices: Record<string, number>) => void;
   clear: () => void;
 };
 
 // ── localStorage as an external store ──────────────────────────────────────
 
 const STORAGE_KEY = "maithilika:cart";
+/** Checkout accepts up to 10 of one made-to-order piece (src/lib/checkout.ts). */
+export const MAX_QTY = 10;
 const EMPTY: CartLine[] = [];
 const listeners = new Set<() => void>();
 let cachedRaw: string | null = null;
@@ -95,13 +99,15 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
   const add = useCallback((p: Product, option: string | null) => {
     const key = p.id + "|" + (option ?? "");
+    const line: CartLine = { key, id: p.id, name: p.name, option, price: p.price, image: p.image, crop: tileCrop(p), qty: 1, madeToOrder: p.madeToOrder };
     writeLines((current) => {
-      const existing = current.find((l) => l.key === key);
-      if (existing) {
-        if (!existing.madeToOrder) return current;
-        return current.map((l) => (l.key === key ? { ...l, qty: l.qty + 1 } : l));
+      if (!p.madeToOrder) {
+        // A one-of-a-kind piece is one line; picking another option replaces it.
+        return current.some((l) => l.id === p.id) ? current.map((l) => (l.id === p.id ? line : l)) : [...current, line];
       }
-      return [...current, { key, id: p.id, name: p.name, option, price: p.price, image: p.image, crop: tileCrop(p), qty: 1, madeToOrder: p.madeToOrder }];
+      const existing = current.find((l) => l.key === key);
+      if (existing) return current.map((l) => (l.key === key ? { ...l, qty: Math.min(l.qty + 1, MAX_QTY) } : l));
+      return [...current, line];
     });
     setIsOpen(true);
   }, []);
@@ -109,10 +115,15 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const setQty = useCallback((key: string, qty: number) => {
     writeLines((current) =>
       current
-        .map((l) => (l.key === key ? { ...l, qty: l.madeToOrder ? qty : Math.min(qty, 1) } : l))
+        .map((l) => (l.key === key ? { ...l, qty: Math.min(qty, l.madeToOrder ? MAX_QTY : 1) } : l))
         .filter((l) => l.qty > 0),
     );
   }, []);
+
+  const updatePrices = useCallback(
+    (prices: Record<string, number>) => writeLines((current) => current.map((l) => (prices[l.id] !== undefined ? { ...l, price: prices[l.id] } : l))),
+    [],
+  );
 
   const remove = useCallback((key: string) => writeLines((current) => current.filter((l) => l.key !== key)), []);
   const removeProducts = useCallback((ids: string[]) => writeLines((current) => current.filter((l) => !ids.includes(l.id))), []);
@@ -130,9 +141,10 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       setQty,
       remove,
       removeProducts,
+      updatePrices,
       clear,
     }),
-    [lines, isOpen, add, setQty, remove, removeProducts, clear],
+    [lines, isOpen, add, setQty, remove, removeProducts, updatePrices, clear],
   );
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;

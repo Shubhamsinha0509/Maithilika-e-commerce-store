@@ -149,7 +149,7 @@ export function SiteHeader({ featured, paymentsEnabled }: Props) {
               </Link>
             </div>
             <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-              <span className="eyebrow" style={{ fontSize: 12.5, letterSpacing: ".14em" }}>Featured pieces</span>
+              <span className="eyebrow ruled" style={{ fontSize: 12.5, letterSpacing: ".14em" }}>Featured pieces</span>
               <div style={{ display: "grid", gridTemplateColumns: "repeat(3, minmax(0, 1fr))", gap: 20 }}>
                 {featured[openSection.key].map((m) => (
                   <Link key={m.id} href={`/product/${m.id}`} className="mega-piece">

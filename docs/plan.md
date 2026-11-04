@@ -69,6 +69,11 @@ threshold) are constants in code, not tables.
   return window, year) are hidden until real values exist.
 - The "Meet the artists" homepage section, WhatsApp links and the
   custom-order section are removed.
+- Heritage theme (2026-11-04, from the owner's reference image): shaded
+  wine maroon, parchment with a fine grain, antique gold, lotus rules between
+  sections and under centred titles, gold leaf sprigs in panel corners, and a
+  dark promise strip with gold dividers. Fonts and logo unchanged. All of it
+  is in `globals.css` ("Heritage ornaments" and the tokens at the top).
 - Images (2026-11-04): every photo goes through the image optimiser (AVIF,
   WebP fallback), including the product gallery's CSS backgrounds. Optimised
   copies are cached for 31 days, so **to replace a photo, upload it under a
@@ -76,6 +81,11 @@ threshold) are constants in code, not tables.
 - Wishlist (added 2026-11-04 at the owner's request): a heart on cards and
   product pages, `/wishlist`, and a header count. Saved in the browser like
   the bag (product ids only, no account), so it is per device.
+- Mobile header (2026-11-04): the wishlist heart made a third 44px icon, so
+  the mobile row uses 8px gaps and 12/8px padding instead of the design's
+  12/16/12. Fits 390px (13px to spare) and 375px. Below about 376px the
+  wordmark and three icons still do not fit; narrower phones (360px) need a
+  decision on shrinking the wordmark, the logo badge, or hiding the words.
 - Owner's admin can manage orders and edit price, sold/available and
   hidden. Adding products with photos comes later.
 - Hosting: Vercel and Neon, Singapore region.

@@ -32,7 +32,7 @@ async function SectionContent({ params }: PageProps<"/[section]">) {
 
   return (
     <>
-      <section className="on-dark" style={{ background: "var(--brand)", color: "var(--ivory)" }}>
+      <section className="on-dark ornate" style={{ color: "var(--ivory)" }}>
         <div className="wrap listing-hero">
           <div style={{ display: "flex", flexDirection: "column", gap: 12, flex: "1 1 420px", maxWidth: 720 }}>
             <nav aria-label="Breadcrumb" className="crumbs on-dark-crumbs">

@@ -1,31 +1,50 @@
 @import "tailwindcss";
 
-/* Design tokens, from Design/Brand Board.dc.html and the page designs. */
+/*
+ * Design tokens. Heritage theme (2026-11-04, from the owner's reference):
+ * wine maroon (#6E1423, the owner's colour) with depth, warm parchment and
+ * antique gold, plus lotus rules and botanical corner sprigs (see
+ * "Heritage ornaments" below). Fonts and logo are unchanged.
+ */
 :root {
-  --ivory: #fbf6ea;
-  --sand: #f3ead3;
-  --sand-2: #f7f0de;
-  --ink: #1a1410;
-  --muted: #5a4a3e;
-  /* The owner's theme colour (2026-11-01): maroon and white. */
+  --ivory: #f6ecdb; /* parchment: the page */
+  --paper: #fbf5ea; /* lighter parchment: fields, cards, chips */
+  --sand: #eedfc4;
+  --sand-2: #f2e5cf;
+  --ink: #2a1a13;
+  --muted: #6b5545;
   --brand: #6e1423;
-  --brand-hover: #7e1d2f;
-  --brand-line: #933a49;
+  --brand-hover: #7d1e2e;
+  --brand-line: rgba(196, 162, 101, 0.35);
   --brand-stripe: #7a1a2b;
-  --brand-deep: #4c0b17;
+  --brand-deep: #4a0d17;
   --maroon: #6e1423;
   --maroon-hover: #5a0f1c;
-  --gold: #c9a24b;
-  --gold-light: #f1dfa8;
-  --on-dark: #e4ddcb;
-  --line: #e3d3ae;
-  --line-2: #dcc897;
-  --line-3: #eadfc4;
-  --ready: #1f5b45;
-  --ready-bg: #e6efe8;
-  --mto-bg: #f4e4df;
-  --chip-bg: #eef0f8;
+  --gold: #c4a265; /* antique gold: lines, fills */
+  --gold-light: #ead6a8; /* gold text on maroon */
+  --gold-deep: #7d5a2b; /* gold text on parchment (readable) */
+  --on-dark: #eadfc8;
+  --line: #dfcca6;
+  --line-2: #ccb184;
+  --line-3: #e8d8b9;
+  --ready: #3f5b33;
+  --ready-bg: #e6e6cc;
+  --mto-bg: #f1dcd0;
+  --chip-bg: #f0e1c8;
   --shadow: rgba(26, 20, 16, 0.55);
+
+  /* Fine paper grain, and the shaded maroon used by every dark surface. */
+  --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .4 0 0 0 0 .28 0 0 0 0 .12 0 0 0 .16 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  --paper-bg: var(--grain), var(--ivory);
+  /* Line-art lotus (section rules) and a leafy sprig (panel corners), in gold. */
+  --lotus: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 30' fill='none' stroke='%23b5884c' stroke-width='1.5' stroke-linejoin='round' stroke-linecap='round'%3E%3Cpath d='M24 3C28.4 8 28.8 15.5 24 25C19.2 15.5 19.6 8 24 3z'/%3E%3Cpath d='M24 13C25.6 15.6 25.8 19 24 23C22.2 19 22.4 15.6 24 13z' fill='%23b5884c'/%3E%3Cpath d='M24 25C17 23.5 12.8 17.4 13.4 9C18.6 11 22.6 16 24 25z'/%3E%3Cpath d='M24 25C31 23.5 35.2 17.4 34.6 9C29.4 11 25.4 16 24 25z'/%3E%3Cpath d='M23.4 25.4C16 26.8 9.6 24 6.6 17.6C12.6 17 19 19.4 23.4 25.4z'/%3E%3Cpath d='M24.6 25.4C32 26.8 38.4 24 41.4 17.6C35.4 17 29 19.4 24.6 25.4z'/%3E%3C/svg%3E");
+  --sprig: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200' fill='none' stroke='%23a9814c' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath stroke-width='1.5' d='M-4 -2C26 20 56 48 80 82C96 104 108 122 120 142'/%3E%3Cpath stroke-width='1' d='M10 6L20 4'/%3E%3Cpath stroke-width='1.2' d='M20.0 4.0 Q20.6 -8.1 22.5 -10.6 Q24.4 -13.1 27.1 -15.5 Q29.7 -18.0 31.9 -18.3 Q34.0 -18.6 37.1 -20.2 Q40.1 -21.7 42.5 -21.4 Q44.9 -21.2 48.1 -22.3 Q51.4 -23.4 53.9 -22.9 Q56.4 -22.3 59.8 -23.3 Q63.1 -24.2 65.7 -23.5 Q68.2 -22.9 71.6 -23.7 Q74.9 -24.6 77.6 -23.7 Q80.3 -22.8 79.2 -20.3 Q78.0 -17.7 75.1 -15.8 Q72.2 -13.9 71.0 -11.5 Q69.8 -9.1 66.9 -7.3 Q63.9 -5.5 62.7 -3.2 Q61.4 -0.9 58.4 0.7 Q55.4 2.3 54.0 4.3 Q52.6 6.3 49.4 7.5 Q46.2 8.7 44.5 10.1 Q42.8 11.5 39.3 11.8 Q35.7 12.2 32.5 11.9 Q29.4 11.6 24.7 7.8 L20.0 4.0z'/%3E%3Cpath stroke-width='.7' d='M20.9 3.6 Q49.7 -10.3 77.3 -21.5 M30.9 -0.8 Q33.0 -9.0 35.6 -16.0 M30.9 -0.8 Q38.3 3.0 45.4 5.8 M40.5 -5.1 Q43.0 -12.4 46.0 -18.8 M40.5 -5.1 Q47.6 -2.1 54.3 -0.0 M50.1 -9.4 Q53.3 -15.3 56.7 -20.6 M50.1 -9.4 Q56.6 -7.8 62.8 -6.9 M59.8 -13.7 Q63.7 -18.0 67.7 -21.9 M59.8 -13.7 Q65.6 -13.7 71.2 -14.2'/%3E%3Cpath stroke-width='1' d='M8 6L6 18'/%3E%3Cpath stroke-width='1.2' d='M6.0 18.0 Q14.3 25.2 15.0 28.0 Q15.8 30.7 16.0 34.0 Q16.3 37.3 15.3 39.0 Q14.4 40.7 13.8 43.7 Q13.2 46.8 11.6 48.4 Q10.1 49.9 9.1 52.9 Q8.1 55.8 6.3 57.3 Q4.5 58.8 3.3 61.7 Q2.1 64.6 0.2 66.1 Q-1.8 67.6 -3.0 70.5 Q-4.2 73.4 -6.4 74.8 Q-8.5 76.2 -9.7 74.0 Q-10.9 71.7 -10.7 68.6 Q-10.4 65.4 -11.5 63.2 Q-12.5 61.0 -12.1 57.9 Q-11.8 54.8 -12.7 52.6 Q-13.6 50.4 -13.1 47.3 Q-12.6 44.3 -13.2 42.2 Q-13.9 40.1 -12.9 37.1 Q-12.0 34.1 -12.1 32.1 Q-12.1 30.2 -10.4 27.4 Q-8.6 24.7 -6.7 22.6 Q-4.7 20.5 0.6 19.2 L6.0 18.0z'/%3E%3Cpath stroke-width='.7' d='M5.8 19.0 Q-0.4 47.3 -7.8 73.3 M3.4 28.5 Q8.0 34.6 11.6 40.4 M3.4 28.5 Q-3.6 31.7 -9.5 35.2 M1.1 37.8 Q4.9 43.7 7.8 49.4 M1.1 37.8 Q-5.1 41.2 -10.3 44.8 M-1.3 47.1 Q1.2 52.7 3.0 58.1 M-1.3 47.1 Q-6.1 50.9 -10.2 54.8 M-3.6 56.4 Q-2.7 61.6 -2.2 66.7 M-3.6 56.4 Q-6.8 60.6 -9.6 64.8'/%3E%3Cpath stroke-width='1' d='M38 28L50 30'/%3E%3Cpath stroke-width='1.2' d='M50.0 30.0 Q60.6 17.8 64.6 16.7 Q68.7 15.7 73.5 15.3 Q78.3 14.9 80.8 16.3 Q83.3 17.7 87.8 18.6 Q92.2 19.5 94.5 21.7 Q96.8 24.0 101.2 25.5 Q105.5 26.9 107.7 29.6 Q109.9 32.3 114.2 34.0 Q118.4 35.7 120.6 38.5 Q122.7 41.4 127.0 43.2 Q131.2 45.0 133.3 48.2 Q135.4 51.3 132.1 53.1 Q128.8 54.9 124.2 54.5 Q119.6 54.1 116.3 55.6 Q113.1 57.1 108.5 56.6 Q104.0 56.1 100.7 57.4 Q97.5 58.8 93.0 58.0 Q88.5 57.3 85.4 58.2 Q82.3 59.1 78.0 57.8 Q73.6 56.4 70.7 56.5 Q67.9 56.6 63.8 54.0 Q59.8 51.4 56.7 48.6 Q53.6 45.7 51.8 37.9 L50.0 30.0z'/%3E%3Cpath stroke-width='.7' d='M51.0 30.2 Q93.0 39.4 131.1 50.2 M65.4 33.8 Q74.3 27.0 82.9 21.8 M65.4 33.8 Q70.1 44.0 75.2 52.7 M79.0 37.2 Q87.7 31.6 96.0 27.3 M79.0 37.2 Q84.0 46.3 89.4 53.9 M92.7 40.6 Q100.9 37.0 108.8 34.3 M92.7 40.6 Q98.2 47.7 103.9 53.8 M106.4 44.1 Q113.9 42.7 121.4 42.0 M106.4 44.1 Q112.4 48.8 118.7 52.9'/%3E%3Cpath stroke-width='1' d='M44 34L44 48'/%3E%3Cpath stroke-width='1.2' d='M44.0 48.0 Q56.7 52.9 58.7 55.8 Q60.7 58.6 62.4 62.3 Q64.1 66.0 63.7 68.4 Q63.3 70.8 63.9 74.6 Q64.5 78.3 63.3 80.8 Q62.2 83.3 62.3 87.1 Q62.4 91.0 60.9 93.5 Q59.4 96.0 59.3 99.8 Q59.2 103.7 57.6 106.2 Q55.9 108.8 55.7 112.6 Q55.5 116.5 53.6 119.0 Q51.7 121.6 49.4 119.5 Q47.0 117.4 46.0 113.6 Q45.0 109.9 42.8 107.8 Q40.7 105.6 39.8 101.9 Q38.9 98.1 36.9 96.0 Q34.9 93.8 34.2 90.1 Q33.5 86.3 31.9 84.1 Q30.3 81.9 30.1 78.1 Q29.9 74.3 29.0 72.0 Q28.1 69.8 29.0 65.8 Q29.9 61.9 31.2 58.6 Q32.6 55.4 38.3 51.7 L44.0 48.0z'/%3E%3Cpath stroke-width='.7' d='M44.1 49.0 Q49.0 84.7 51.3 117.9 M45.4 61.2 Q53.3 66.4 59.9 71.6 M45.4 61.2 Q38.7 67.9 33.3 74.4 M46.6 73.0 Q53.6 78.2 59.3 83.6 M46.6 73.0 Q40.9 79.6 36.4 86.0 M47.9 84.8 Q53.1 90.2 57.5 95.7 M47.9 84.8 Q43.9 91.2 40.7 97.5 M49.1 96.6 Q52.3 102.2 55.1 107.9 M49.1 96.6 Q47.1 102.7 45.6 108.8'/%3E%3Cpath stroke-width='1' d='M76 76L90 76'/%3E%3Cpath stroke-width='1.2' d='M90.0 76.0 Q100.5 67.7 104.1 67.6 Q107.7 67.5 111.7 68.2 Q115.7 68.9 117.8 70.7 Q119.9 72.6 123.5 74.2 Q127.1 75.9 128.9 78.4 Q130.8 80.8 134.2 82.9 Q137.6 84.9 139.4 87.7 Q141.1 90.4 144.5 92.6 Q147.9 94.8 149.5 97.8 Q151.2 100.7 147.9 101.7 Q144.7 102.7 140.7 101.9 Q136.8 101.2 133.6 101.9 Q130.5 102.7 126.6 101.7 Q122.7 100.8 119.6 101.3 Q116.6 101.8 112.8 100.5 Q109.1 99.2 106.3 99.1 Q103.5 99.0 100.2 96.7 Q96.8 94.3 94.3 91.8 Q91.8 89.2 90.9 82.6 L90.0 76.0z'/%3E%3Cpath stroke-width='.7' d='M90.9 76.4 Q121.0 87.4 148.1 99.5 M101.0 80.5 Q108.4 76.3 115.3 73.3 M101.0 80.5 Q103.5 88.5 106.3 95.5 M110.8 84.4 Q117.8 81.1 124.4 78.8 M110.8 84.4 Q113.6 91.6 116.7 97.9 M120.6 88.4 Q127.0 86.5 133.2 85.4 M120.6 88.4 Q123.9 94.2 127.6 99.3 M130.4 92.3 Q136.2 92.1 141.8 92.4 M130.4 92.3 Q134.4 96.4 138.6 100.2'/%3E%3Cpath stroke-width='1' d='M86 90L88 100'/%3E%3Cpath stroke-width='1.2' d='M88.0 100.0 Q98.8 101.4 100.9 103.5 Q103.0 105.6 104.9 108.3 Q106.8 111.0 106.9 113.3 Q107.0 115.6 108.1 118.7 Q109.1 121.7 108.7 124.2 Q108.3 126.7 109.1 129.9 Q109.8 133.1 109.2 135.7 Q108.6 138.3 109.2 141.5 Q109.8 144.8 109.0 147.4 Q108.2 150.1 105.8 148.7 Q103.4 147.4 101.6 144.6 Q99.8 141.8 97.5 140.4 Q95.3 139.0 93.6 136.2 Q92.0 133.3 89.9 131.8 Q87.9 130.3 86.5 127.4 Q85.2 124.4 83.7 122.7 Q82.2 121.0 81.6 117.7 Q81.1 114.4 81.1 111.5 Q81.2 108.6 84.6 104.3 L88.0 100.0z'/%3E%3Cpath stroke-width='.7' d='M88.4 100.9 Q98.9 124.7 107.2 147.6 M91.6 109.0 Q98.2 111.0 103.9 113.4 M91.6 109.0 Q88.3 115.0 85.8 120.7 M94.9 117.0 Q100.8 119.3 105.9 121.9 M94.9 117.0 Q92.2 122.8 90.3 128.2 M98.1 125.0 Q102.9 127.8 107.0 130.7 M98.1 125.0 Q96.6 130.3 95.7 135.3 M101.4 133.0 Q104.7 136.3 107.8 139.8 M101.4 133.0 Q101.2 137.8 101.4 142.4'/%3E%3Cpath stroke-width='1' d='M112 128L124 130'/%3E%3Cpath stroke-width='1.2' d='M124.0 130.0 Q132.4 124.3 135.1 124.4 Q137.8 124.5 140.8 125.3 Q143.8 126.0 145.3 127.5 Q146.8 129.0 149.4 130.4 Q152.0 131.9 153.3 133.8 Q154.5 135.8 157.0 137.5 Q159.5 139.3 160.7 141.4 Q161.9 143.6 164.3 145.4 Q166.8 147.3 167.8 149.6 Q168.9 151.9 166.4 152.5 Q163.9 153.1 161.0 152.3 Q158.0 151.5 155.6 151.9 Q153.2 152.3 150.3 151.4 Q147.4 150.5 145.0 150.7 Q142.7 150.9 140.0 149.7 Q137.2 148.6 135.1 148.3 Q133.0 148.1 130.6 146.1 Q128.2 144.2 126.4 142.2 Q124.6 140.1 124.3 135.1 L124.0 130.0z'/%3E%3Cpath stroke-width='.7' d='M124.9 130.4 Q146.8 140.3 166.7 150.8 M132.1 133.9 Q137.9 131.2 143.2 129.3 M132.1 133.9 Q133.5 140.2 135.3 145.6 M139.3 137.5 Q144.8 135.4 149.9 134.0 M139.3 137.5 Q141.0 143.1 143.1 148.0 M146.5 141.0 Q151.4 139.9 156.2 139.4 M146.5 141.0 Q148.7 145.5 151.2 149.6 M153.7 144.5 Q158.0 144.6 162.3 145.1 M153.7 144.5 Q156.5 147.8 159.4 150.8'/%3E%3C/svg%3E");
+  /* Lighter in the middle and equally shaded at the top and bottom edges, so
+     two maroon sections meet at the same colour. */
+  --maroon-bg:
+    radial-gradient(130% 90% at 50% 45%, rgba(255, 228, 190, 0.07), transparent 65%),
+    linear-gradient(to bottom, rgba(25, 0, 6, 0.24), transparent 28%, transparent 72%, rgba(25, 0, 6, 0.24)),
+    var(--grain), var(--brand);
   color-scheme: light;
 }
 
@@ -40,7 +59,7 @@ html {
 
 body {
   margin: 0;
-  background: var(--ivory);
+  background: var(--paper-bg);
   color: var(--ink);
   font-family: var(--font-mukta), sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -69,9 +88,9 @@ button {
 .eyebrow {
   font-size: 13px;
   font-weight: 600;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--maroon);
+  color: var(--gold-deep);
 }
 .on-dark .eyebrow,
 .eyebrow.light {
@@ -102,15 +121,14 @@ button {
   color: var(--on-dark);
 }
 
-/* The dotted gold band that separates sections. */
+/* The band that separates sections: a gold rule with a lotus at its centre. */
 .dot-band {
-  height: 9px;
-  border-top: 1.5px solid var(--gold);
-  border-bottom: 1.5px solid var(--gold);
-  background-image: radial-gradient(circle, var(--gold) 1.3px, transparent 1.7px);
-  background-size: 9px 9px;
-  background-position: center;
-  background-repeat: repeat-x;
+  height: 30px;
+  flex: none;
+  background:
+    var(--lotus) center / 46px 29px no-repeat,
+    linear-gradient(to left, var(--gold), transparent) left center / calc(50% - 34px) 1.5px no-repeat,
+    linear-gradient(to right, var(--gold), transparent) right center / calc(50% - 34px) 1.5px no-repeat;
 }
 
 /* Arch-topped frames used around photos. */
@@ -140,7 +158,7 @@ button {
   position: relative;
   overflow: hidden;
   border-radius: 50%;
-  background: #f1e8d2;
+  background: var(--sand-2);
 }
 
 /* Buttons */
@@ -168,14 +186,15 @@ button {
   background: var(--maroon-hover);
   color: var(--ivory);
 }
-/* On maroon sections a maroon button would disappear. */
+/* On maroon sections the main button is antique gold. */
 .on-dark .btn-primary {
-  background: var(--ivory);
-  color: var(--maroon);
+  background: var(--gold);
+  color: var(--ink);
+  box-shadow: none;
 }
 .on-dark .btn-primary:hover {
   background: var(--gold-light);
-  color: var(--maroon);
+  color: var(--ink);
 }
 .btn-primary:disabled {
   background: #9a7a7f;
@@ -324,6 +343,108 @@ button {
   object-fit: cover;
 }
 
+/* ── Heritage ornaments ─────────────────────────────────────────────────── */
+
+/* Every maroon section gets the shaded, grained surface. */
+.on-dark {
+  background: var(--maroon-bg);
+}
+
+/* Small gold capitals between two fine gold lines: "—— FEATURED PIECES ——". */
+.centered-head .eyebrow,
+.eyebrow.ruled {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+}
+.centered-head .eyebrow::before,
+.centered-head .eyebrow::after,
+.eyebrow.ruled::before,
+.eyebrow.ruled::after {
+  content: "";
+  width: clamp(28px, 5vw, 56px);
+  height: 1px;
+  background: currentColor;
+  opacity: 0.6;
+}
+
+/* A lotus rule under centred section titles, above the intro text. */
+.centered-head::after {
+  content: "";
+  order: 2;
+  width: 180px;
+  height: 26px;
+  background:
+    var(--lotus) center / 40px 25px no-repeat,
+    linear-gradient(to left, var(--gold), transparent) left center / 64px 1.5px no-repeat,
+    linear-gradient(to right, var(--gold), transparent) right center / 64px 1.5px no-repeat;
+}
+.centered-head > :not(.eyebrow, .section-title) {
+  order: 3;
+}
+
+/* Gold line-art sprigs in the corners of panels. They sit behind the content
+   (isolation keeps z-index: -1 inside the panel). */
+.ornate,
+.site-footer,
+.menu-panel,
+.empty-state {
+  position: relative;
+  isolation: isolate;
+}
+.mega {
+  isolation: isolate;
+}
+.ornate::before,
+.ornate::after,
+.mega::before,
+.mega::after,
+.site-footer::before,
+.site-footer::after,
+.menu-panel::after,
+.empty-state::before,
+.empty-state::after {
+  content: "";
+  position: absolute;
+  width: clamp(120px, 16vw, 190px);
+  aspect-ratio: 1;
+  background: var(--sprig) center / contain no-repeat;
+  opacity: 0.6;
+  pointer-events: none;
+  z-index: -1;
+}
+.ornate::before,
+.mega::before,
+.site-footer::before,
+.empty-state::before {
+  top: 0;
+  left: 0;
+}
+.ornate::after,
+.mega::after,
+.site-footer::after,
+.menu-panel::after,
+.empty-state::after {
+  right: 0;
+  bottom: 0;
+  transform: rotate(180deg);
+}
+.on-dark.ornate::before,
+.on-dark.ornate::after,
+.site-footer::before,
+.site-footer::after {
+  opacity: 0.3;
+}
+.empty-state::before,
+.empty-state::after {
+  width: 110px;
+}
+
+/* Gold words inside a headline: "Worn like a story." */
+.gold-text {
+  color: var(--gold-light);
+}
+
 /* ── Header ─────────────────────────────────────────────────────────────── */
 
 .site-header {
@@ -332,9 +453,13 @@ button {
 }
 .announce {
   background: var(--brand-deep);
-  color: var(--ivory);
-  font-size: 13.5px;
+  color: var(--gold-light);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
   line-height: 1.3;
+  border-bottom: 1px solid var(--brand-line);
 }
 .announce-row {
   padding-block: 8px;
@@ -352,8 +477,10 @@ button {
   background: var(--gold);
 }
 .header-bar {
-  background: var(--brand);
+  background: var(--maroon-bg);
+  /* A double gold rule under the header. */
   border-bottom: 1px solid var(--gold);
+  box-shadow: 0 3px 0 -1px var(--brand-deep), 0 4px 0 -1px rgba(196, 162, 101, 0.6);
 }
 .header-row {
   max-width: 1360px;
@@ -424,6 +551,8 @@ button {
 .icon-btn {
   width: 44px;
   height: 44px;
+  /* Never let a crowded header row shrink a 44px tap target. */
+  flex: none;
   border: none;
   background: transparent;
   display: flex;
@@ -449,6 +578,16 @@ button {
   background: var(--gold);
   margin-right: 6px;
 }
+/* The mobile row carries the menu button, the wordmark and three 44px icons,
+   which at 390px leaves the design's 12px gaps nothing to spare. Tighten the
+   gaps and the outer padding instead of letting a tap target shrink. Must
+   stay after .header-row: a media query adds no specificity. */
+@media (max-width: 959px) {
+  .header-row {
+    gap: 8px;
+    padding: 0 8px 0 12px;
+  }
+}
 /* Wishlist hearts (Design/ProductCard.dc.html, Design/Product.dc.html) */
 .heart-card {
   position: absolute;
@@ -467,7 +606,7 @@ button {
   width: 34px;
   height: 34px;
   border-radius: 50%;
-  background: var(--ivory);
+  background: var(--paper);
   border: 1px solid var(--line-2);
   display: flex;
   align-items: center;
@@ -518,7 +657,7 @@ button {
   height: 44px;
   padding: 0 14px;
   border: 1px solid var(--gold);
-  background: var(--ivory);
+  background: var(--paper);
   color: var(--ink);
   font-size: 16px;
   border-radius: 2px;
@@ -529,7 +668,7 @@ button {
   left: 0;
   right: 0;
   top: 100%;
-  background: var(--ivory);
+  background: var(--paper-bg);
   box-shadow: 0 24px 32px -24px rgba(26, 20, 16, 0.45);
 }
 .mega-grid {
@@ -573,7 +712,7 @@ button {
 .menu-panel,
 .cart-panel {
   height: 100%;
-  background: var(--ivory);
+  background: var(--paper-bg);
   display: flex;
   flex-direction: column;
 }
@@ -587,7 +726,7 @@ button {
   box-shadow: -8px 0 30px rgba(26, 20, 16, 0.25);
 }
 .panel-head {
-  background: var(--brand);
+  background: var(--maroon-bg);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -747,19 +886,83 @@ button {
 /* ── Footer ─────────────────────────────────────────────────────────────── */
 
 .site-footer {
-  background: var(--brand);
+  /* Deeper than the page's maroon sections, so the footer reads as its own band. */
+  background:
+    radial-gradient(70% 55% at 50% 0%, rgba(255, 228, 190, 0.08), transparent 70%), var(--grain),
+    linear-gradient(to bottom, #571220, #3c0a12);
   color: var(--ivory);
 }
+/* A painted Mithila border: gold triangles and dots between two gold lines. */
+.mithila-border {
+  height: 22px;
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='16'%3E%3Cpath d='M0 1.5H18M0 14.5H18' stroke='%23c4a265' stroke-width='1.2'/%3E%3Cpath d='M2.2 12L6.6 4.6L11 12z' fill='%23c4a265'/%3E%3Ccircle cx='14.6' cy='8.4' r='1.3' fill='%23c4a265'/%3E%3C/svg%3E")
+      center / 18px 16px repeat-x,
+    var(--brand-deep);
+  border-top: 1px solid var(--gold);
+  border-bottom: 1px solid rgba(196, 162, 101, 0.5);
+}
+.footer-brand {
+  padding-block: clamp(40px, 5vw, 60px) 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 4px;
+}
+.footer-brand .logo-badge {
+  box-shadow: 0 0 0 2px var(--gold), 0 0 0 7px rgba(196, 162, 101, 0.18);
+  margin-bottom: 10px;
+}
+.footer-wordmark {
+  font-size: clamp(30px, 3.4vw, 40px);
+  line-height: 1.05;
+  color: var(--ivory);
+}
+.footer-wordmark-hi {
+  font-size: 18px;
+  line-height: 1.2;
+  color: var(--gold-light);
+}
+.footer-tagline {
+  margin-top: 8px;
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+.footer-promise {
+  margin: 0;
+  font-size: 15.5px;
+  color: var(--on-dark);
+}
 .footer-grid {
-  padding-block: 56px 28px;
+  padding-block: 28px 44px;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 190px), 1fr));
-  gap: 40px 32px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 36px 24px;
+}
+@media (min-width: 900px) {
+  .footer-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0;
+  }
+  .footer-col {
+    padding-inline: 28px;
+  }
+  .footer-col:first-child {
+    padding-left: 0;
+  }
+  .footer-col + .footer-col {
+    border-left: 1px solid var(--brand-line);
+  }
 }
 .footer-col {
   display: flex;
   flex-direction: column;
   gap: 2px;
+  min-width: 0;
 }
 .footer-col a {
   color: var(--ivory);
@@ -768,6 +971,7 @@ button {
   min-height: 32px;
   display: flex;
   align-items: center;
+  overflow-wrap: anywhere;
 }
 .footer-col a:hover {
   color: var(--gold-light);
@@ -775,16 +979,33 @@ button {
 .footer-head {
   font-size: 12.5px;
   font-weight: 600;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--gold-light);
+  padding-bottom: 10px;
   margin-bottom: 8px;
+  background: linear-gradient(var(--gold), var(--gold)) left bottom / 28px 1px no-repeat;
 }
 .footer-base {
-  padding-block: 18px 28px;
+  background: rgba(20, 0, 5, 0.28);
   border-top: 1px solid var(--brand-line);
-  font-size: 13.5px;
-  color: #d8d1bf;
+  font-size: 13px;
+  color: var(--on-dark);
+}
+.footer-base-row {
+  padding-block: 16px 22px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 6px 24px;
+}
+/* Bigger sprigs in the footer, clear of the border strip. */
+.site-footer::before,
+.site-footer::after {
+  width: clamp(150px, 20vw, 250px);
+}
+.site-footer::before {
+  top: 23px;
 }
 
 /* ── Product card ───────────────────────────────────────────────────────── */
@@ -801,12 +1022,12 @@ button {
   position: relative;
   overflow: hidden;
   aspect-ratio: 3 / 4;
-  background: #f1e8d2;
+  background: var(--sand-2);
 }
 .card-inset {
   position: absolute;
   inset: 7px;
-  outline: 1px solid var(--line-2);
+  outline: 1px solid rgba(234, 214, 168, 0.85);
   pointer-events: none;
 }
 .card-body {
@@ -895,26 +1116,52 @@ button {
   text-transform: uppercase;
   color: var(--gold-light);
 }
+/* The promise strip under the hero: gold labels between fine gold dividers. */
+.promise-band {
+  background: var(--grain), var(--brand-deep);
+  color: var(--on-dark);
+  border-bottom: 1px solid var(--brand-line);
+}
 .promise-list {
   list-style: none;
   margin-block: 0;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 .promise {
   display: flex;
-  gap: 14px;
-  align-items: flex-start;
-  padding: 24px 20px 24px 0;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 4px;
+  padding: 20px clamp(8px, 2vw, 24px);
 }
-.promise-mark {
-  flex: none;
-  width: 14px;
-  height: 14px;
-  margin-top: 6px;
-  transform: rotate(45deg);
-  border: 1.5px solid var(--maroon);
-  box-shadow: inset 0 0 0 2.5px var(--ivory), inset 0 0 0 8px var(--gold);
+.promise + .promise {
+  border-left: 1px solid var(--brand-line);
+}
+.promise-title {
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--gold-light);
+}
+.promise-text {
+  font-size: 15px;
+  line-height: 1.45;
+  color: var(--on-dark);
+}
+@media (max-width: 600px) {
+  .promise {
+    padding-block: 16px;
+  }
+  .promise-title {
+    font-size: 11px;
+    letter-spacing: 0.12em;
+  }
+  .promise-text {
+    display: none;
+  }
 }
 .centered-head {
   display: flex;
@@ -924,7 +1171,7 @@ button {
   text-align: center;
 }
 .clothing-feature {
-  background: var(--brand);
+  background: var(--maroon-bg);
   color: var(--ivory);
   border: 1.5px solid var(--gold);
   outline: 1px solid var(--gold);
@@ -963,6 +1210,7 @@ button {
   gap: 24px;
 }
 .section-card {
+  background: var(--paper);
   border: 3px double var(--gold);
   padding: 18px;
   display: flex;
@@ -989,9 +1237,11 @@ button {
   align-items: center;
   text-align: center;
   gap: 14px;
-  padding: 28px 20px 24px;
-  background: var(--ivory);
+  padding: 30px 22px 26px;
+  background: var(--paper);
   border: 1px solid var(--line-2);
+  /* An inner hairline frame, like a mount around a painting. */
+  box-shadow: inset 0 0 0 5px var(--paper), inset 0 0 0 6px var(--line-3);
   text-decoration: none;
   color: var(--ink);
 }
@@ -1110,7 +1360,7 @@ button {
   height: 44px;
   padding: 0 14px;
   border: 1px solid var(--line-2);
-  background: var(--ivory);
+  background: var(--paper);
   color: var(--ink);
   font-weight: 500;
   font-size: 15px;
@@ -1225,7 +1475,7 @@ button {
   display: none;
 }
 .sort-sheet {
-  background: var(--ivory);
+  background: var(--paper-bg);
   border-top: 2px solid var(--gold);
   padding: 8px 20px 24px;
 }
@@ -1275,7 +1525,7 @@ button {
     width: auto;
     max-height: none;
     z-index: 80;
-    background: var(--ivory);
+    background: var(--paper-bg);
     border-top: 2px solid var(--gold);
     padding: 0;
   }
@@ -1286,7 +1536,7 @@ button {
     position: sticky;
     top: 0;
     z-index: 1;
-    background: var(--ivory);
+    background: var(--paper);
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -1297,7 +1547,7 @@ button {
     position: sticky;
     bottom: 0;
     margin-top: auto;
-    background: var(--ivory);
+    background: var(--paper);
     border-top: 1px solid var(--line);
     padding: 12px 20px;
     display: flex;
@@ -1309,7 +1559,7 @@ button {
     right: 0;
     bottom: 0;
     z-index: 65;
-    background: var(--brand);
+    background: var(--maroon-bg);
     border-top: 1.5px solid var(--gold);
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -1374,7 +1624,7 @@ button {
   width: 76px;
   padding: 3px;
   border: 1px solid var(--line-2);
-  background: var(--ivory);
+  background: var(--paper);
 }
 .thumb.is-on {
   border: 2px solid var(--maroon);
@@ -1547,7 +1797,7 @@ button {
   height: 48px;
   padding: 0 14px;
   border: 1px solid var(--line-2);
-  background: #fffdf7;
+  background: var(--paper);
   color: var(--ink);
   font-size: 16px;
   font-weight: 400;
@@ -1756,7 +2006,7 @@ button {
 .admin-price,
 .admin-textarea {
   border: 1px solid var(--line-2);
-  background: #fffdf7;
+  background: var(--paper);
   color: var(--ink);
   font-size: 15px;
   border-radius: 2px;

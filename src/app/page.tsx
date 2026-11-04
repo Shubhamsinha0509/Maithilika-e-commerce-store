@@ -24,14 +24,14 @@ export default async function HomePage() {
 
   return (
     <>
-      <section aria-label="Featured piece" className="on-dark" style={{ background: "var(--brand)", color: "var(--ivory)" }}>
+      <section aria-label="Featured piece" className="on-dark ornate" style={{ color: "var(--ivory)" }}>
         <div className="wrap hero-grid">
           <div style={{ display: "flex", flexDirection: "column", gap: 22, maxWidth: 620 }}>
             <span className="eyebrow" style={{ display: "flex", alignItems: "center", gap: 12 }}>
               <span style={{ width: 28, height: 1.5, background: "var(--gold)" }} />
               Hand-painted Mithila art · मिथिला चित्रकला
             </span>
-            <h1 className="display hero-title">Painted by hand. Worn like a story.</h1>
+            <h1 className="display hero-title">Painted by hand. <span className="gold-text">Worn like a story.</span></h1>
             <p className="lede" style={{ fontSize: "clamp(16px, 1.4vw, 19px)", maxWidth: "50ch" }}>
               Every saree, cushion and canvas is painted line by line by a Mithila artist. Each piece carries the meaning of its motif.
             </p>
@@ -63,7 +63,7 @@ export default async function HomePage() {
         <div className="dot-band" />
       </section>
 
-      <section aria-label="Our promise" style={{ borderBottom: "1px solid var(--line)" }}>
+      <section aria-label="Our promise" className="promise-band">
         <ul className="wrap promise-list">
           {[
             ["100% hand-painted", "No prints, no stencils. Every line is drawn by hand."],
@@ -71,11 +71,8 @@ export default async function HomePage() {
             ["Made to order", "Some pieces are painted for you after you order."],
           ].map(([title, text]) => (
             <li key={title} className="promise">
-              <span className="promise-mark" />
-              <span style={{ display: "flex", flexDirection: "column", gap: 2 }}>
-                <span style={{ fontWeight: 600, fontSize: 16.5 }}>{title}</span>
-                <span style={{ fontSize: 14.5, color: "var(--muted)", lineHeight: 1.45 }}>{text}</span>
-              </span>
+              <span className="promise-title">{title}</span>
+              <span className="promise-text">{text}</span>
             </li>
           ))}
         </ul>
@@ -142,7 +139,7 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section id="motifs" aria-labelledby="motif-title" style={{ marginTop: "clamp(56px, 8vw, 104px)", background: "var(--sand)", scrollMarginTop: 20 }}>
+      <section id="motifs" aria-labelledby="motif-title" className="ornate" style={{ marginTop: "clamp(56px, 8vw, 104px)", background: "var(--grain), var(--sand)", scrollMarginTop: 20 }}>
         <div className="dot-band" />
         <div className="wrap" style={{ paddingBlock: "clamp(48px, 6vw, 80px)", display: "flex", flexDirection: "column", gap: 36 }}>
           <div className="centered-head">
@@ -177,7 +174,7 @@ export default async function HomePage() {
         <Link href="/clothing" className="btn btn-outline" style={{ alignSelf: "center", padding: "0 28px" }}>See all new pieces</Link>
       </section>
 
-      <section id="story" aria-labelledby="story-title" className="on-dark" style={{ background: "var(--brand)", color: "var(--ivory)", scrollMarginTop: 20 }}>
+      <section id="story" aria-labelledby="story-title" className="on-dark ornate" style={{ color: "var(--ivory)", scrollMarginTop: 20 }}>
         <div className="dot-band" />
         <div className="wrap" style={{ paddingBlock: "clamp(56px, 7vw, 96px)", display: "flex", flexDirection: "column", gap: 40 }}>
           <div style={{ display: "flex", flexDirection: "column", gap: 8, maxWidth: 640 }}>

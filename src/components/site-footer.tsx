@@ -1,10 +1,10 @@
 import Link from "next/link";
 import { Logo } from "@/components/logo";
-import { SECTIONS, sectionHref } from "@/lib/store";
+import { CONTACT_EMAIL, SECTIONS, sectionHref } from "@/lib/store";
 
 /**
- * Help and policy links, the studio address and contact details are hidden
- * until those pages and details exist (docs/plan.md).
+ * Help and policy links and the studio address are hidden until those pages
+ * and details exist (docs/plan.md).
  */
 export function SiteFooter() {
   return (
@@ -35,6 +35,11 @@ export function SiteFooter() {
           <Link href="/#motifs">Motif meanings</Link>
           <Link href="/order">Track your order</Link>
         </nav>
+        <div className="footer-col">
+          <span className="footer-head">Write to us</span>
+          <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
+          <span style={{ fontSize: 14, color: "var(--on-dark)" }}>Questions about a piece, an order or a delivery.</span>
+        </div>
       </div>
       <div className="wrap footer-base">
         <span>© Maithilika. Every piece painted by hand in Mithila.</span>

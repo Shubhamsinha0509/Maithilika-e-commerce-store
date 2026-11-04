@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useCart } from "@/components/cart";
 import { CartDrawer } from "@/components/cart-drawer";
 import { Logo } from "@/components/logo";
@@ -37,8 +37,15 @@ export function SiteHeader({ featured, paymentsEnabled }: Props) {
     return () => window.removeEventListener(OPEN_MENU_EVENT, openDrawer);
   }, []);
 
+  // A touch tap on a section name opens its menu first; a mouse click (the
+  // menu is already open on hover) or a keyboard Enter goes straight to it.
+  const touchTap = useRef(false);
+
   // Any link click inside the header closes whatever menu is open. Pages stay
   // mounted between navigations, so state would otherwise survive the click.
+  // This runs in the bubble phase, after the link's own onClick: closing the
+  // menu first would make the section link think it was closed and reopen it
+  // instead of navigating.
   const closeOnLink = (e: React.MouseEvent) => {
     if ((e.target as HTMLElement).closest("a")) {
       setMenu(null);
@@ -57,7 +64,7 @@ export function SiteHeader({ featured, paymentsEnabled }: Props) {
   const openSection = SECTIONS.find((s) => s.key === menu);
 
   return (
-    <div className="site-header" onMouseLeave={() => setMenu(null)} onClickCapture={closeOnLink}>
+    <div className="site-header" onMouseLeave={() => setMenu(null)} onClick={closeOnLink}>
       <div className="announce">
         <div className="wrap announce-row">
           <span className="desktop-only" style={{ display: "contents" }}>
@@ -90,13 +97,15 @@ export function SiteHeader({ featured, paymentsEnabled }: Props) {
                 aria-expanded={menu === s.key}
                 className={menu === s.key ? "is-open" : undefined}
                 onPointerEnter={(e) => e.pointerType === "mouse" && setMenu(s.key)}
+                onPointerDown={(e) => { touchTap.current = e.pointerType !== "mouse"; }}
                 onClick={(e) => {
                   // First tap on touch opens the menu; the second follows the link.
-                  if (menu !== s.key) {
+                  if (touchTap.current && menu !== s.key) {
                     e.preventDefault();
                     e.stopPropagation();
                     setMenu(s.key);
                   }
+                  touchTap.current = false;
                 }}
               >
                 {s.label}

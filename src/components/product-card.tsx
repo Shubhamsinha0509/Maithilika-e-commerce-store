@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { AddToBagButton } from "@/components/add-to-bag";
+import { WishlistButton } from "@/components/wishlist";
 import { cardCrop, cardMeta, inr, productHref, type Product } from "@/lib/store";
 
 export function ProductCard({ p }: { p: Product }) {
@@ -21,6 +22,7 @@ export function ProductCard({ p }: { p: Product }) {
           <span className="card-inset" />
         </Link>
         <span className="badge-painted">Hand-painted</span>
+        <WishlistButton id={p.id} variant="card" />
       </div>
       <div className="card-body">
         <Link href={productHref(p.id)} className="card-name">{p.name}</Link>

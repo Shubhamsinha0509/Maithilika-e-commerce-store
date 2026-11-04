@@ -449,6 +449,47 @@ button {
   background: var(--gold);
   margin-right: 6px;
 }
+/* Wishlist hearts (Design/ProductCard.dc.html, Design/Product.dc.html) */
+.heart-card {
+  position: absolute;
+  right: 4px;
+  top: 4px;
+  width: 44px;
+  height: 44px;
+  border: none;
+  background: transparent;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.heart-card > span {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--ivory);
+  border: 1px solid var(--line-2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.heart-card:hover > span {
+  border-color: var(--maroon);
+}
+.heart-detail {
+  width: 54px;
+  min-height: 54px;
+  flex: none;
+  border: 1.5px solid var(--maroon);
+  background: transparent;
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.heart-detail:hover {
+  background: var(--sand);
+}
 .bag-count {
   position: absolute;
   top: 4px;

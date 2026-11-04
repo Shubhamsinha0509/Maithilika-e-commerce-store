@@ -67,8 +67,11 @@ threshold) are constants in code, not tables.
   free above ₹2,999 until the owner sets real numbers.
 - Placeholder details (artist name, painting days, address, phone, email,
   return window, year) are hidden until real values exist.
-- The "Meet the artists" homepage section, WhatsApp links, the custom-order
-  section and the wishlist are removed.
+- The "Meet the artists" homepage section, WhatsApp links and the
+  custom-order section are removed.
+- Wishlist (added 2026-11-04 at the owner's request): a heart on cards and
+  product pages, `/wishlist`, and a header count. Saved in the browser like
+  the bag (product ids only, no account), so it is per device.
 - Owner's admin can manage orders and edit price, sold/available and
   hidden. Adding products with photos comes later.
 - Hosting: Vercel and Neon, Singapore region.
@@ -147,5 +150,6 @@ existing `MX`/`TXT` records, or the GoDaddy business email stops working.
 - Order confirmation emails (Resend, free tier)
 - Cash on Delivery
 - Automatic Shiprocket integration and PIN-code serviceability check
-- Wishlist, coupons, artist pages, invoices and GST breakdown
+- Wishlist synced across devices (needs customer accounts), coupons, artist
+  pages, invoices and GST breakdown
 - Image upload to cloud storage (images live in `public/images` for now)

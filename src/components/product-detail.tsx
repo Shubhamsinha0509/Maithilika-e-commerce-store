@@ -2,6 +2,7 @@
 
 import { useState, type CSSProperties } from "react";
 import { useCart } from "@/components/cart";
+import { WishlistButton } from "@/components/wishlist";
 import type { DetailTab } from "@/lib/product-details";
 import type { ImageLayout, Product, View } from "@/lib/store";
 
@@ -112,17 +113,20 @@ export function BuyBox({ p }: { p: Product }) {
           </div>
         </fieldset>
       )}
-      <button
-        className="btn btn-primary"
-        style={{ minHeight: 54, fontSize: 17 }}
-        disabled={choice === null && mustChoose}
-        onClick={() => {
-          add(p, p.options[choice ?? 0] ?? null);
-          setAdded(true);
-        }}
-      >
-        {label}
-      </button>
+      <div style={{ display: "flex", gap: 10 }}>
+        <button
+          className="btn btn-primary"
+          style={{ minHeight: 54, fontSize: 17, flex: 1 }}
+          disabled={choice === null && mustChoose}
+          onClick={() => {
+            add(p, p.options[choice ?? 0] ?? null);
+            setAdded(true);
+          }}
+        >
+          {label}
+        </button>
+        <WishlistButton id={p.id} variant="detail" />
+      </div>
     </>
   );
 }

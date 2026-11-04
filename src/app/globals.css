@@ -1016,6 +1016,7 @@ button {
   gap: 12px;
   min-width: 0;
   height: 100%;
+  container: card / inline-size;
 }
 .card-photo {
   display: block;
@@ -1050,13 +1051,26 @@ button {
   line-height: 1.4;
   color: var(--muted);
 }
+/* The price and the button sit at the bottom of the card, so they line up
+   across a row even when a name or its fabric line wraps to two lines. */
 .card-price-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 6px 8px;
   flex-wrap: wrap;
-  margin-top: 6px;
+  margin-top: auto;
+  padding-top: 6px;
+}
+/* On narrow cards the price and its badge don't reliably fit on one line.
+   Stack them on every narrow card, not just the ones that happen to wrap,
+   so a row of same-width cards stays aligned. */
+@container card (max-width: 215px) {
+  .card-price-row {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
 }
 .card-add {
   margin-top: 10px;

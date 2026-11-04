@@ -1,11 +1,7 @@
 import Link from "next/link";
 import { Logo } from "@/components/logo";
+import { POLICY_LINKS } from "@/lib/policies";
 import { CONTACT_EMAIL, SECTIONS, sectionHref } from "@/lib/store";
-
-/**
- * Help and policy links and the studio address are hidden until those pages
- * and details exist (docs/plan.md).
- */
 export function SiteFooter() {
   return (
     <footer className="site-footer">
@@ -34,6 +30,12 @@ export function SiteFooter() {
           <Link href="/#story">Our Story</Link>
           <Link href="/#motifs">Motif meanings</Link>
           <Link href="/order">Track your order</Link>
+        </nav>
+        <nav aria-label="Help" className="footer-col">
+          <span className="footer-head">Help</span>
+          {POLICY_LINKS.map((l) => (
+            <Link key={l.href} href={l.href}>{l.label}</Link>
+          ))}
         </nav>
         <div className="footer-col">
           <span className="footer-head">Write to us</span>

@@ -213,6 +213,10 @@ export function CheckoutForm({ paymentsEnabled }: { paymentsEnabled: boolean }) 
           <button type="button" className="btn btn-primary" disabled style={{ minHeight: 54, fontSize: 17 }}>Checkout opens soon</button>
         )}
         <p className="field-help" style={{ textAlign: "center" }}>Secure payment by Razorpay: UPI, cards and netbanking.</p>
+        <p className="field-help" style={{ textAlign: "center" }}>
+          By paying you agree to our <Link href="/policies/terms">terms</Link>, <Link href="/policies/shipping">shipping</Link> and{" "}
+          <Link href="/policies/refunds">returns and refunds</Link> policies.
+        </p>
       </form>
 
       <aside className="checkout-summary" aria-label="Order summary">

@@ -86,7 +86,10 @@ with checkout.
 
 - The cart works; its Checkout button says "Checkout opens soon".
 - Search covers product names, motifs and fabrics.
-- Footer help and policy links are hidden until those pages exist.
+- Policy pages (`/contact`, `/policies/shipping`, `/policies/refunds`,
+  `/policies/terms`, `/policies/privacy`) are linked in the footer. Details
+  the owner hasn't confirmed show a "to be confirmed" marker; fill them in
+  `src/lib/policies.ts`.
 - Search engines are told not to index the site (`noindex`).
 
 ## Build order
@@ -125,7 +128,7 @@ with checkout.
 | Database | Create a free Neon project; send the two connection strings |
 | Payments | Razorpay account (needs PAN and bank details; activation takes a few days, so start now). Test keys work immediately |
 | Checkout | Shipping fee and free-shipping threshold |
-| Policy pages | Return window, shipping time, contact email/phone, address |
+| Policy pages (built; blanks in `src/lib/policies.ts`) | Legal name (as given to Razorpay), address, phone, court city; dispatch and delivery time; days to report damage; which pieces can be returned, return window and who pays return shipping; until when an order can be cancelled. Contact email is done |
 | Product pages | Artist names, villages and painting days (pages hide these until filled), lead time for the 4 made-to-order pieces |
 | Domain | `maithilika.com`, bought at GoDaddy. Contact email `support@maithilika.com` (GoDaddy Professional Email Pro Light, created 2026-11-04 as a **trial ending about 2026-11-22**: renew it, or move the same address to Zoho Mail's free plan before then) |
 

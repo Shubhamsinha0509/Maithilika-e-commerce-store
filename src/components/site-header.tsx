@@ -8,7 +8,7 @@ import { useCart } from "@/components/cart";
 import { CartDrawer } from "@/components/cart-drawer";
 import { Logo } from "@/components/logo";
 import { WishlistLink } from "@/components/wishlist";
-import { inr, SECTIONS, sectionHref, SHIPPING, type SectionKey } from "@/lib/store";
+import { inr, SECTIONS, sectionHref, type SectionKey } from "@/lib/store";
 
 export type MenuPiece = {
   id: string;
@@ -65,15 +65,6 @@ export function SiteHeader({ featured, paymentsEnabled }: Props) {
 
   return (
     <div className="site-header" onMouseLeave={() => setMenu(null)} onClick={closeOnLink}>
-      <div className="announce">
-        <div className="wrap announce-row">
-          <span className="desktop-only" style={{ display: "contents" }}>
-            <span>Free shipping across India on orders above {inr(SHIPPING.freeAboveRupees)}</span>
-            <span className="diamond" />
-          </span>
-          <span>Every piece painted by hand, never printed</span>
-        </div>
-      </div>
 
       <header className="header-bar">
         <div className="header-row">

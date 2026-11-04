@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { MAX_QTY, useCart } from "@/components/cart";
 import { inr, productHref, SHIPPING } from "@/lib/store";
@@ -35,8 +36,7 @@ export function CartDrawer({ paymentsEnabled }: { paymentsEnabled: boolean }) {
               {lines.map((l) => (
                 <li key={l.key} className="cart-line">
                   <Link href={productHref(l.id)} onClick={close} className="cart-thumb">
-                    {/* eslint-disable-next-line @next/next/no-img-element -- collage crop needs width > 100% */}
-                    <img src={l.image} alt="" style={{ width: l.crop.width, objectPosition: l.crop.position }} />
+                    <Image src={l.image} alt="" fill sizes="160px" style={{ width: l.crop.width, objectPosition: l.crop.position }} />
                   </Link>
                   <div style={{ display: "flex", flexDirection: "column", gap: 3, minWidth: 0 }}>
                     <Link href={productHref(l.id)} onClick={close} className="cart-name">{l.name}</Link>

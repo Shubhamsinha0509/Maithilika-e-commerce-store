@@ -106,8 +106,7 @@ export default async function HomePage() {
                   <span className="arch">
                     <span className="arch-inner" style={{ aspectRatio: "3 / 4.4", background: "var(--brand-stripe)" }}>
                       {p && crop && (
-                        // eslint-disable-next-line @next/next/no-img-element -- collage crop needs width > 100%
-                        <img src={p.image} alt={sub} className="crop-img" style={{ width: crop.width, objectPosition: crop.position }} />
+                        <Image src={p.image} alt={sub} fill sizes="(max-width: 760px) 70vw, 360px" className="crop-img" style={{ width: crop.width, objectPosition: crop.position }} />
                       )}
                     </span>
                   </span>

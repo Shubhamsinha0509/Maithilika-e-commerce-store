@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { ProductCard } from "@/components/product-card";
@@ -127,8 +128,7 @@ function ListingInner({ section, products, initialSub, initialMotif }: { section
                 <span className="arch">
                   <span className="arch-inner" style={{ aspectRatio: "3 / 3.8" }}>
                     {p && crop && (
-                      // eslint-disable-next-line @next/next/no-img-element -- collage crop needs width > 100%
-                      <img src={p.image} alt="" className="crop-img" style={{ width: crop.width, objectPosition: crop.position }} />
+                      <Image src={p.image} alt="" fill sizes="(max-width: 760px) 60vw, 320px" className="crop-img" style={{ width: crop.width, objectPosition: crop.position }} />
                     )}
                   </span>
                 </span>

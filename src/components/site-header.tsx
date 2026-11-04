@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -154,8 +155,7 @@ export function SiteHeader({ featured, paymentsEnabled }: Props) {
                   <Link key={m.id} href={`/product/${m.id}`} className="mega-piece">
                     <span className="circle-frame" style={{ padding: 4 }}>
                       <span className="circle-inner">
-                        {/* eslint-disable-next-line @next/next/no-img-element -- collage crop needs width > 100% */}
-                        <img src={m.image} alt="" className="crop-img" style={{ width: m.crop.width, objectPosition: m.crop.position }} />
+                        <Image src={m.image} alt="" fill sizes="280px" className="crop-img" style={{ width: m.crop.width, objectPosition: m.crop.position }} />
                       </span>
                     </span>
                     <span style={{ fontWeight: 600, fontSize: 15.5, lineHeight: 1.3 }}>{m.name}</span>
@@ -166,8 +166,7 @@ export function SiteHeader({ featured, paymentsEnabled }: Props) {
             </div>
             <div className="arch" style={{ padding: 7 }}>
               <div className="arch-inner" style={{ minHeight: 220 }}>
-                {/* eslint-disable-next-line @next/next/no-img-element -- decorative menu photo */}
-                <img src={openSection.photo} alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }} />
+                <Image src={openSection.photo} alt="" fill sizes="360px" style={{ objectFit: "cover" }} />
               </div>
             </div>
           </div>

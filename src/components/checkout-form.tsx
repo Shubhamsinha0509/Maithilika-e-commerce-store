@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -225,8 +226,7 @@ export function CheckoutForm({ paymentsEnabled }: { paymentsEnabled: boolean }) 
           {cart.lines.map((l) => (
             <li key={l.key} className="summary-line">
               <span className="cart-thumb" style={{ width: 56 }}>
-                {/* eslint-disable-next-line @next/next/no-img-element -- collage crop needs width > 100% */}
-                <img src={l.image} alt="" style={{ width: l.crop.width, objectPosition: l.crop.position }} />
+                <Image src={l.image} alt="" fill sizes="120px" style={{ width: l.crop.width, objectPosition: l.crop.position }} />
               </span>
               <span style={{ display: "flex", flexDirection: "column", gap: 2, minWidth: 0, flex: 1 }}>
                 <span style={{ fontWeight: 600, fontSize: 15, lineHeight: 1.3 }}>{l.name}</span>

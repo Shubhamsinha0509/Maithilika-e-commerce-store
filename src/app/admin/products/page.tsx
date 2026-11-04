@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { Suspense } from "react";
 import { updateProduct } from "@/app/admin/actions";
@@ -48,8 +49,7 @@ async function Products({ query }: { query: PageProps<"/admin/products">["search
                   <td>
                     <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
                       <span className="cart-thumb" style={{ width: 48 }}>
-                        {/* eslint-disable-next-line @next/next/no-img-element -- collage crop needs width > 100% */}
-                        <img src={p.image} alt="" style={{ width: crop.width, objectPosition: crop.position }} />
+                        <Image src={p.image} alt="" fill sizes="100px" style={{ width: crop.width, objectPosition: crop.position }} />
                       </span>
                       <span>
                         <Link href={productHref(p.id)} target="_blank" style={{ fontWeight: 600, color: "var(--ink)" }}>{p.name}</Link>

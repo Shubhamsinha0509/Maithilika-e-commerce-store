@@ -1,5 +1,6 @@
 "use client";
 
+import { getImageProps } from "next/image";
 import { useState, type CSSProperties } from "react";
 import { useCart } from "@/components/cart";
 import { WishlistButton } from "@/components/wishlist";
@@ -47,10 +48,19 @@ function cropStyle(image: string, layout: ImageLayout, view: View, extra?: CSSPr
   };
 }
 
+/**
+ * The gallery draws crops as CSS backgrounds, which next/image can't
+ * optimise on its own. This asks the image optimiser for one AVIF/WebP copy,
+ * 1080px wide (the full collage fills a ~500px box, so this is sharp on a 2x
+ * screen). Thumbnails reuse it.
+ */
+const galleryImage = (src: string) => getImageProps({ src, alt: "", width: 540, height: 540 }).props.src;
+
 export function Gallery({ p }: { p: Product }) {
   const views: View[] = p.layout.views?.length ? p.layout.views : [["Full view", 0, 0, p.layout.iw, p.layout.ih]];
   const [index, setIndex] = useState(0);
   const current = views[index] ?? views[0];
+  const image = galleryImage(p.image);
 
   return (
     <div className="gallery">
@@ -66,13 +76,13 @@ export function Gallery({ p }: { p: Product }) {
               className={i === index ? "thumb is-on" : "thumb"}
               style={{ aspectRatio: String(p.layout.ar) }}
             >
-              <span style={cropStyle(p.image, p.layout, v, { height: "100%" })} />
+              <span style={cropStyle(image, p.layout, v, { height: "100%" })} />
             </button>
           ))}
         </div>
       )}
       <div className="gallery-main">
-        <div role="img" aria-label={`${p.name}: ${current[0]}`} style={cropStyle(p.image, p.layout, current)} />
+        <div role="img" aria-label={`${p.name}: ${current[0]}`} style={cropStyle(image, p.layout, current)} />
         <span className="badge-painted" style={{ left: 20, top: 20, fontSize: 11 }}>Hand-painted</span>
         {views.length > 1 && <span className="view-label">{current[0]}</span>}
       </div>

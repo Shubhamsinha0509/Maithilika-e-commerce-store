@@ -69,6 +69,10 @@ threshold) are constants in code, not tables.
   return window, year) are hidden until real values exist.
 - The "Meet the artists" homepage section, WhatsApp links and the
   custom-order section are removed.
+- Images (2026-11-04): every photo goes through the image optimiser (AVIF,
+  WebP fallback), including the product gallery's CSS backgrounds. Optimised
+  copies are cached for 31 days, so **to replace a photo, upload it under a
+  new file name** (the same name would keep showing the old copy).
 - Wishlist (added 2026-11-04 at the owner's request): a heart on cards and
   product pages, `/wishlist`, and a header count. Saved in the browser like
   the bag (product ids only, no account), so it is per device.

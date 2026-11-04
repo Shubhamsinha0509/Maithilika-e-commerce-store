@@ -21,6 +21,8 @@ const yatra = Yatra_One({
 });
 
 export const metadata: Metadata = {
+  // Absolute links in share previews (og:image) use the shop's own domain.
+  metadataBase: new URL("https://www.maithilika.com"),
   title: {
     default: "Maithilika — Painted by hand. Worn like a story.",
     template: "%s · Maithilika",

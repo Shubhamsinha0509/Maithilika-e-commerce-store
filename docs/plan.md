@@ -129,7 +129,11 @@ with checkout.
 | Product pages | Artist names, villages and painting days (pages hide these until filled), lead time for the 4 made-to-order pieces |
 | Domain | `maithilika.com`, bought at GoDaddy. Contact email `support@maithilika.com` (GoDaddy Professional Email Pro Light, created 2026-11-04 as a **trial ending about 2026-11-22**: renew it, or move the same address to Zoho Mail's free plan before then) |
 
-**Connecting the domain (at launch):** keep the domain at GoDaddy and add
+**Domain connected 2026-11-04:** https://www.maithilika.com is the main
+address (`maithilika.com` redirects to it). GoDaddy DNS: `A @ 216.198.79.1`,
+`CNAME www a286f2b545c7ada3.vercel-dns-017.com`. Email records unchanged.
+
+**Connecting the domain:** keep the domain at GoDaddy and add
 only the website records Vercel asks for (an `A` record and a `CNAME` for
 `www`). Do **not** switch the nameservers to Vercel, and do not touch the
 existing `MX`/`TXT` records, or the GoDaddy business email stops working.

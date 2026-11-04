@@ -111,7 +111,6 @@ export function SiteHeader({ featured, paymentsEnabled }: Props) {
                 {s.label}
               </Link>
             ))}
-            <Link href="/#story" onPointerEnter={() => setMenu(null)}>Our Story</Link>
           </nav>
           <span className="mobile-only" style={{ flex: 1 }} />
 
@@ -218,7 +217,6 @@ export function SiteHeader({ featured, paymentsEnabled }: Props) {
                   </div>
                 );
               })}
-              <Link href="/#story" className="drawer-link">Our Story</Link>
             </div>
             <span style={{ marginTop: "auto", padding: 18, fontSize: 13.5, color: "var(--muted)", textAlign: "center" }}>
               Every piece painted by hand, never printed

@@ -127,7 +127,7 @@ with checkout.
 | Checkout | Shipping fee and free-shipping threshold |
 | Policy pages | Return window, shipping time, contact email/phone, address |
 | Product pages | Artist names, villages and painting days (pages hide these until filled), lead time for the 4 made-to-order pieces |
-| Domain | Bought at GoDaddy, with business email included. Need the domain name and which address to show as the shop's contact email |
+| Domain | `maithilika.com`, bought at GoDaddy. Contact email `support@maithilika.com` (GoDaddy Professional Email Pro Light, created 2026-11-04 as a **trial ending about 2026-11-22**: renew it, or move the same address to Zoho Mail's free plan before then) |
 
 **Connecting the domain (at launch):** keep the domain at GoDaddy and add
 only the website records Vercel asks for (an `A` record and a `CNAME` for

@@ -974,6 +974,17 @@ button {
   justify-content: space-between;
   gap: 6px 24px;
 }
+/* The developer credit sits on its own line, quieter than the shop's lines. */
+.footer-credit {
+  flex-basis: 100%;
+  padding-top: 8px;
+  border-top: 1px solid var(--brand-line);
+  text-align: center;
+  font-size: 12.5px;
+  letter-spacing: 0.04em;
+  color: var(--gold-light);
+  opacity: 0.85;
+}
 /* Bigger sprigs in the footer, clear of the border strip. */
 .site-footer::before,
 .site-footer::after {

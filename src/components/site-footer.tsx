@@ -49,6 +49,7 @@ export function SiteFooter() {
         <div className="wrap footer-base-row">
           <span>© Maithilika. Every piece painted by hand in Mithila.</span>
           <span>Secure payments by Razorpay · UPI · Cards · Netbanking</span>
+          <span className="footer-credit">Developed by Tanay Harsh and Shubham Sinha</span>
         </div>
       </div>
     </footer>

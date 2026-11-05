@@ -122,11 +122,18 @@ with checkout.
       webhook, confirmation page, order lookup (`/order`). Built and
       tested without Razorpay (validation; webhook signature, wrong amount,
       double delivery, sold marking). Switches on when the keys are set.
-- [ ] **2b. Test a real payment in Razorpay test mode.** Needs the owner's
-      test keys: add `RAZORPAY_KEY_ID`, `RAZORPAY_KEY_SECRET` and
-      `RAZORPAY_WEBHOOK_SECRET` to `.env` and to Vercel, add the webhook
-      (`https://<site>/api/razorpay/webhook`, event `payment.captured`),
-      then redeploy
+- [x] **2b. Test a real payment in Razorpay test mode.** Done 2026-11-05 on
+      the developer's machine with the owner's test keys (Razorpay account
+      in the name Nilu Devi; developer is a team Admin). Netbanking test
+      payment: order marked Paid with the Razorpay payment id, amount
+      matched Razorpay (captured), piece marked Sold, tracking page showed
+      Paid. Test order deleted and piece made available again. The test-mode
+      webhook is created in Razorpay (`payment.captured`).
+- [ ] **2c. Switch checkout on for the live site.** Add `RAZORPAY_KEY_ID`,
+      `RAZORPAY_KEY_SECRET`, `RAZORPAY_WEBHOOK_SECRET` (and the admin
+      variables) to Vercel, redeploy, and check the webhook delivery in
+      Razorpay. Test keys only take test payments, so do this together with
+      the live keys, or briefly to test the webhook
 - [x] **3. Admin:** `/admin` with one password. Orders by status with
       search; order detail (status, tracking link, note; unpaid orders can
       only be cancelled); products (price, sold, hidden). Tested end to end

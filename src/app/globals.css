@@ -974,16 +974,34 @@ button {
   justify-content: space-between;
   gap: 6px 24px;
 }
-/* The developer credit sits on its own line, quieter than the shop's lines. */
+/* The developers' credit: a lotus rule, a small gold line, the names in the
+   display font. */
 .footer-credit {
-  flex-basis: 100%;
-  padding-top: 8px;
-  border-top: 1px solid var(--brand-line);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 0 20px 28px;
   text-align: center;
-  font-size: 12.5px;
-  letter-spacing: 0.04em;
+}
+.footer-credit .dot-band {
+  width: min(100%, 260px);
+}
+.footer-credit-label {
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+.footer-credit-names {
+  font-size: clamp(19px, 2vw, 23px);
+  line-height: 1.25;
   color: var(--gold-light);
-  opacity: 0.85;
+}
+.footer-credit-amp {
+  margin-inline: 0.25em;
+  color: var(--gold);
 }
 /* Bigger sprigs in the footer, clear of the border strip. */
 .site-footer::before,

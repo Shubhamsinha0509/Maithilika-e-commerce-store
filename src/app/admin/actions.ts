@@ -66,6 +66,16 @@ export async function cancelUnpaidOrder(form: FormData) {
   redirect(`/admin/orders/${encodeURIComponent(orderNumber)}?saved=1`);
 }
 
+const requestRef = z.object({ id: z.string().min(1).max(40) });
+
+export async function markRequestContacted(form: FormData) {
+  await requireAdmin();
+  const parsed = requestRef.safeParse(Object.fromEntries(form));
+  if (!parsed.success) redirect("/admin/requests");
+  await prisma.customRequest.updateMany({ where: { id: parsed.data.id, contactedAt: null }, data: { contactedAt: new Date() } });
+  redirect("/admin/requests");
+}
+
 const productUpdate = z.object({
   id: z.string().min(1).max(100),
   price: z.coerce.number().int("Price must be a whole number of rupees").min(1).max(10_000_000),

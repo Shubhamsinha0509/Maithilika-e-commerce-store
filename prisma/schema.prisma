@@ -1,6 +1,6 @@
 // Maithilika — Prisma schema.
 //
-// Deliberately small: two tables. Categories, motif meanings and store
+// Deliberately small: three tables. Categories, motif meanings and store
 // settings are constants in code; there are no customer accounts at launch
 // (guest checkout only), and the admin signs in with a password from .env.
 // See docs/plan.md.
@@ -115,4 +115,24 @@ model Order {
 
   @@index([email])
   @@index([status, createdAt])
+}
+
+/// A customer asking for a piece to be painted for them. The owner calls them back.
+model CustomRequest {
+  id String @id @default(cuid())
+
+  /// Saree | Painting
+  type   String
+  /// Silk | Cotton. Sarees only.
+  fabric String?
+
+  description String
+  name        String
+  phone       String
+
+  /// Set by the admin after calling the customer.
+  contactedAt DateTime?
+  createdAt   DateTime  @default(now())
+
+  @@index([contactedAt, createdAt])
 }

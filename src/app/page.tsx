@@ -46,7 +46,7 @@ export default async function HomePage() {
           </p>
           <div style={{ display: "flex", flexWrap: "wrap", gap: 12, marginTop: 6 }}>
             <Link href="/clothing" className="btn btn-primary">Shop clothing</Link>
-            <Link href="#story" className="btn btn-outline">How it&apos;s painted</Link>
+            <Link href="/custom-order" className="btn btn-outline">Custom order</Link>
           </div>
         </div>
       </section>

@@ -1874,7 +1874,8 @@ button {
   color: var(--muted);
 }
 .field input,
-.field select {
+.field select,
+.field textarea {
   height: 48px;
   padding: 0 14px;
   border: 1px solid var(--line-2);
@@ -1885,8 +1886,16 @@ button {
   border-radius: 2px;
   width: 100%;
 }
+.field textarea {
+  height: auto;
+  padding: 12px 14px;
+  font-family: inherit;
+  line-height: 1.5;
+  resize: vertical;
+}
 .field input:focus,
-.field select:focus {
+.field select:focus,
+.field textarea:focus {
   outline: 2px solid var(--gold);
   outline-offset: 1px;
 }
@@ -1917,6 +1926,90 @@ button {
   font-size: 13.5px;
   line-height: 1.5;
   color: var(--muted);
+}
+/* Custom order page */
+.custom-page {
+  max-width: 680px;
+  padding-block: clamp(28px, 4vw, 48px) 72px;
+}
+.custom-types {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+.custom-type,
+.custom-fabric {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background: var(--paper);
+  cursor: pointer;
+}
+.custom-type {
+  min-height: 96px;
+  border: 3px double var(--gold);
+  font-size: 24px;
+  color: var(--brand);
+}
+.custom-fabrics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.custom-fabric {
+  min-height: 46px;
+  padding: 0 20px;
+  border: 1px solid var(--line-2);
+  border-radius: 999px;
+  font-size: 16px;
+  font-weight: 500;
+}
+/* The real radio stays in place, invisible, so keyboards and screen readers still use it. */
+.custom-type input,
+.custom-fabric input {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+.custom-type:has(input:checked),
+.custom-fabric:has(input:checked) {
+  background: var(--brand);
+  color: var(--ivory);
+  border-color: var(--brand);
+}
+.custom-type:has(input:focus-visible),
+.custom-fabric:has(input:focus-visible) {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+}
+/* Hidden from people; only bots fill it in. */
+.custom-trap {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+.custom-thanks {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  padding: 28px 20px 36px;
+  text-align: center;
+  background: var(--paper);
+  border: 3px double var(--gold);
+}
+.custom-thanks .dot-band {
+  width: min(100%, 300px);
+}
+.custom-thanks .lede {
+  font-size: 18px;
+  color: var(--ink);
 }
 .checkout-message {
   margin: 0;

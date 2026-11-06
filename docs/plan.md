@@ -36,7 +36,7 @@ roadmap) were replaced by this file on 2026-10-31. They are in git history
   owner to refund it from the Razorpay dashboard. This is rare for a small
   shop, and much simpler than a reservation system.
 
-## Database: 2 tables
+## Database: 3 tables
 
 `prisma/schema.prisma`
 
@@ -45,6 +45,8 @@ roadmap) were replaced by this file on 2026-10-31. They are in git history
 - **Order:** customer details, address, a snapshot of the items and
   prices, total, status (`PENDING_PAYMENT → PAID → SHIPPED → DELIVERED`, or
   `CANCELLED`), Razorpay IDs, tracking link.
+- **CustomRequest:** a custom order request: type, fabric, description, name,
+  phone, and when the owner contacted them.
 
 Categories, motif meanings and store settings (shipping fee, free-shipping
 threshold) are constants in code, not tables.
@@ -67,8 +69,14 @@ threshold) are constants in code, not tables.
   free above ₹2,999 until the owner sets real numbers.
 - Placeholder details (artist name, painting days, address, phone, email,
   return window, year) are hidden until real values exist.
-- The "Meet the artists" homepage section, WhatsApp links and the
-  custom-order section are removed.
+- The "Meet the artists" homepage section and WhatsApp links are removed.
+- Custom orders (2026-11-07, at the owner's request; replaces the earlier
+  decision to leave them out): the hero's "Custom order" button opens
+  `/custom-order`. The customer picks Saree (then a fabric) or Painting,
+  describes it and leaves a name and mobile number. Requests are in
+  `/admin/requests`. The thank-you message promises contact within 1-2 hours,
+  **but the owner is not notified yet**: they have to open the admin to see a
+  request. A "new request" email or alert is needed to keep that promise.
 - Heritage theme (2026-11-04, from the owner's reference image): shaded
   wine maroon, parchment with a fine grain, antique gold, lotus rules between
   sections and under centred titles, gold leaf sprigs in panel corners, and a

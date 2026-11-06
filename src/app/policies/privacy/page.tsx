@@ -18,6 +18,9 @@ export default function Privacy() {
           never your card, UPI or bank details.
         </li>
         <li>
+          <strong>When you ask for a custom order:</strong> your name, mobile number and what you describe to us.
+        </li>
+        <li>
           <strong>Your bag:</strong> the pieces in your bag are saved in your own browser on your device, not on our servers, until you
           check out.
         </li>
@@ -25,7 +28,7 @@ export default function Privacy() {
       <p>We don’t use advertising or tracking cookies. Razorpay’s payment window may use its own cookies while you pay.</p>
 
       <h2>Why we use it</h2>
-      <p>Only to process, deliver and support your order, to contact you about it, and to keep the records the law requires. We don’t send marketing messages.</p>
+      <p>Only to process, deliver and support your order, to reply to your custom order request, to contact you about them, and to keep the records the law requires. We don’t send marketing messages.</p>
 
       <h2>Who we share it with</h2>
       <ul>

@@ -29,6 +29,7 @@ export function SiteFooter() {
           <span className="footer-head">Maithilika</span>
           <Link href="/#story">Our Story</Link>
           <Link href="/#motifs">Motif meanings</Link>
+          <Link href="/account">My account</Link>
           <Link href="/wishlist">Wishlist</Link>
           <Link href="/order">Track your order</Link>
         </nav>

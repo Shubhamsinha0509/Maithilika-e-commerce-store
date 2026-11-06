@@ -144,7 +144,7 @@ ${button(track, "Track your order")}
   };
 }
 
-type RequestForEmail = { type: string; fabric: string | null; description: string; name: string; phone: string };
+type RequestForEmail = { type: string; fabric: string | null; description: string; name: string; phone: string; email: string };
 
 /** To the shop's own inbox, so the owner can call back within the time the customer was promised. */
 export function customRequestEmail(r: RequestForEmail): Email {
@@ -152,6 +152,7 @@ export function customRequestEmail(r: RequestForEmail): Email {
   const admin = `${SITE_URL}/admin/requests`;
   return {
     to: CONTACT_EMAIL,
+    replyTo: r.email,
     subject: `New custom order: ${wants} from ${r.name}`,
     html: frame(
       `${r.name} asked for a custom ${wants}. Please call within 1-2 hours.`,
@@ -160,6 +161,7 @@ export function customRequestEmail(r: RequestForEmail): Email {
 ${label("Customer")}
 <div style="font-size:18px;font-weight:bold;">${esc(r.name)}</div>
 <div><a href="tel:${esc(r.phone)}" style="color:${MAROON};font-size:18px;">${esc(r.phone)}</a></div>
+<div>${esc(r.email)}</div>
 ${label("Wants")}
 <div>${esc(wants)}</div>
 ${label("Description")}
@@ -171,6 +173,7 @@ ${button(admin, "Open custom requests")}`,
       "",
       `Customer: ${r.name}`,
       `Phone: ${r.phone}`,
+      `Email: ${r.email}`,
       `Wants: ${wants}`,
       "",
       r.description,

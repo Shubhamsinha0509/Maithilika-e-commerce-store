@@ -18,6 +18,12 @@ export function normaliseIndianMobile(input: string): string | null {
   return /^[6-9]\d{9}$/.test(digits) ? "+91" + digits : null;
 }
 
+export const indianMobile = z.string().transform((v, ctx) => {
+  const phone = normaliseIndianMobile(v);
+  if (!phone) ctx.addIssue({ code: "custom", message: "Please enter a 10-digit Indian mobile number" });
+  return phone ?? "";
+});
+
 const text = (min: number, max: number, message: string) => z.string().trim().min(min, message).max(max);
 
 export const checkoutSchema = z.object({
@@ -35,11 +41,7 @@ export const checkoutSchema = z.object({
   expectedTotal: z.number().int().min(0),
   name: text(2, 100, "Please enter your full name"),
   email: z.string().trim().toLowerCase().pipe(z.email("Please enter a valid email address")),
-  phone: z.string().transform((v, ctx) => {
-    const phone = normaliseIndianMobile(v);
-    if (!phone) ctx.addIssue({ code: "custom", message: "Please enter a 10-digit Indian mobile number" });
-    return phone ?? "";
-  }),
+  phone: indianMobile,
   addressLine1: text(5, 200, "Please enter your house number and street"),
   addressLine2: z.string().trim().max(200).optional().transform((v) => v || null),
   city: text(2, 100, "Please enter your city"),

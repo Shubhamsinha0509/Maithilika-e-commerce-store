@@ -37,6 +37,11 @@ const serverSchema = z.object({
   /** Resend. Optional: until it is set, the site sends no emails. */
   RESEND_API_KEY: z.string().optional(),
 
+  /** Google sign-in. Optional: until all three are set, customers can't sign in. */
+  GOOGLE_CLIENT_ID: z.string().optional(),
+  GOOGLE_CLIENT_SECRET: z.string().optional(),
+  CUSTOMER_SESSION_SECRET: z.string().optional(),
+
   /** Admin login. Optional: until both are set, /admin cannot be signed into. */
   ADMIN_PASSWORD: z.string().optional(),
   ADMIN_SESSION_SECRET: z.string().optional(),

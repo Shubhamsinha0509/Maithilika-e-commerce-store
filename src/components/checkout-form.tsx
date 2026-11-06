@@ -3,7 +3,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { checkoutPrefill } from "@/app/account/actions";
 import { confirmPayment, startCheckout } from "@/app/checkout/actions";
 import { useCart } from "@/components/cart";
 import { INDIAN_STATES, type FieldErrors } from "@/lib/checkout";
@@ -46,6 +47,20 @@ export function CheckoutForm({ paymentsEnabled }: { paymentsEnabled: boolean }) 
   const busy = status !== "idle";
   // Razorpay's window floats over this page; keep the page still behind it.
   useScrollLock(status === "paying");
+
+  // Signed-in customers get their details filled in. It never overwrites typing.
+  const form = useRef<HTMLFormElement>(null);
+  useEffect(() => {
+    checkoutPrefill()
+      .then((profile) => {
+        if (!profile || !form.current) return;
+        for (const [name, value] of Object.entries(profile)) {
+          const input = form.current.elements.namedItem(name);
+          if (value && input instanceof HTMLInputElement && !input.value) input.value = value;
+        }
+      })
+      .catch(() => {});
+  }, []);
 
   if (unconfirmed) {
     return (
@@ -151,7 +166,7 @@ export function CheckoutForm({ paymentsEnabled }: { paymentsEnabled: boolean }) 
 
   return (
     <div className="checkout-grid">
-      <form onSubmit={submit} className="checkout-form" noValidate>
+      <form ref={form} onSubmit={submit} className="checkout-form" noValidate>
         <fieldset disabled={busy}>
           <legend className="checkout-legend">Contact</legend>
           <label className="field">

@@ -36,7 +36,7 @@ roadmap) were replaced by this file on 2026-10-31. They are in git history
   owner to refund it from the Razorpay dashboard. This is rare for a small
   shop, and much simpler than a reservation system.
 
-## Database: 3 tables
+## Database: 4 tables
 
 `prisma/schema.prisma`
 
@@ -45,8 +45,9 @@ roadmap) were replaced by this file on 2026-10-31. They are in git history
 - **Order:** customer details, address, a snapshot of the items and
   prices, total, status (`PENDING_PAYMENT → PAID → SHIPPED → DELIVERED`, or
   `CANCELLED`), Razorpay IDs, tracking link.
+- **Customer:** a Google account's name, email and mobile number.
 - **CustomRequest:** a custom order request: type, fabric, description, name,
-  phone, and when the owner contacted them.
+  phone, who sent it, and when the owner contacted them.
 
 Categories, motif meanings and store settings (shipping fee, free-shipping
 threshold) are constants in code, not tables.
@@ -72,10 +73,16 @@ threshold) are constants in code, not tables.
 - The "Meet the artists" homepage section and WhatsApp links are removed.
 - Custom orders (2026-11-07, at the owner's request; replaces the earlier
   decision to leave them out): the hero's "Custom order" button opens
-  `/custom-order`. The customer picks Saree (then a fabric) or Painting,
-  describes it and leaves a name and mobile number. Requests are in
-  `/admin/requests`. The thank-you message promises contact within 1-2 hours,
+  `/custom-order`, one question at a time: tap a round photo (Saree, then Silk
+  or Cotton, or Painting), write the idea, sign in with Google, and give a
+  mobile number the first time only. Requests are in `/admin/requests`. The thank-you message promises contact within 1-2 hours,
   so each request also emails `support@maithilika.com`, once Resend is set up.
+- Customer accounts (2026-11-07, at the owner's request): Google sign-in with
+  a profile at `/account` (name, email, mobile). Required only for custom
+  orders; buying stays open to guests, and checkout fills in the details of
+  anyone signed in. Orders aren't linked to accounts yet, so there's no order
+  history. Off until the three Google variables are set; until then
+  `/custom-order` can't take requests.
 - Emails (2026-11-07, through Resend, from `orders@maithilika.com`): the
   customer gets one confirmation with a "Track your order" link when an order
   is first paid; the shop gets one alert for each custom request. No email
@@ -186,7 +193,7 @@ existing `MX`/`TXT` records, or the GoDaddy business email stops working.
 
 ## Later (not needed to launch)
 
-- Customer accounts and Google sign-in (order history, saved addresses)
+- Order history and saved addresses on the customer's account
 - A "shipped" email with the tracking link, and a "new order" email to the owner
 - Cash on Delivery
 - Automatic Shiprocket integration and PIN-code serviceability check

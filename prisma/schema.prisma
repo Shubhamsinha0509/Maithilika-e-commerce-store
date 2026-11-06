@@ -1,8 +1,8 @@
 // Maithilika — Prisma schema.
 //
-// Deliberately small: three tables. Categories, motif meanings and store
-// settings are constants in code; there are no customer accounts at launch
-// (guest checkout only), and the admin signs in with a password from .env.
+// Deliberately small: four tables. Categories, motif meanings and store
+// settings are constants in code. Customers sign in with Google, but buying
+// stays open to guests; the admin signs in with a password from .env.
 // See docs/plan.md.
 
 generator client {
@@ -117,9 +117,29 @@ model Order {
   @@index([status, createdAt])
 }
 
+/// Created the first time someone signs in with Google. Only custom requests
+/// need it; orders stay guest orders.
+model Customer {
+  id       String  @id @default(cuid())
+  /// Google's permanent id for this person. Their email can change; this can't.
+  googleId String  @unique
+  email    String
+  name     String
+  /// Google doesn't share this. Asked once, then kept on the profile.
+  phone    String?
+
+  requests CustomRequest[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
 /// A customer asking for a piece to be painted for them. The owner calls them back.
 model CustomRequest {
   id String @id @default(cuid())
+
+  customerId String?
+  customer   Customer? @relation(fields: [customerId], references: [id], onDelete: SetNull)
 
   /// Saree | Painting
   type   String
@@ -127,6 +147,7 @@ model CustomRequest {
   fabric String?
 
   description String
+  /// Copied from the profile when sent, as an order keeps its own details.
   name        String
   phone       String
 
@@ -135,4 +156,5 @@ model CustomRequest {
   createdAt   DateTime  @default(now())
 
   @@index([contactedAt, createdAt])
+  @@index([customerId, createdAt])
 }

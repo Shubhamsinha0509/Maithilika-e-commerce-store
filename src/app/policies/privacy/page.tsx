@@ -18,7 +18,11 @@ export default function Privacy() {
           never your card, UPI or bank details.
         </li>
         <li>
-          <strong>When you ask for a custom order:</strong> your name, mobile number and what you describe to us.
+          <strong>When you sign in:</strong> if you create an account with Google, Google tells us your name and email address. We keep
+          these on your profile, with the mobile number you give us.
+        </li>
+        <li>
+          <strong>When you ask for a custom order:</strong> what you describe to us, with your name, email and mobile number from your profile.
         </li>
         <li>
           <strong>Your bag:</strong> the pieces in your bag are saved in your own browser on your device, not on our servers, until you
@@ -34,6 +38,7 @@ export default function Privacy() {
       <ul>
         <li><strong>Razorpay</strong>, our payment partner, to take your payment.</li>
         <li><strong>Our courier partner</strong>: your name, mobile number and address, to deliver your order.</li>
+        <li><strong>Google</strong>, if you choose to sign in with it. We never see your Google password.</li>
         <li><strong>Resend</strong>, our email provider: your email address and order details, to send your order confirmation.</li>
         <li>
           <strong>Our hosting providers</strong> (Vercel for the website and Neon for the database), which store order details for us on

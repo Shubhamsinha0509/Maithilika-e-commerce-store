@@ -23,6 +23,7 @@ async function Requests() {
   // Waiting for a call first, then the newest.
   const requests = await prisma.customRequest.findMany({
     orderBy: [{ contactedAt: { sort: "desc", nulls: "first" } }, { createdAt: "desc" }],
+    include: { customer: { select: { email: true } } },
     take: 200,
   });
 
@@ -41,7 +42,7 @@ async function Requests() {
               {requests.map((r) => (
                 <tr key={r.id}>
                   <td>{formatDate(r.createdAt)}</td>
-                  <td>{r.name}<br /><a href={`tel:${r.phone}`}>{r.phone}</a></td>
+                  <td>{r.name}<br /><a href={`tel:${r.phone}`}>{r.phone}</a>{r.customer && <><br /><span className="field-help">{r.customer.email}</span></>}</td>
                   <td>{r.type}{r.fabric && <><br /><span className="field-help">{r.fabric}</span></>}</td>
                   <td style={{ whiteSpace: "pre-wrap", minWidth: 240 }}>{r.description}</td>
                   <td>

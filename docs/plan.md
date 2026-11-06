@@ -75,8 +75,14 @@ threshold) are constants in code, not tables.
   `/custom-order`. The customer picks Saree (then a fabric) or Painting,
   describes it and leaves a name and mobile number. Requests are in
   `/admin/requests`. The thank-you message promises contact within 1-2 hours,
-  **but the owner is not notified yet**: they have to open the admin to see a
-  request. A "new request" email or alert is needed to keep that promise.
+  so each request also emails `support@maithilika.com`, once Resend is set up.
+- Emails (2026-11-07, through Resend, from `orders@maithilika.com`): the
+  customer gets one confirmation with a "Track your order" link when an order
+  is first paid; the shop gets one alert for each custom request. No email
+  goes out if a piece was sold to someone else (the owner refunds and explains).
+  A failed confirmation adds a note to the order. Off until `RESEND_API_KEY`
+  is set. GoDaddy gets Resend's extra records only; the existing `MX` and `TXT`
+  records for the business email stay as they are.
 - Heritage theme (2026-11-04, from the owner's reference image): shaded
   wine maroon, parchment with a fine grain, antique gold, lotus rules between
   sections and under centred titles, gold leaf sprigs in panel corners, and a
@@ -181,7 +187,7 @@ existing `MX`/`TXT` records, or the GoDaddy business email stops working.
 ## Later (not needed to launch)
 
 - Customer accounts and Google sign-in (order history, saved addresses)
-- Order confirmation emails (Resend, free tier)
+- A "shipped" email with the tracking link, and a "new order" email to the owner
 - Cash on Delivery
 - Automatic Shiprocket integration and PIN-code serviceability check
 - Wishlist synced across devices (needs customer accounts), coupons, artist

@@ -34,6 +34,7 @@ export default function Privacy() {
       <ul>
         <li><strong>Razorpay</strong>, our payment partner, to take your payment.</li>
         <li><strong>Our courier partner</strong>: your name, mobile number and address, to deliver your order.</li>
+        <li><strong>Resend</strong>, our email provider: your email address and order details, to send your order confirmation.</li>
         <li>
           <strong>Our hosting providers</strong> (Vercel for the website and Neon for the database), which store order details for us on
           servers in Singapore.

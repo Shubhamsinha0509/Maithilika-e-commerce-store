@@ -34,6 +34,9 @@ const serverSchema = z.object({
   RAZORPAY_KEY_SECRET: z.string().optional(),
   RAZORPAY_WEBHOOK_SECRET: z.string().optional(),
 
+  /** Resend. Optional: until it is set, the site sends no emails. */
+  RESEND_API_KEY: z.string().optional(),
+
   /** Admin login. Optional: until both are set, /admin cannot be signed into. */
   ADMIN_PASSWORD: z.string().optional(),
   ADMIN_SESSION_SECRET: z.string().optional(),

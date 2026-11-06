@@ -5,7 +5,7 @@ import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader, type MenuPiece } from "@/components/site-header";
 import { getProducts } from "@/lib/catalog";
 import { paymentsEnabled } from "@/lib/razorpay";
-import { SECTIONS, circleCrop, type SectionKey } from "@/lib/store";
+import { SECTIONS, SITE_URL, circleCrop, type SectionKey } from "@/lib/store";
 import "./globals.css";
 
 const mukta = Mukta({
@@ -22,7 +22,7 @@ const yatra = Yatra_One({
 
 export const metadata: Metadata = {
   // Absolute links in share previews (og:image) use the shop's own domain.
-  metadataBase: new URL("https://www.maithilika.com"),
+  metadataBase: new URL(SITE_URL),
   title: {
     default: "Maithilika — Painted by hand. Worn like a story.",
     template: "%s · Maithilika",

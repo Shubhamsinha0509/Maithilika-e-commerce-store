@@ -133,6 +133,8 @@ export const COLOUR_SWATCHES: Record<string, string> = {
   Black: "#1A1410",
 };
 
+export const SITE_URL = "https://www.maithilika.com";
+
 /** The shop's contact address (GoDaddy mailbox on maithilika.com). */
 export const CONTACT_EMAIL = "support@maithilika.com";
 

@@ -1,6 +1,8 @@
 import { randomInt } from "node:crypto";
 import { revalidateTag } from "next/cache";
+import { after } from "next/server";
 import { Prisma } from "@/generated/prisma/client";
+import { sendOrderConfirmation } from "@/lib/email";
 import { prisma } from "@/lib/prisma";
 import { createRazorpayOrder } from "@/lib/razorpay";
 import { inr, shippingFor } from "@/lib/store";
@@ -176,10 +178,32 @@ export async function markPaid(razorpayOrderId: string, razorpayPaymentId: strin
       await tx.order.update({ where: { id: order.id }, data: { note: [order.note, ...notes].filter(Boolean).join(" ") } });
     }
     return { status: "paid", orderNumber: order.orderNumber, soldToSomeoneElse };
-  });
+    // Prisma waits only 2s for a connection by default. That is too short when
+    // the database is waking from idle, and this is the step a payment needs.
+  }, { maxWait: 10_000, timeout: 15_000 });
 
-  if (result.status === "paid") revalidateTag("products", { expire: 0 });
+  if (result.status === "paid") {
+    revalidateTag("products", { expire: 0 });
+    // Only the first call reaches here, so the customer gets one email. It runs
+    // after the response, so email trouble can never affect the payment. If a
+    // piece went to someone else, the owner refunds and explains instead.
+    if (result.soldToSomeoneElse.length === 0) after(() => emailConfirmation(razorpayOrderId));
+  }
   return result;
+}
+
+async function emailConfirmation(razorpayOrderId: string) {
+  try {
+    const order = await prisma.order.findUnique({ where: { razorpayOrderId } });
+    if (!order) return;
+    const sent = await sendOrderConfirmation({ ...order, items: order.items as unknown as OrderItem[] });
+    if (sent === "failed") {
+      const note = [order.note, "The confirmation email could not be sent to the customer."].filter(Boolean).join(" ");
+      await prisma.order.update({ where: { id: order.id }, data: { note } });
+    }
+  } catch (e) {
+    console.error("Confirmation email step failed", e);
+  }
 }
 
 export async function findOrder(orderNumber: string, email: string) {

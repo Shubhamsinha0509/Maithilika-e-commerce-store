@@ -10,6 +10,8 @@ const nextConfig: NextConfig = {
     // give the new file a new name (docs/plan.md).
     minimumCacheTTL: 2678400,
     formats: ["image/avif", "image/webp"],
+    // 75 is the default; 90 is for the full-width home hero, where softness shows.
+    qualities: [75, 90],
   },
   turbopack: {
     rules: {

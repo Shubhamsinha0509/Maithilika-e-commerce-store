@@ -209,15 +209,6 @@ button {
   background: var(--maroon);
   color: var(--ivory);
 }
-.btn-ghost-gold {
-  background: transparent;
-  color: var(--gold-light);
-  border: 1px solid var(--gold);
-}
-.btn-ghost-gold:hover {
-  background: var(--brand-hover);
-  color: var(--gold-light);
-}
 
 .text-link {
   font-weight: 600;
@@ -441,10 +432,6 @@ button {
 }
 
 /* Gold words inside a headline: "Worn like a story." */
-.gold-text {
-  color: var(--gold-light);
-}
-
 /* ── Header ─────────────────────────────────────────────────────────────── */
 
 .site-header {
@@ -1100,39 +1087,78 @@ button {
 
 /* ── Home ───────────────────────────────────────────────────────────────── */
 
-.hero-grid {
-  padding-block: clamp(36px, 6vw, 80px) clamp(40px, 6vw, 72px);
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 440px), 1fr));
-  gap: clamp(36px, 5vw, 72px);
-  align-items: center;
+/* Hero: the photo fills the width, with the words on the sunlit wall at its
+   left. On phones the wall is too narrow for words, so they sit under the photo. */
+.hero-photo {
+  background: var(--paper-bg);
+}
+.hero-photo-img {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+}
+.hero-photo-img img {
+  object-fit: cover;
+  object-position: 76% 20%;
+}
+.hero-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding-block: 32px 40px;
 }
 .hero-title {
   margin: 0;
-  font-size: clamp(42px, 6vw, 82px);
-  line-height: 1.04;
+  font-size: clamp(32px, 9.7vw, 64px);
+  line-height: 1.06;
   letter-spacing: -0.005em;
-  text-wrap: balance;
+  color: var(--brand-deep);
 }
-.hero-figure {
-  margin: 0;
-  width: 100%;
-  max-width: 520px;
-  justify-self: center;
+.hero-title-accent {
+  display: block;
+  color: var(--brand);
 }
-.hero-caption {
-  border: 1.5px solid var(--gold);
-  border-top: none;
-  padding: 12px 14px;
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
+.hero-lede {
+  font-size: clamp(16px, 1.3vw, 19px);
+  max-width: 44ch;
+  color: var(--ink);
 }
-.hero-caption-label {
-  font-size: 11.5px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--gold-light);
+@media (max-width: 899px) {
+  .hero-copy .eyebrow {
+    font-size: clamp(10px, 2.9vw, 13px);
+    letter-spacing: 0.1em;
+  }
+}
+@media (min-width: 900px) {
+  .hero-lede {
+    max-width: min(44ch, 40vw);
+  }
+  .hero-photo {
+    position: relative;
+    height: min(56.25vw, 860px);
+    display: flex;
+    align-items: center;
+  }
+  .hero-photo-img {
+    position: absolute;
+    inset: 0;
+    aspect-ratio: auto;
+  }
+  .hero-photo-img img {
+    object-position: 100% 12%;
+  }
+  /* Clear of the leaves at the photo's left edge, and a little below centre. */
+  .hero-copy {
+    position: relative;
+    width: 100%;
+    gap: clamp(14px, 1.6vw, 22px);
+    padding-block: 7% 0;
+    /* 8.5% of the screen from its left edge, after the .wrap's centring margin. */
+    padding-left: max(20px, calc(8.5vw - max(0px, (100vw - 1360px) / 2)));
+  }
+  .hero-title {
+    font-size: clamp(40px, 5vw, 78px);
+  }
 }
 /* The promise strip under the hero: gold labels between fine gold dividers. */
 .promise-band {

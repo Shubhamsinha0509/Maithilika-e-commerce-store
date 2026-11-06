@@ -74,6 +74,12 @@ threshold) are constants in code, not tables.
   sections and under centred titles, gold leaf sprigs in panel corners, and a
   dark promise strip with gold dividers. Fonts and logo unchanged. All of it
   is in `globals.css` ("Heritage ornaments" and the tokens at the top).
+- Home hero (2026-11-06, owner's photo): full-width photo with the words on
+  the wall at its left; on phones the words sit under it. The owner's image
+  had a logo, menu and text painted in, so these were removed and it was
+  AI-upscaled to 3200×1800 (`public/images/home/hero-saree-hd.jpg`). A larger
+  original without text would be sharper. It looks AI-generated: confirm the
+  saree is a real piece, or replace the photo with one that is.
 - Images (2026-11-04): every photo goes through the image optimiser (AVIF,
   WebP fallback), including the product gallery's CSS backgrounds. Optimised
   copies are cached for 31 days, so **to replace a photo, upload it under a

@@ -24,43 +24,31 @@ export default async function HomePage() {
 
   return (
     <>
-      <section aria-label="Featured piece" className="on-dark ornate" style={{ color: "var(--ivory)" }}>
-        <div className="wrap hero-grid">
-          <div style={{ display: "flex", flexDirection: "column", gap: 22, maxWidth: 620 }}>
-            <span className="eyebrow" style={{ display: "flex", alignItems: "center", gap: 12 }}>
-              <span style={{ width: 28, height: 1.5, background: "var(--gold)" }} />
-              Hand-painted Mithila art · मिथिला चित्रकला
-            </span>
-            <h1 className="display hero-title">Painted by hand. <span className="gold-text">Worn like a story.</span></h1>
-            <p className="lede" style={{ fontSize: "clamp(16px, 1.4vw, 19px)", maxWidth: "50ch" }}>
-              Every saree, cushion and canvas is painted line by line by a Mithila artist. Each piece carries the meaning of its motif.
-            </p>
-            <div style={{ display: "flex", flexWrap: "wrap", gap: 12, marginTop: 6 }}>
-              <Link href="/clothing" className="btn btn-primary">Shop clothing</Link>
-              <Link href="#story" className="btn btn-ghost-gold">How it&apos;s painted</Link>
-            </div>
-          </div>
-          <figure className="hero-figure">
-            <div className="arch" style={{ padding: 9 }}>
-              <div style={{ flex: 1, borderRadius: "999px 999px 0 0", border: "1px dashed var(--gold)", padding: 7 }}>
-                <Image
-                  src="/images/home/hero-artist.jpg"
-                  alt="An artist painting a Mithila tree-of-life border on an ivory saree"
-                  width={1374}
-                  height={1145}
-                  priority
-                  sizes="(max-width: 960px) 90vw, 520px"
-                  style={{ display: "block", width: "100%", height: "auto", aspectRatio: "4 / 4.6", objectFit: "cover", objectPosition: "32% 50%", borderRadius: "999px 999px 0 0" }}
-                />
-              </div>
-            </div>
-            <figcaption className="hero-caption">
-              <span className="hero-caption-label">Motif</span>
-              <span style={{ fontSize: 15, fontWeight: 600 }}>Fish, for good fortune</span>
-            </figcaption>
-          </figure>
+      <section aria-label="Featured piece" className="hero-photo">
+        <div className="hero-photo-img">
+          <Image
+            src="/images/home/hero-saree-hd.jpg"
+            alt="A woman in a hand-painted Mithila saree with peacock and flower motifs, sitting beside a carved wooden door"
+            fill
+            priority
+            sizes="100vw"
+            quality={90}
+          />
         </div>
-        <div className="dot-band" />
+        <div className="wrap hero-copy">
+          <span className="eyebrow" style={{ display: "flex", alignItems: "center", gap: 12 }}>
+            <span style={{ width: 28, height: 1.5, background: "currentColor", flex: "none" }} />
+            Hand-painted Mithila art · मिथिला चित्रकला
+          </span>
+          <h1 className="display hero-title">Painted by hand. <span className="hero-title-accent">Worn like a story.</span></h1>
+          <p className="lede hero-lede">
+            Every saree, cushion and canvas is painted line by line by a Mithila artist. Each piece carries the meaning of its motif.
+          </p>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: 12, marginTop: 6 }}>
+            <Link href="/clothing" className="btn btn-primary">Shop clothing</Link>
+            <Link href="#story" className="btn btn-outline">How it&apos;s painted</Link>
+          </div>
+        </div>
       </section>
 
       <section aria-label="Our promise" className="promise-band">

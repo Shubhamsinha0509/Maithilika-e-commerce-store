@@ -110,7 +110,7 @@ export default async function HomePage() {
                   <Image src={s.photo} alt={s.label} fill sizes="(max-width: 760px) 90vw, 420px" style={{ objectFit: "cover" }} />
                 </span>
               </Link>
-              <h3 style={{ margin: 0, display: "flex", alignItems: "baseline", gap: 10 }}>
+              <h3 style={{ margin: 0, display: "flex", flexWrap: "wrap", alignItems: "baseline", gap: "0 10px" }}>
                 <span className="display" style={{ fontSize: 30, lineHeight: 1.1, color: "var(--brand)" }}>{s.label}</span>
                 <span className="display" style={{ fontSize: 17, color: "var(--maroon)" }}>{s.hi}</span>
               </h3>

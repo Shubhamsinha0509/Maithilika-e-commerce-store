@@ -89,9 +89,8 @@ threshold) are constants in code, not tables.
   the bag (product ids only, no account), so it is per device.
 - Mobile header (2026-11-04): the wishlist heart made a third 44px icon, so
   the mobile row uses 8px gaps and 12/8px padding instead of the design's
-  12/16/12. Fits 390px (13px to spare) and 375px. Below about 376px the
-  wordmark and three icons still do not fit; narrower phones (360px) need a
-  decision on shrinking the wordmark, the logo badge, or hiding the words.
+  12/16/12. Below 375px (from 2026-11-06) the logo badge, wordmark, gaps and
+  icon widths shrink too, so the header fits down to 320px.
 - Owner's admin can manage orders and edit price, sold/available and
   hidden. Adding products with photos comes later.
 - Hosting: Vercel and Neon, Singapore region.

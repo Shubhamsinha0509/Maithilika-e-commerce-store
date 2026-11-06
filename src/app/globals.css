@@ -550,6 +550,30 @@ button {
     padding: 0 8px 0 12px;
   }
 }
+/* Narrow phones (360px is common on Android): the logo, wordmark and three
+   icons need 369px at the sizes above, so tighten them to fit down to 320px. */
+@media (max-width: 374px) {
+  .header-row {
+    gap: 4px;
+    padding: 0 4px 0 10px;
+  }
+  .header-row .brand {
+    gap: 7px;
+  }
+  .header-row .logo-badge {
+    width: 36px;
+    height: 36px;
+  }
+  .header-row .brand-en {
+    font-size: clamp(17px, 5.6vw, 21px);
+  }
+  .header-row .brand-hi {
+    font-size: 11.5px;
+  }
+  .header-row .icon-btn {
+    width: 40px;
+  }
+}
 /* Wishlist hearts (Design/ProductCard.dc.html, Design/Product.dc.html) */
 .heart-card {
   position: absolute;
@@ -1109,7 +1133,7 @@ button {
 }
 .hero-title {
   margin: 0;
-  font-size: clamp(32px, 9.7vw, 64px);
+  font-size: clamp(30px, 9.7vw, 64px);
   line-height: 1.06;
   letter-spacing: -0.005em;
   color: var(--brand-deep);
@@ -1125,8 +1149,17 @@ button {
 }
 @media (max-width: 899px) {
   .hero-copy .eyebrow {
-    font-size: clamp(10px, 2.9vw, 13px);
+    font-size: clamp(11px, 2.9vw, 13px);
     letter-spacing: 0.1em;
+  }
+}
+/* Tablets: show the whole photo; a square would fill the screen before any words. */
+@media (min-width: 600px) and (max-width: 899px) {
+  .hero-photo-img {
+    aspect-ratio: 16 / 9;
+  }
+  .hero-photo-img img {
+    object-position: 100% 12%;
   }
 }
 @media (min-width: 900px) {
@@ -1250,7 +1283,8 @@ button {
 }
 .section-cards {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+  /* Three cards: 220px keeps them in one row on tablets, with none left alone. */
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
   gap: 24px;
 }
 .section-card {
@@ -1954,7 +1988,7 @@ button {
 .policy-nav a {
   color: var(--maroon);
   text-decoration: none;
-  min-height: 32px;
+  min-height: 40px;
   display: inline-flex;
   align-items: center;
 }

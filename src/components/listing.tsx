@@ -6,6 +6,7 @@ import { useState } from "react";
 import { ProductCard } from "@/components/product-card";
 import { OPEN_MENU_EVENT } from "@/components/site-header";
 import { COLOUR_SWATCHES, sectionByKey, tileCrop, type Product, type SectionKey } from "@/lib/store";
+import { useScrollLock } from "@/lib/use-scroll-lock";
 
 type GroupKey = "motif" | "style" | "fabric" | "medium" | "frame" | "price" | "avail" | "colour";
 
@@ -85,6 +86,7 @@ function ListingInner({ section, products, initialSub, initialMotif }: { section
   const [count, setCount] = useState(12);
   const [sheet, setSheet] = useState(false);
   const [sortSheet, setSortSheet] = useState(false);
+  useScrollLock(sheet || sortSheet);
 
   const toggle = (g: GroupKey, v: string) => {
     setSel((s) => {

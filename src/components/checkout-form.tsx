@@ -8,6 +8,7 @@ import { confirmPayment, startCheckout } from "@/app/checkout/actions";
 import { useCart } from "@/components/cart";
 import { INDIAN_STATES, type FieldErrors } from "@/lib/checkout";
 import { inr, shippingFor, SHIPPING } from "@/lib/store";
+import { useScrollLock } from "@/lib/use-scroll-lock";
 
 type RazorpayResponse = { razorpay_order_id: string; razorpay_payment_id: string; razorpay_signature: string };
 type RazorpayInstance = { open: () => void };
@@ -43,6 +44,8 @@ export function CheckoutForm({ paymentsEnabled }: { paymentsEnabled: boolean }) 
   const shipping = shippingFor(cart.subtotal);
   const total = cart.subtotal + shipping;
   const busy = status !== "idle";
+  // Razorpay's window floats over this page; keep the page still behind it.
+  useScrollLock(status === "paying");
 
   if (unconfirmed) {
     return (

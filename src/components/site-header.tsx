@@ -9,6 +9,7 @@ import { CartDrawer } from "@/components/cart-drawer";
 import { Logo } from "@/components/logo";
 import { WishlistLink } from "@/components/wishlist";
 import { inr, SECTIONS, sectionHref, type SectionKey } from "@/lib/store";
+import { useScrollLock } from "@/lib/use-scroll-lock";
 
 export type MenuPiece = {
   id: string;
@@ -28,6 +29,7 @@ export function SiteHeader({ featured, paymentsEnabled }: Props) {
   const cart = useCart();
   const [menu, setMenu] = useState<SectionKey | null>(null);
   const [drawer, setDrawer] = useState(false);
+  useScrollLock(drawer);
   const [accordion, setAccordion] = useState<SectionKey | null>(null);
   const [searchOpen, setSearchOpen] = useState(false);
 

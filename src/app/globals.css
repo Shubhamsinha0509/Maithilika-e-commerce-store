@@ -705,6 +705,7 @@ button {
 .menu-panel {
   width: min(88vw, 380px);
   overflow-y: auto;
+  overscroll-behavior: contain;
   box-shadow: 8px 0 30px rgba(26, 20, 16, 0.25);
 }
 .cart-panel {
@@ -790,6 +791,7 @@ button {
   padding: 8px 20px;
   flex: 1;
   overflow-y: auto;
+  overscroll-behavior: contain;
 }
 .cart-line {
   display: grid;
@@ -1593,6 +1595,7 @@ button {
     display: none;
   }
   .filters.is-sheet {
+    overscroll-behavior: contain;
     display: flex;
     flex-direction: column;
     position: fixed;

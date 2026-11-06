@@ -4,9 +4,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { MAX_QTY, useCart } from "@/components/cart";
 import { inr, productHref, SHIPPING } from "@/lib/store";
+import { useScrollLock } from "@/lib/use-scroll-lock";
 
 export function CartDrawer({ paymentsEnabled }: { paymentsEnabled: boolean }) {
   const { lines, count, subtotal, isOpen, close, setQty, remove } = useCart();
+  useScrollLock(isOpen);
   if (!isOpen) return null;
 
   return (

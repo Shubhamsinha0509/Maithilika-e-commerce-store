@@ -1479,7 +1479,8 @@ body:has(.hero-photo:not([style*="none"])) .site-header:has(.mega) .header-bar {
 /* ── Home ───────────────────────────────────────────────────────────────── */
 
 /* Hero: the photo fills the width, with the words on the sunlit wall at its
-   left. On phones the wall is too narrow for words, so they sit under the photo. */
+   left. On phones and tablets the wall is too narrow, so the photo fills a tall
+   frame and the words sit at its foot on a soft cream fade: still one picture. */
 .hero-photo {
   background: var(--paper-bg);
 }
@@ -1520,13 +1521,66 @@ body:has(.hero-photo:not([style*="none"])) .site-header:has(.mega) .header-bar {
     letter-spacing: 0.1em;
   }
 }
-/* Tablets: show the whole photo; a square would fill the screen before any words. */
-@media (min-width: 600px) and (max-width: 899px) {
-  .hero-photo-img {
-    aspect-ratio: 16 / 9;
+@media (max-width: 899px) {
+  .hero-photo {
+    position: relative;
+    min-height: clamp(560px, 165vw, 90svh);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
   }
+  .hero-photo-img {
+    position: absolute;
+    inset: 0;
+    aspect-ratio: auto;
+  }
+  /* Her face stays clear at the top; the saree fades into cream under the words. */
   .hero-photo-img img {
-    object-position: 100% 12%;
+    object-position: 72% 18%;
+  }
+  .hero-photo-img::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to top,
+      rgba(246, 236, 219, 0.98) 0%,
+      rgba(246, 236, 219, 0.95) 32%,
+      rgba(246, 236, 219, 0.7) 46%,
+      rgba(246, 236, 219, 0) 66%
+    );
+  }
+  .hero-copy {
+    position: relative;
+    gap: 14px;
+    padding-block: 0 30px;
+  }
+}
+/* Small phones: the two buttons share one row, and the photo is a little
+   taller, so the words stay below her face. */
+@media (max-width: 419px) {
+  .hero-photo {
+    min-height: max(600px, 165vw);
+  }
+  .hero-actions {
+    flex-wrap: nowrap !important;
+    gap: 10px !important;
+  }
+  .hero-actions .btn {
+    flex: 1;
+    min-width: 0;
+    padding: 0 10px;
+    font-size: 15px;
+  }
+  /* The words take more of the frame here, so the fade starts higher. */
+  .hero-photo-img::after {
+    background: linear-gradient(
+      to top,
+      rgba(246, 236, 219, 0.98) 0%,
+      rgba(246, 236, 219, 0.95) 44%,
+      rgba(246, 236, 219, 0.78) 55%,
+      rgba(246, 236, 219, 0) 72%
+    );
   }
 }
 @media (min-width: 900px) {

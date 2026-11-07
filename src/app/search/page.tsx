@@ -2,8 +2,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Suspense } from "react";
 import { ProductCard } from "@/components/product-card";
+import { SearchIcon } from "@/components/search-panel";
 import { getProducts } from "@/lib/catalog";
-import { sectionByKey } from "@/lib/store";
+import { matchProducts } from "@/lib/search";
 
 export const metadata: Metadata = { title: "Search" };
 
@@ -19,26 +20,19 @@ export default function SearchPage({ searchParams }: PageProps<"/search">) {
 
 async function Results({ query }: { query: Promise<string> }) {
   const q = await query;
-  const words = q.toLowerCase().split(/\s+/).filter(Boolean);
-  const products = await getProducts();
-  // Every word must appear somewhere in the piece's searchable text.
-  const matches = words.length
-    ? products.filter((p) => {
-        const text = [p.name, p.motif, p.motifHi, p.fabric, p.colour, p.style, p.medium, p.sub, sectionByKey(p.section)?.label]
-          .filter(Boolean)
-          .join(" ")
-          .toLowerCase();
-        return words.every((w) => text.includes(w));
-      })
-    : [];
+  const matches = matchProducts(await getProducts(), q);
 
   return (
     <>
       <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
         <span className="eyebrow">Search</span>
         <h1 className="section-title">{q ? `“${q}”` : "Search the shop"}</h1>
+        <form action="/search" role="search" className="search-pill search-pill-page">
+          <SearchIcon />
+          <input type="search" name="q" defaultValue={q} enterKeyHint="search" aria-label="Search Maithilika" placeholder="Search sarees, motifs, paintings…" />
+        </form>
         <p className="lede">
-          {!q ? "Type a fabric, motif or piece name in the search box above." : matches.length === 1 ? "1 piece found" : `${matches.length} pieces found`}
+          {!q ? "Type a fabric, motif or piece name." : matches.length === 1 ? "1 piece found" : `${matches.length} pieces found`}
         </p>
       </div>
       {q && matches.length === 0 && (

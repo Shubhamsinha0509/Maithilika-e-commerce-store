@@ -2,11 +2,11 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useCart } from "@/components/cart";
 import { AddedToBag, CartDrawer } from "@/components/cart-drawer";
 import { Logo } from "@/components/logo";
+import { SearchIcon, SearchPanel } from "@/components/search-panel";
 import { WishlistLink } from "@/components/wishlist";
 import { inr, SECTIONS, sectionHref, type SectionKey } from "@/lib/store";
 import { useScrollLock } from "@/lib/use-scroll-lock";
@@ -25,7 +25,6 @@ type Props = { featured: Record<SectionKey, MenuPiece[]>; paymentsEnabled: boole
 export const OPEN_MENU_EVENT = "maithilika:menu";
 
 export function SiteHeader({ featured, paymentsEnabled }: Props) {
-  const router = useRouter();
   const cart = useCart();
   const [menu, setMenu] = useState<SectionKey | null>(null);
   const [drawer, setDrawer] = useState(false);
@@ -55,13 +54,7 @@ export function SiteHeader({ featured, paymentsEnabled }: Props) {
     }
   };
 
-  const submitSearch = (e: React.SyntheticEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const q = String(new FormData(e.currentTarget).get("q") ?? "").trim();
-    if (!q) return;
-    setSearchOpen(false);
-    router.push(`/search?q=${encodeURIComponent(q)}`);
-  };
+  const closeSearch = useCallback(() => setSearchOpen(false), []);
 
   const openSection = SECTIONS.find((s) => s.key === menu);
 
@@ -110,7 +103,7 @@ export function SiteHeader({ featured, paymentsEnabled }: Props) {
               aria-label="Search"
               aria-expanded={searchOpen}
             >
-              <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" strokeWidth="1.7" /><path d="M15.5 15.5 L21 21" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" /></svg>
+              <SearchIcon />
             </button>
             <Link href="/account" className="icon-btn desktop-only" aria-label="My account">
               <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4" fill="none" stroke="currentColor" strokeWidth="1.7" /><path d="M4.5 21 a7.5 7.5 0 0 1 15 0" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" /></svg>
@@ -123,12 +116,7 @@ export function SiteHeader({ featured, paymentsEnabled }: Props) {
           </div>
         </div>
 
-        {searchOpen && (
-          <form onSubmit={submitSearch} role="search" className="search-row">
-            <input type="search" name="q" aria-label="Search Maithilika" placeholder="Search sarees, motifs, fabrics" autoFocus />
-            <button type="submit" className="btn btn-primary" style={{ minHeight: 44, padding: "0 20px", fontSize: 15 }}>Search</button>
-          </form>
-        )}
+        {searchOpen && <SearchPanel onClose={closeSearch} />}
       </header>
 
       {openSection && (

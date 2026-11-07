@@ -1283,62 +1283,92 @@ body:has(.hero-photo) .site-header:has(.mega) .header-bar {
   align-items: center;
   text-align: center;
 }
-.clothing-feature {
-  background: var(--maroon-bg);
-  color: var(--ivory);
-  border: 1.5px solid var(--gold);
-  outline: 1px solid var(--gold);
-  outline-offset: 5px;
-  margin: 6px;
+/* Shop by Category: four photo cards, two to a row on phones. */
+.category-section {
+  padding-top: clamp(48px, 7vw, 96px);
   display: flex;
-  flex-wrap: wrap;
-  gap: 36px;
-  padding: clamp(24px, 3.5vw, 48px);
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(24px, 3vw, 36px);
 }
-.clothing-tiles {
-  flex: 2 1 520px;
+.title-ruled {
+  display: flex;
+  align-items: center;
+  gap: clamp(10px, 2vw, 20px);
+  text-align: center;
+  white-space: nowrap;
+}
+@media (max-width: 599px) {
+  .title-ruled {
+    font-size: clamp(24px, 7.4vw, 34px);
+  }
+}
+.title-ruled::before,
+.title-ruled::after {
+  content: "";
+  flex: none;
+  width: clamp(28px, 9vw, 120px);
+  height: 7px;
+  background:
+    radial-gradient(circle, var(--gold) 0 2.6px, transparent 3px) center / 7px 7px no-repeat,
+    linear-gradient(var(--gold), var(--gold)) center / 100% 1px no-repeat;
+}
+.title-ruled::before {
+  -webkit-mask: linear-gradient(to right, transparent, #000 40%);
+  mask: linear-gradient(to right, transparent, #000 40%);
+}
+.title-ruled::after {
+  -webkit-mask: linear-gradient(to left, transparent, #000 40%);
+  mask: linear-gradient(to left, transparent, #000 40%);
+}
+.category-grid {
+  width: 100%;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 130px), 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(12px, 2vw, 24px);
 }
-@media (max-width: 600px) {
-  .clothing-tiles {
-    flex-basis: 100%;
+@media (max-width: 899px) {
+  .category-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
-.clothing-tile {
+.category-card {
   display: flex;
   flex-direction: column;
   gap: 12px;
   text-decoration: none;
-  color: var(--ivory);
+  color: var(--brand);
 }
-.clothing-tile:hover {
-  color: var(--gold-light);
+.category-photo {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border-radius: 14px;
+  background: var(--sand-2);
+  box-shadow: 0 10px 24px -16px rgba(42, 26, 19, 0.45);
 }
-.section-cards {
-  display: grid;
-  /* Three cards: 220px keeps them in one row on tablets, with none left alone. */
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
-  gap: 24px;
+.category-photo img {
+  transition: transform 0.4s ease;
 }
-.section-card {
-  background: var(--paper);
-  border: 3px double var(--gold);
-  padding: 18px;
+@media (hover: hover) {
+  .category-card:hover .category-photo img {
+    transform: scale(1.05);
+  }
+}
+.category-name {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  align-items: center;
+  gap: 2px;
+  text-align: center;
 }
-.sub-pill {
-  min-height: 40px;
-  padding: 0 14px;
-  font-size: 14.5px;
+.category-name .display {
+  font-size: clamp(19px, 2vw, 24px);
+  line-height: 1.15;
 }
-.sub-pill:hover {
-  border-color: var(--maroon);
-  color: var(--maroon);
+.category-hi {
+  font-size: 13.5px;
+  color: var(--gold-deep);
 }
 .motif-grid {
   display: grid;

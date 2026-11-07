@@ -2,9 +2,18 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrivalsTabs } from "@/components/arrivals-tabs";
 import { getProducts } from "@/lib/catalog";
-import { inr, MOTIFS, SECTIONS, sectionHref, SHIPPING, tileCrop, type Product } from "@/lib/store";
+import { inr, MOTIFS, SECTIONS, sectionHref, SHIPPING, type SectionKey } from "@/lib/store";
 
 const ARRIVAL_IDS = ["saree-7", "saree-3", "dupatta-1", "painting-3", "kurta-2", "cushion-2", "painting-17", "tote-1"];
+
+// One photo per category. Crops show the subject: the saree photo has detail
+// shots on its right, so only its main picture (the left 60%) is shown.
+const CATEGORY_CARDS: { key: SectionKey; src: string; width: number; height: number; cropWidth: string; left: string; position: string }[] = [
+  { key: "clothing", src: "/images/sarees/saree-3.jpg", width: 1145, height: 1374, cropWidth: "166%", left: "0", position: "0 6%" },
+  { key: "homedecor", src: "/images/home/arrival-cushion.jpg", width: 356, height: 475, cropWidth: "100%", left: "0", position: "50% 50%" },
+  { key: "paintings", src: "/images/home/arrival-peacock.jpg", width: 356, height: 475, cropWidth: "100%", left: "0", position: "50% 50%" },
+  { key: "accessories", src: "/images/accessories/earrings-1.jpg", width: 1254, height: 1254, cropWidth: "100%", left: "0", position: "35% 50%" },
+];
 
 const STEPS = [
   { num: "१", title: "Sketch", img: "/images/home/step-sketch.jpg", text: "The artist draws the composition freehand, usually starting with the central figure and working outwards." },
@@ -15,12 +24,7 @@ const STEPS = [
 
 export default async function HomePage() {
   const products = await getProducts();
-  const clothing = SECTIONS[0];
-  const others = SECTIONS.slice(1);
   const arrivals = products.filter((p) => ARRIVAL_IDS.includes(p.id));
-  // The Sarees tile uses the peacock tissue saree, as in the design.
-  const tileProduct = (sub: string): Product | undefined =>
-    sub === "Sarees" ? products.find((p) => p.id === "saree-3") : products.find((p) => p.section === "clothing" && p.sub === sub);
 
   return (
     <>
@@ -66,64 +70,31 @@ export default async function HomePage() {
         </ul>
       </section>
 
-      <section aria-labelledby="sections-title" className="wrap" style={{ paddingTop: "clamp(48px, 7vw, 96px)", display: "flex", flexDirection: "column", gap: 28 }}>
-        <div className="centered-head">
-          <span className="eyebrow">Shop the collection</span>
-          <h2 id="sections-title" className="section-title">A painting that happens to be a saree</h2>
-        </div>
-
-        <article className="on-dark clothing-feature">
-          <div style={{ flex: "1 1 300px", display: "flex", flexDirection: "column", gap: 16, justifyContent: "center", maxWidth: 420 }}>
-            <span className="eyebrow" style={{ fontSize: 12.5 }}>The main collection</span>
-            <h3 style={{ margin: 0, display: "flex", alignItems: "baseline", gap: 14, flexWrap: "wrap" }}>
-              <span className="display" style={{ fontSize: "clamp(40px, 4.4vw, 60px)", lineHeight: 1 }}>Clothing</span>
-              <span className="display" style={{ fontSize: 26, color: "var(--gold-light)" }}>वस्त्र</span>
-            </h3>
-            <p className="lede">Sarees, dupattas, kurtas and stoles painted on silk and cotton. Fish borders, lotus pallus and peacock vines.</p>
-            <Link href="/clothing" className="btn btn-primary" style={{ alignSelf: "flex-start", marginTop: 4 }}>Shop all clothing</Link>
-          </div>
-          <div className="clothing-tiles">
-            {clothing.subs.map((sub) => {
-              const p = tileProduct(sub);
-              const crop = p ? tileCrop(p) : null;
-              return (
-                <Link key={sub} href={sectionHref("clothing", { sub })} className="clothing-tile">
-                  <span className="arch">
-                    <span className="arch-inner" style={{ aspectRatio: "3 / 4.4", background: "var(--brand-stripe)" }}>
-                      {p && crop && (
-                        <Image src={p.image} alt={sub} fill sizes="(max-width: 760px) 70vw, 360px" className="crop-img" style={{ width: crop.width, objectPosition: crop.position }} />
-                      )}
-                    </span>
-                  </span>
-                  <span style={{ fontWeight: 600, fontSize: 17, textAlign: "center" }}>{sub}</span>
-                </Link>
-              );
-            })}
-          </div>
-        </article>
-
-        <div className="section-cards">
-          {others.map((s) => (
-            <article key={s.key} className="section-card">
-              <Link href={sectionHref(s.key)} aria-label={s.label} className="arch">
-                <span className="arch-inner" style={{ aspectRatio: "4 / 3" }}>
-                  <Image src={s.photo} alt={s.label} fill sizes="(max-width: 760px) 90vw, 420px" style={{ objectFit: "cover" }} />
+      <section aria-labelledby="category-title" className="wrap category-section">
+        <h2 id="category-title" className="section-title title-ruled">Shop by Category</h2>
+        <div className="category-grid">
+          {CATEGORY_CARDS.map((c) => {
+            const s = SECTIONS.find((x) => x.key === c.key)!;
+            return (
+              <Link key={c.key} href={sectionHref(c.key)} className="category-card">
+                <span className="category-photo">
+                  <Image
+                    src={c.src}
+                    alt=""
+                    width={c.width}
+                    height={c.height}
+                    sizes="(max-width: 899px) 46vw, 320px"
+                    className="crop-img"
+                    style={{ width: c.cropWidth, left: c.left, objectPosition: c.position }}
+                  />
+                </span>
+                <span className="category-name">
+                  <span className="display">{s.label}</span>
+                  <span className="category-hi">{s.hi}</span>
                 </span>
               </Link>
-              <h3 style={{ margin: 0, display: "flex", flexWrap: "wrap", alignItems: "baseline", gap: "0 10px" }}>
-                <span className="display" style={{ fontSize: 30, lineHeight: 1.1, color: "var(--brand)" }}>{s.label}</span>
-                <span className="display" style={{ fontSize: 17, color: "var(--maroon)" }}>{s.hi}</span>
-              </h3>
-              <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
-                {s.subs.map((sub) => (
-                  <Link key={sub} href={sectionHref(s.key, { sub })} className="pill sub-pill">{sub}</Link>
-                ))}
-              </div>
-              <Link href={sectionHref(s.key)} className="text-link" style={{ marginTop: "auto" }}>
-                Shop {s.label.toLowerCase()} →
-              </Link>
-            </article>
-          ))}
+            );
+          })}
         </div>
       </section>
 

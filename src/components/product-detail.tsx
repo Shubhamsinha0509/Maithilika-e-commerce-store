@@ -1,7 +1,7 @@
 "use client";
 
 import { getImageProps } from "next/image";
-import { useState, type CSSProperties } from "react";
+import { useRef, useState, type CSSProperties } from "react";
 import { useCart } from "@/components/cart";
 import { WishlistButton } from "@/components/wishlist";
 import type { DetailTab } from "@/lib/product-details";
@@ -56,15 +56,36 @@ function cropStyle(image: string, layout: ImageLayout, view: View, extra?: CSSPr
  */
 const galleryImage = (src: string) => getImageProps({ src, alt: "", width: 540, height: 540 }).props.src;
 
+/**
+ * The photos sit side by side in a strip that scrolls one photo at a time:
+ * swipe on a phone, arrows or the trackpad on a computer, or tap a thumbnail
+ * or dot to jump to a photo.
+ */
 export function Gallery({ p }: { p: Product }) {
   const views: View[] = p.layout.views?.length ? p.layout.views : [["Full view", 0, 0, p.layout.iw, p.layout.ih]];
   const [index, setIndex] = useState(0);
+  const track = useRef<HTMLDivElement>(null);
   const current = views[index] ?? views[0];
   const image = galleryImage(p.image);
+  const many = views.length > 1;
+
+  const goTo = (i: number) => {
+    const el = track.current;
+    if (!el) return;
+    const next = Math.max(0, Math.min(views.length - 1, i));
+    el.scrollTo({ left: next * el.clientWidth, behavior: "smooth" });
+  };
+  // The photo in view decides which thumbnail and dot are lit.
+  const onScroll = () => {
+    const el = track.current;
+    if (!el || !el.clientWidth) return;
+    const i = Math.round(el.scrollLeft / el.clientWidth);
+    if (i !== index) setIndex(i);
+  };
 
   return (
     <div className="gallery">
-      {views.length > 1 && (
+      {many && (
         <div role="tablist" aria-label="Product images" className="gallery-thumbs">
           {views.map((v, i) => (
             <button
@@ -72,7 +93,7 @@ export function Gallery({ p }: { p: Product }) {
               role="tab"
               aria-selected={i === index}
               aria-label={v[0]}
-              onClick={() => setIndex(i)}
+              onClick={() => goTo(i)}
               className={i === index ? "thumb is-on" : "thumb"}
               style={{ aspectRatio: String(p.layout.ar) }}
             >
@@ -82,9 +103,40 @@ export function Gallery({ p }: { p: Product }) {
         </div>
       )}
       <div className="gallery-main">
-        <div role="img" aria-label={`${p.name}: ${current[0]}`} style={cropStyle(image, p.layout, current)} />
+        <div
+          ref={track}
+          className="gallery-track"
+          onScroll={onScroll}
+          tabIndex={many ? 0 : -1}
+          aria-label={many ? `${p.name}: photos, use the arrow keys to move between them` : undefined}
+          onKeyDown={(e) => {
+            if (e.key === "ArrowRight") { e.preventDefault(); goTo(index + 1); }
+            if (e.key === "ArrowLeft") { e.preventDefault(); goTo(index - 1); }
+          }}
+        >
+          {views.map((v, i) => (
+            <div key={v[0]} className="gallery-slide" aria-hidden={i !== index}>
+              <div role="img" aria-label={`${p.name}: ${v[0]}`} style={cropStyle(image, p.layout, v)} />
+            </div>
+          ))}
+        </div>
         <span className="badge-painted" style={{ left: 20, top: 20, fontSize: 11 }}>Hand-painted</span>
-        {views.length > 1 && <span className="view-label">{current[0]}</span>}
+        {many && (
+          <>
+            <span className="view-label">{current[0]}</span>
+            <button type="button" className="gallery-arrow is-prev" aria-label="Previous photo" onClick={() => goTo(index - 1)} disabled={index === 0}>
+              <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
+            </button>
+            <button type="button" className="gallery-arrow is-next" aria-label="Next photo" onClick={() => goTo(index + 1)} disabled={index === views.length - 1}>
+              <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
+            </button>
+            <div className="gallery-dots" aria-hidden="true">
+              {views.map((v, i) => (
+                <button key={v[0]} type="button" tabIndex={-1} className={i === index ? "is-on" : undefined} onClick={() => goTo(i)} />
+              ))}
+            </div>
+          </>
+        )}
       </div>
     </div>
   );

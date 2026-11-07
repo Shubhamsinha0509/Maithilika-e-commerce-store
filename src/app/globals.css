@@ -2208,6 +2208,82 @@ body:has(.hero-photo:not([style*="none"])) .site-header:has(.mega) .header-bar {
   border: 1.5px solid var(--gold);
   padding: 8px;
 }
+/* The slider: photos in a row, one per view, snapping into place. */
+.gallery-track {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  overscroll-behavior-x: contain;
+  outline: none;
+}
+.gallery-track:focus-visible {
+  box-shadow: 0 0 0 2px var(--gold);
+}
+.gallery-slide {
+  flex: 0 0 100%;
+  min-width: 0;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+.gallery-arrow {
+  position: absolute;
+  top: 50%;
+  width: 44px;
+  height: 44px;
+  margin-top: -22px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(196, 162, 101, 0.7);
+  border-radius: 50%;
+  background: rgba(255, 252, 246, 0.92);
+  color: var(--brand);
+  box-shadow: 0 6px 16px -8px rgba(42, 26, 19, 0.5);
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+.gallery-arrow.is-prev {
+  left: 18px;
+}
+.gallery-arrow.is-next {
+  right: 18px;
+}
+.gallery-arrow:disabled {
+  opacity: 0;
+  pointer-events: none;
+}
+/* Phones: swipe instead of arrows. */
+@media (hover: none) {
+  .gallery-arrow {
+    display: none;
+  }
+}
+.gallery-dots {
+  position: absolute;
+  left: 50%;
+  bottom: 22px;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 4px;
+  padding: 5px 8px;
+  border-radius: 999px;
+  background: rgba(255, 252, 246, 0.85);
+}
+.gallery-dots button {
+  width: 8px;
+  height: 8px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: rgba(110, 20, 35, 0.3);
+  cursor: pointer;
+  transition: width 0.2s, background-color 0.2s;
+}
+.gallery-dots button.is-on {
+  width: 20px;
+  border-radius: 999px;
+  background: var(--brand);
+}
 .view-label {
   position: absolute;
   right: 20px;
@@ -2224,9 +2300,16 @@ body:has(.hero-photo:not([style*="none"])) .site-header:has(.mega) .header-bar {
   .gallery {
     flex-direction: column-reverse;
   }
+  /* Phones swipe through the photos, with dots to show where they are. */
   .gallery-thumbs {
-    flex-direction: row;
+    display: none;
   }
+  .view-label {
+    display: none;
+  }
+}
+.product-layout {
+  padding-top: clamp(20px, 3vw, 36px);
 }
 .product-title {
   margin: 0;

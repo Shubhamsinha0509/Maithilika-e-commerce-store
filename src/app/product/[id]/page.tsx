@@ -41,13 +41,6 @@ async function ProductContent({ params }: PageProps<"/product/[id]">) {
 
   return (
     <>
-      <nav aria-label="Breadcrumb" className="wrap crumbs" style={{ paddingTop: 18 }}>
-        <Link href="/">Home</Link><span aria-hidden="true">/</span>
-        <Link href={sectionHref(p.section)}>{section.label}</Link><span aria-hidden="true">/</span>
-        <Link href={sectionHref(p.section, { sub: p.sub })}>{p.sub}</Link><span aria-hidden="true">/</span>
-        <span aria-current="page">{p.name}</span>
-      </nav>
-
       <section className="wrap product-layout">
         <Gallery p={p} />
 

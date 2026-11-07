@@ -58,13 +58,37 @@ export default async function HomePage() {
       <section aria-label="Our promise" className="promise-band">
         <ul className="wrap promise-list">
           {[
-            ["100% hand-painted", "No prints, no stencils. Every line is drawn by hand."],
-            ["Shipping across India", `Free on orders above ${inr(SHIPPING.freeAboveRupees)}.`],
-            ["Made to order", "Some pieces are painted for you after you order."],
-          ].map(([title, text]) => (
-            <li key={title} className="promise">
-              <span className="promise-title">{title}</span>
-              <span className="promise-text">{text}</span>
+            { icon: "brush", title: "100% hand-painted", text: "No prints, no stencils. Every line is drawn by hand." },
+            { icon: "parcel", title: "Ships across India", text: `Free on orders above ${inr(SHIPPING.freeAboveRupees)}.` },
+            { icon: "spark", title: "Made to order", text: "Some pieces are painted for you after you order." },
+          ].map((p) => (
+            <li key={p.title} className="promise">
+              <span className="promise-icon" aria-hidden="true">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  {p.icon === "brush" && (
+                    <>
+                      <path d="M20 4 11.6 12.4" />
+                      <path d="M11.6 12.4c-2.4-.6-4.6.9-5.1 3.4-.4 1.9-1.4 2.9-3 3.5 3 1.1 6.6.6 8.3-1.5 1.2-1.5 1.1-3.6-.2-5.4Z" />
+                    </>
+                  )}
+                  {p.icon === "parcel" && (
+                    <>
+                      <path d="M3.5 7.5 12 3.5l8.5 4v9L12 20.5l-8.5-4Z" />
+                      <path d="M3.5 7.5 12 11.5l8.5-4M12 11.5v9" />
+                    </>
+                  )}
+                  {p.icon === "spark" && (
+                    <>
+                      <path d="M11 3.5 12.7 8l4.5 1.7-4.5 1.7L11 16l-1.7-4.6L4.8 9.7 9.3 8Z" />
+                      <path d="M18 14.5l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8Z" />
+                    </>
+                  )}
+                </svg>
+              </span>
+              <span className="promise-words">
+                <span className="promise-title">{p.title}</span>
+                <span className="promise-text">{p.text}</span>
+              </span>
             </li>
           ))}
         </ul>

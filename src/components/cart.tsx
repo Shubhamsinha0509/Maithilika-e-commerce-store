@@ -28,6 +28,9 @@ type CartContextValue = {
   isOpen: boolean;
   open: () => void;
   close: () => void;
+  /** The piece just added, for the short "Added to bag" note. Null once it's gone. */
+  justAdded: { line: CartLine; n: number } | null;
+  dismissAdded: () => void;
   add: (p: Product, option: string | null) => void;
   setQty: (key: string, qty: number) => void;
   remove: (key: string) => void;
@@ -51,6 +54,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   // The server (and first client render) see an empty cart; then the stored one.
   const lines = useSyncExternalStore(store.subscribe, store.read, store.serverSnapshot);
   const [isOpen, setIsOpen] = useState(false);
+  const [justAdded, setJustAdded] = useState<{ line: CartLine; n: number } | null>(null);
 
   const add = useCallback((p: Product, option: string | null) => {
     const key = p.id + "|" + (option ?? "");
@@ -64,7 +68,8 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       if (existing) return current.map((l) => (l.key === key ? { ...l, qty: Math.min(l.qty + 1, MAX_QTY) } : l));
       return [...current, line];
     });
-    setIsOpen(true);
+    // A short note instead of opening the bag, so the customer can keep browsing.
+    setJustAdded((prev) => ({ line, n: (prev?.n ?? 0) + 1 }));
   }, []);
 
   const setQty = useCallback((key: string, qty: number) => {
@@ -90,8 +95,13 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       count: lines.reduce((n, l) => n + l.qty, 0),
       subtotal: lines.reduce((n, l) => n + l.qty * l.price, 0),
       isOpen,
-      open: () => setIsOpen(true),
+      open: () => {
+        setJustAdded(null);
+        setIsOpen(true);
+      },
       close: () => setIsOpen(false),
+      justAdded,
+      dismissAdded: () => setJustAdded(null),
       add,
       setQty,
       remove,
@@ -99,7 +109,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       updatePrices,
       clear,
     }),
-    [lines, isOpen, add, setQty, remove, removeProducts, updatePrices, clear],
+    [lines, isOpen, justAdded, add, setQty, remove, removeProducts, updatePrices, clear],
   );
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;

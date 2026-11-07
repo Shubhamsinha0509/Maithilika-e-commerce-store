@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { useCart } from "@/components/cart";
-import { CartDrawer } from "@/components/cart-drawer";
+import { AddedToBag, CartDrawer } from "@/components/cart-drawer";
 import { Logo } from "@/components/logo";
 import { WishlistLink } from "@/components/wishlist";
 import { inr, SECTIONS, sectionHref, type SectionKey } from "@/lib/store";
@@ -219,6 +219,7 @@ export function SiteHeader({ featured, paymentsEnabled }: Props) {
         </div>
       )}
 
+      <AddedToBag />
       <CartDrawer paymentsEnabled={paymentsEnabled} />
     </div>
   );

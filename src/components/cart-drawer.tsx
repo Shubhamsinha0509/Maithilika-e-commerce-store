@@ -2,9 +2,43 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect } from "react";
 import { MAX_QTY, useCart } from "@/components/cart";
 import { inr, productHref, SHIPPING } from "@/lib/store";
 import { useScrollLock } from "@/lib/use-scroll-lock";
+
+/** "Added to bag" note: shows for a few seconds after each add, with a way into the bag. */
+export function AddedToBag() {
+  const { justAdded, dismissAdded, open, count } = useCart();
+  const n = justAdded?.n;
+  useEffect(() => {
+    if (!n) return;
+    const t = setTimeout(dismissAdded, 4000);
+    return () => clearTimeout(t);
+    // A new add (a new n) restarts the timer.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [n]);
+
+  return (
+    <div className="added-note-region" role="status" aria-live="polite">
+      {justAdded && (
+        <div key={justAdded.n} className="added-note">
+          <span className="added-thumb">
+            <Image src={justAdded.line.image} alt="" fill sizes="96px" className="crop-img" style={{ width: justAdded.line.crop.width, objectPosition: justAdded.line.crop.position }} />
+          </span>
+          <span className="added-text">
+            <strong>Added to bag</strong>
+            <span>{justAdded.line.name}</span>
+          </span>
+          <button type="button" className="added-view" onClick={open}>
+            View bag{count > 0 ? ` (${count})` : ""}
+          </button>
+          <button type="button" className="added-close" onClick={dismissAdded} aria-label="Close">×</button>
+        </div>
+      )}
+    </div>
+  );
+}
 
 export function CartDrawer({ paymentsEnabled }: { paymentsEnabled: boolean }) {
   const { lines, count, subtotal, isOpen, close, setQty, remove } = useCart();

@@ -56,6 +56,18 @@
 html {
   scroll-behavior: smooth;
 }
+/* No visible scrollbars anywhere (owner's request). Everything still scrolls
+   with a wheel, trackpad, touch or keyboard. */
+* {
+  scrollbar-width: none;
+}
+*::-webkit-scrollbar {
+  display: none;
+}
+html,
+body {
+  overflow-x: clip;
+}
 
 body {
   margin: 0;
@@ -438,11 +450,30 @@ button {
   position: relative;
   z-index: 60;
 }
+/* A light header on warm paper, with a fine gold rule. */
 .header-bar {
-  background: var(--maroon-bg);
-  /* A double gold rule under the header. */
-  border-bottom: 1px solid var(--gold);
-  box-shadow: 0 3px 0 -1px var(--brand-deep), 0 4px 0 -1px rgba(196, 162, 101, 0.6);
+  background: rgba(251, 245, 234, 0.96);
+  border-bottom: 1px solid rgba(196, 162, 101, 0.5);
+  color: var(--ink);
+}
+/* Home (any page with the hero photo): the header floats over the photo. A
+   soft paper wash at the top keeps the menu readable over the dark door, then
+   fades into the picture. */
+body:has(.hero-photo) .site-header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+body:has(.hero-photo) .header-bar {
+  background: linear-gradient(to bottom, rgba(251, 245, 234, 0.9), rgba(251, 245, 234, 0.55) 62%, rgba(251, 245, 234, 0)) no-repeat border-box;
+  border-bottom-color: transparent;
+}
+/* Solid again while the search row or a menu panel is open over the photo. */
+body:has(.hero-photo) .site-header:has(.search-row) .header-bar,
+body:has(.hero-photo) .site-header:has(.mega) .header-bar {
+  background: rgba(251, 245, 234, 0.98);
+  border-bottom-color: rgba(196, 162, 101, 0.5);
 }
 .header-row {
   max-width: 1360px;
@@ -456,29 +487,19 @@ button {
 .brand {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   text-decoration: none;
   flex: none;
 }
-.logo-badge {
-  border-radius: 50%;
-  box-shadow: 0 0 0 2px var(--gold);
+.brand-mark {
+  width: 50px;
+  height: 50px;
   flex: none;
 }
-.brand-words {
-  display: flex;
-  flex-direction: column;
-  line-height: 1;
-}
-.brand-en {
-  font-size: 23px;
-  color: var(--ivory);
-  line-height: 1.05;
-}
-.brand-hi {
-  font-size: 13px;
-  color: var(--gold-light);
-  line-height: 1.2;
+.brand-word {
+  width: auto;
+  height: 24px;
+  flex: none;
 }
 .main-nav {
   display: flex;
@@ -491,17 +512,18 @@ button {
   display: flex;
   align-items: center;
   padding: 3px 14px 0;
-  color: var(--ivory);
+  color: var(--ink);
   text-decoration: none;
   font-size: 15.5px;
   font-weight: 500;
-  letter-spacing: 0.01em;
-  border-bottom: 3px solid transparent;
+  letter-spacing: 0.02em;
+  border-bottom: 2px solid transparent;
 }
 .main-nav a:hover {
-  color: var(--gold-light);
+  color: var(--brand);
 }
 .main-nav a.is-open {
+  color: var(--brand);
   border-bottom-color: var(--gold);
 }
 .header-icons {
@@ -517,13 +539,15 @@ button {
   flex: none;
   border: none;
   background: transparent;
+  color: var(--ink);
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 50%;
 }
 .icon-btn:hover {
-  background: var(--brand-hover);
+  background: rgba(110, 20, 35, 0.08);
+  color: var(--brand);
 }
 .menu-btn {
   margin-left: -8px;
@@ -533,11 +557,11 @@ button {
 .menu-btn span {
   width: 20px;
   height: 1.5px;
-  background: var(--ivory);
+  background: var(--ink);
 }
 .menu-btn span.short {
   width: 14px;
-  background: var(--gold);
+  background: var(--gold-deep);
   margin-right: 6px;
 }
 /* The mobile row carries the menu button, the wordmark and three 44px icons,
@@ -549,6 +573,17 @@ button {
     gap: 8px;
     padding: 0 8px 0 12px;
   }
+  /* The logo grows with the screen: at 375px it has 159px beside the icons. */
+  .header-row .brand {
+    gap: 5px;
+  }
+  .header-row .brand-mark {
+    width: 42px;
+    height: 42px;
+  }
+  .header-row .brand-word {
+    height: clamp(16px, calc(14.8vw - 41px), 22px);
+  }
 }
 /* Narrow phones (360px is common on Android): the logo, wordmark and three
    icons need 369px at the sizes above, so tighten them to fit down to 320px. */
@@ -558,17 +593,15 @@ button {
     padding: 0 4px 0 10px;
   }
   .header-row .brand {
-    gap: 7px;
+    gap: 4px;
   }
-  .header-row .logo-badge {
-    width: 36px;
-    height: 36px;
+  /* 134px of room at 320px, 174px at 360px. */
+  .header-row .brand-mark {
+    width: calc(15vw - 16px);
+    height: calc(15vw - 16px);
   }
-  .header-row .brand-en {
-    font-size: clamp(17px, 5.6vw, 21px);
-  }
-  .header-row .brand-hi {
-    font-size: 11.5px;
+  .header-row .brand-word {
+    height: clamp(13px, calc(12.5vw - 26px), 19px);
   }
   .header-row .icon-btn {
     width: 40px;
@@ -623,8 +656,8 @@ button {
   height: 19px;
   padding: 0 5px;
   border-radius: 10px;
-  background: var(--gold);
-  color: var(--ink);
+  background: var(--brand);
+  color: var(--ivory);
   font-weight: 700;
   font-size: 11.5px;
   line-height: 19px;
@@ -898,14 +931,14 @@ button {
   text-align: center;
   gap: 4px;
 }
-.footer-brand .logo-badge {
-  box-shadow: 0 0 0 2px var(--gold), 0 0 0 7px rgba(196, 162, 101, 0.18);
-  margin-bottom: 10px;
+.footer-mark {
+  width: 104px;
+  height: 104px;
+  margin-bottom: 6px;
 }
-.footer-wordmark {
-  font-size: clamp(30px, 3.4vw, 40px);
-  line-height: 1.05;
-  color: var(--ivory);
+.footer-word {
+  width: auto;
+  height: clamp(30px, 3.2vw, 38px);
 }
 .footer-wordmark-hi {
   font-size: 18px;
@@ -1187,7 +1220,8 @@ button {
     position: relative;
     width: 100%;
     gap: clamp(14px, 1.6vw, 22px);
-    padding-block: 7% 0;
+    /* Below centre, and clear of the header that floats over the photo. */
+    padding-block: calc(7% + 32px) 0;
     /* 8.5% of the screen from its left edge, after the .wrap's centring margin. */
     padding-left: max(20px, calc(8.5vw - max(0px, (100vw - 1360px) / 2)));
   }
@@ -1845,6 +1879,13 @@ button {
   flex-direction: column;
   gap: 22px;
 }
+/* On checkout, each group of fields is a soft card. */
+.checkout-grid .checkout-form fieldset {
+  padding: clamp(18px, 3vw, 26px);
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+}
 .checkout-form fieldset {
   border: none;
   margin: 0;
@@ -1855,6 +1896,9 @@ button {
   min-width: 0;
 }
 .checkout-legend {
+  /* Floated, so it sits inside its card instead of on the card's border. */
+  float: left;
+  width: 100%;
   font-family: var(--font-yatra), serif;
   font-size: 22px;
   color: var(--brand);
@@ -1864,9 +1908,11 @@ button {
 .field {
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  font-size: 15px;
+  gap: 7px;
+  font-size: 14.5px;
   font-weight: 600;
+  letter-spacing: 0.01em;
+  color: var(--ink);
   min-width: 0;
 }
 .field em {
@@ -1876,15 +1922,25 @@ button {
 .field input,
 .field select,
 .field textarea {
-  height: 48px;
-  padding: 0 14px;
-  border: 1px solid var(--line-2);
-  background: var(--paper);
+  height: 52px;
+  padding: 0 16px;
+  border: 1px solid rgba(125, 90, 43, 0.3);
+  background: #fffcf6;
   color: var(--ink);
   font-size: 16px;
   font-weight: 400;
-  border-radius: 2px;
+  border-radius: 12px;
   width: 100%;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.field select {
+  appearance: none;
+  padding-right: 44px;
+  background: #fffcf6 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='9'%3E%3Cpath d='M1 1l6 6 6-6' stroke='%236e1423' stroke-width='1.8' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat right 18px center;
+}
+.field input::placeholder,
+.field textarea::placeholder {
+  color: #a8957f;
 }
 .field textarea {
   height: auto;
@@ -1896,11 +1952,13 @@ button {
 .field input:focus,
 .field select:focus,
 .field textarea:focus {
-  outline: 2px solid var(--gold);
-  outline-offset: 1px;
+  outline: none;
+  border-color: var(--brand);
+  box-shadow: 0 0 0 3px rgba(110, 20, 35, 0.13);
 }
 .field [aria-invalid="true"] {
   border-color: var(--maroon);
+  background-color: #fff6f4;
 }
 .field-row {
   display: grid;
@@ -2150,6 +2208,7 @@ button {
   flex-direction: column;
   gap: 6px;
   padding: 16px;
+  border-radius: 14px;
   background: var(--sand);
   border: 1px solid var(--line);
 }
@@ -2180,6 +2239,7 @@ button {
 .checkout-summary {
   background: var(--sand);
   border: 1px solid var(--line);
+  border-radius: 16px;
   padding: 22px;
   display: flex;
   flex-direction: column;

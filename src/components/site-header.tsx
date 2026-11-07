@@ -74,11 +74,7 @@ export function SiteHeader({ featured, paymentsEnabled }: Props) {
             <span /><span /><span className="short" />
           </button>
           <Link href="/" aria-label="Maithilika home" className="brand">
-            <Logo size={44} />
-            <span className="brand-words">
-              <span className="display brand-en">Maithilika</span>
-              <span className="display brand-hi">मैथिलिका</span>
-            </span>
+            <Logo />
           </Link>
 
           <nav aria-label="Shop sections" className="main-nav desktop-only">
@@ -114,14 +110,14 @@ export function SiteHeader({ featured, paymentsEnabled }: Props) {
               aria-label="Search"
               aria-expanded={searchOpen}
             >
-              <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="#FBF6EA" strokeWidth="1.7" /><path d="M15.5 15.5 L21 21" stroke="#FBF6EA" strokeWidth="1.7" strokeLinecap="round" /></svg>
+              <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" strokeWidth="1.7" /><path d="M15.5 15.5 L21 21" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" /></svg>
             </button>
             <Link href="/account" className="icon-btn desktop-only" aria-label="My account">
-              <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4" fill="none" stroke="#FBF6EA" strokeWidth="1.7" /><path d="M4.5 21 a7.5 7.5 0 0 1 15 0" fill="none" stroke="#FBF6EA" strokeWidth="1.7" strokeLinecap="round" /></svg>
+              <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4" fill="none" stroke="currentColor" strokeWidth="1.7" /><path d="M4.5 21 a7.5 7.5 0 0 1 15 0" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" /></svg>
             </Link>
             <WishlistLink />
             <button className="icon-btn" onClick={() => { cart.open(); setMenu(null); }} aria-label={cart.count ? `Bag, ${cart.count} items` : "Bag"} style={{ position: "relative" }}>
-              <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 8 H19.5 L18.5 21 H5.5 Z" fill="none" stroke="#FBF6EA" strokeWidth="1.7" strokeLinejoin="round" /><path d="M8.5 10 V7 a3.5 3.5 0 0 1 7 0 V10" fill="none" stroke="#FBF6EA" strokeWidth="1.7" /></svg>
+              <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 8 H19.5 L18.5 21 H5.5 Z" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinejoin="round" /><path d="M8.5 10 V7 a3.5 3.5 0 0 1 7 0 V10" fill="none" stroke="currentColor" strokeWidth="1.7" /></svg>
               {cart.count > 0 && <span className="bag-count">{cart.count}</span>}
             </button>
           </div>

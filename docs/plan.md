@@ -115,6 +115,15 @@ threshold) are constants in code, not tables.
 - Owner's admin can manage orders and edit price, sold/available and
   hidden. Adding products with photos comes later.
 - Hosting: Vercel and Neon, Singapore region.
+- Logo and header (2026-11-07, owner's request for a more modern look): the
+  peacock M and the MAITHILIKA lettering are cut out of the owner's logo onto
+  transparency (`public/brand/mark.png`, `wordmark.png`, `wordmark-gold.png`
+  for the footer), with no round badge. The header is light paper with dark
+  text; on the home page it floats over the hero photo with a soft wash. On
+  phones the logo scales with the screen to fit beside the three icons down
+  to 320px. The tab icon, link preview and emails still use the round badge.
+- Scrollbars (2026-11-07, owner's request): hidden everywhere; every area
+  still scrolls by wheel, trackpad, touch and keyboard.
 - Logo (2026-11-01): the owner's peacock "M" logo. The full logo is in
   `public/brand/logo.jpg`. The cropped mark is the header/footer badge and
   the browser icon, and the full logo is the link-preview image

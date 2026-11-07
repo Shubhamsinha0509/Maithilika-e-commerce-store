@@ -55,7 +55,7 @@ export function WishlistLink() {
   const { ids } = useWishlist();
   return (
     <Link href="/wishlist" className="icon-btn" aria-label={ids.length ? `Wishlist, ${ids.length} saved` : "Wishlist"} style={{ position: "relative" }}>
-      <HeartIcon filled={false} colour="#FBF6EA" />
+      <HeartIcon filled={false} colour="currentColor" />
       {ids.length > 0 && <span className="bag-count">{ids.length}</span>}
     </Link>
   );

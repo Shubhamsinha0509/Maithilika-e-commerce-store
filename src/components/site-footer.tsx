@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Logo } from "@/components/logo";
+import { FooterLogo } from "@/components/logo";
 import { POLICY_LINKS } from "@/lib/policies";
 import { CONTACT_EMAIL, SECTIONS, sectionHref } from "@/lib/store";
 
@@ -10,8 +10,7 @@ export function SiteFooter() {
       <div className="mithila-border" aria-hidden="true" />
 
       <div className="wrap footer-brand">
-        <Logo size={84} />
-        <span className="display footer-wordmark">Maithilika</span>
+        <FooterLogo />
         <span className="display footer-wordmark-hi">मैथिलिका</span>
         <span className="footer-tagline">Carrying Mithila’s heritage</span>
         <div className="dot-band" style={{ width: "min(100%, 420px)" }} />

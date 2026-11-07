@@ -184,19 +184,37 @@ button {
   font-weight: 600;
   font-size: 16px;
   text-decoration: none;
-  border-radius: 2px;
+  /* Rounded pills, as in the owner's reference design. */
+  border-radius: 999px;
   white-space: nowrap;
   border: none;
-  transition: background-color 0.15s, color 0.15s;
+  transition: background-color 0.15s, color 0.15s, box-shadow 0.15s, transform 0.15s;
 }
 .btn-primary {
   background: var(--maroon);
   color: var(--ivory);
-  box-shadow: inset 0 0 0 1px var(--gold);
+  box-shadow: 0 10px 22px -12px rgba(110, 20, 35, 0.75);
 }
 .btn-primary:hover {
   background: var(--maroon-hover);
   color: var(--ivory);
+  box-shadow: 0 14px 26px -12px rgba(110, 20, 35, 0.8);
+}
+@media (hover: hover) {
+  .btn:not(:disabled):hover {
+    transform: translateY(-1px);
+  }
+}
+.btn:not(:disabled):active {
+  transform: translateY(0);
+}
+/* The arrow in a call to action slides a little on hover. */
+.btn-arrow {
+  display: inline-block;
+  transition: transform 0.2s;
+}
+.btn:hover .btn-arrow {
+  transform: translateX(3px);
 }
 /* On maroon sections the main button is antique gold. */
 .on-dark .btn-primary {
@@ -213,7 +231,7 @@ button {
   cursor: not-allowed;
 }
 .btn-outline {
-  background: transparent;
+  background: rgba(255, 252, 246, 0.55);
   color: var(--maroon);
   border: 1.5px solid var(--maroon);
 }
@@ -1463,7 +1481,7 @@ body:has(.hero-photo:not([style*="none"])) .site-header:has(.mega) .header-bar {
   color: var(--maroon);
   font-weight: 600;
   font-size: 15px;
-  border-radius: 2px;
+  border-radius: 999px;
   white-space: nowrap;
   display: flex;
   align-items: center;

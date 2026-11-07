@@ -49,7 +49,7 @@ export default async function HomePage() {
             Every saree, cushion and canvas is painted line by line by a Mithila artist. Each piece carries the meaning of its motif.
           </p>
           <div className="hero-actions" style={{ display: "flex", flexWrap: "wrap", gap: 12, marginTop: 6 }}>
-            <Link href="/clothing" className="btn btn-primary">Shop clothing</Link>
+            <Link href="/clothing" className="btn btn-primary">Shop clothing <span className="btn-arrow" aria-hidden="true">→</span></Link>
             <Link href="/custom-order" className="btn btn-outline">Custom order</Link>
           </div>
         </div>

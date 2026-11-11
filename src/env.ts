@@ -36,6 +36,22 @@ const serverSchema = z.object({
 
   /** Resend. Optional: until it is set, the site sends no emails. */
   RESEND_API_KEY: z.string().optional(),
+  /**
+   * Extra inboxes for the new custom order alert, besides the shop's own
+   * address, e.g. the owner's personal email. Comma-separated. Kept here, not
+   * in the code, because the repository is public. Anything that isn't an
+   * email address is skipped, so a typo can't stop the site from starting.
+   */
+  ALERT_EMAILS: z
+    .string()
+    .optional()
+    .transform((v) =>
+      (v ?? "")
+        .split(",")
+        .map((s) => s.trim())
+        .filter((s) => z.email().safeParse(s).success)
+        .slice(0, 5),
+    ),
 
   /** Google sign-in. Optional: until all three are set, customers can't sign in. */
   GOOGLE_CLIENT_ID: z.string().optional(),

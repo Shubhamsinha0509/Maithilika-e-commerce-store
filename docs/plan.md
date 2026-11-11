@@ -76,7 +76,10 @@ threshold) are constants in code, not tables.
   `/custom-order`, one question at a time: tap a round photo (Saree, then Silk
   or Cotton, or Painting), write the idea, sign in with Google, and give a
   mobile number the first time only. Requests are in `/admin/requests`. The thank-you message promises contact within 1-2 hours,
-  so each request also emails `support@maithilika.com`, once Resend is set up.
+  so each request also emails `support@maithilika.com`, once Resend is set up,
+  and any extra inboxes in the Vercel setting `ALERT_EMAILS` (comma-separated,
+  e.g. the owner's personal Gmail; kept out of the code because the repo is
+  public).
 - Customer accounts (2026-11-07, at the owner's request): Google sign-in with
   a profile at `/account` (name, email, mobile). Required only for custom
   orders; buying stays open to guests, and checkout fills in the details of

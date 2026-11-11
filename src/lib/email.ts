@@ -7,7 +7,7 @@ import { CONTACT_EMAIL, inr, SITE_URL } from "@/lib/store";
  */
 const FROM = "Maithilika <orders@maithilika.com>";
 
-type Email = { to: string; subject: string; html: string; text: string; replyTo?: string };
+type Email = { to: string | string[]; subject: string; html: string; text: string; replyTo?: string };
 export type SendResult = "sent" | "skipped" | "failed";
 
 async function sendEmail({ to, subject, html, text, replyTo }: Email): Promise<SendResult> {
@@ -17,7 +17,7 @@ async function sendEmail({ to, subject, html, text, replyTo }: Email): Promise<S
     const res = await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json" },
-      body: JSON.stringify({ from: FROM, to: [to], subject, html, text, reply_to: replyTo }),
+      body: JSON.stringify({ from: FROM, to: Array.isArray(to) ? to : [to], subject, html, text, reply_to: replyTo }),
       signal: AbortSignal.timeout(10_000),
     });
     if (res.ok) return "sent";
@@ -151,7 +151,8 @@ export function customRequestEmail(r: RequestForEmail): Email {
   const wants = r.fabric ? `${r.type} (${r.fabric})` : r.type;
   const admin = `${SITE_URL}/admin/requests`;
   return {
-    to: CONTACT_EMAIL,
+    // The shop's inbox, plus any personal inboxes set in ALERT_EMAILS.
+    to: [CONTACT_EMAIL, ...serverEnv().ALERT_EMAILS.filter((e) => e.toLowerCase() !== CONTACT_EMAIL)],
     replyTo: r.email,
     subject: `New custom order: ${wants} from ${r.name}`,
     html: frame(

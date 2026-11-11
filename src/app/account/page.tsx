@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Suspense } from "react";
-import { saveProfile, signOut } from "@/app/account/actions";
+import { signOut } from "@/app/account/actions";
+import { AccountForm } from "@/components/account-form";
 import { GoogleButton } from "@/components/google-button";
 import { formatDate } from "@/lib/admin";
 import { currentCustomer, signInEnabled } from "@/lib/customer-auth";
@@ -34,7 +35,6 @@ async function Account({ query }: { query: PageProps<"/account">["searchParams"]
   }
 
   const requests = await prisma.customRequest.findMany({ where: { customerId: customer.id }, orderBy: { createdAt: "desc" }, take: 50 });
-  const error = typeof params.error === "string" ? params.error : null;
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 32 }}>
@@ -44,19 +44,18 @@ async function Account({ query }: { query: PageProps<"/account">["searchParams"]
         <p className="field-help">{customer.email}</p>
       </div>
 
-      <form action={saveProfile} className="checkout-form" style={{ gap: 14 }}>
-        <label className="field">
-          <span>Name</span>
-          <input name="name" defaultValue={customer.name} autoComplete="name" maxLength={100} required />
-        </label>
-        <label className="field">
-          <span>Mobile number</span>
-          <input name="phone" type="tel" inputMode="tel" autoComplete="tel" defaultValue={customer.phone ?? ""} placeholder="98765 43210" required />
-        </label>
-        {error && <p role="alert" className="checkout-message">{error}</p>}
-        {params.saved === "1" && !error && <p role="status" className="field-help">Saved.</p>}
-        <button type="submit" className="btn btn-outline" style={{ alignSelf: "flex-start" }}>Save</button>
-      </form>
+      <AccountForm
+        email={customer.email}
+        initial={{
+          name: customer.name,
+          phone: customer.phone ?? "",
+          addressLine1: customer.addressLine1 ?? "",
+          addressLine2: customer.addressLine2 ?? "",
+          city: customer.city ?? "",
+          state: customer.state ?? "",
+          pincode: customer.pincode ?? "",
+        }}
+      />
 
       <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
         <h2 className="checkout-legend" style={{ margin: 0 }}>My custom orders</h2>

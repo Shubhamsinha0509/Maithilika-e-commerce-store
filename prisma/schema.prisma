@@ -128,6 +128,14 @@ model Customer {
   /// Google doesn't share this. Asked once, then kept on the profile.
   phone    String?
 
+  /// Saved delivery address, filled in at checkout. Set on the account page,
+  /// or from the last order placed while signed in.
+  addressLine1 String?
+  addressLine2 String?
+  city         String?
+  state        String?
+  pincode      String?
+
   requests CustomRequest[]
 
   createdAt DateTime @default(now())

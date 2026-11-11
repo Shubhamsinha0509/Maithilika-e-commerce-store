@@ -19,7 +19,7 @@ export default function Privacy() {
         </li>
         <li>
           <strong>When you sign in:</strong> if you create an account with Google, Google tells us your name and email address. We keep
-          these on your profile, with the mobile number you give us.
+          these on your profile, with the mobile number and any delivery address you give us.
         </li>
         <li>
           <strong>When you ask for a custom order:</strong> what you describe to us, with your name, email and mobile number from your profile.

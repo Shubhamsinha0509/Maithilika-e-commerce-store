@@ -26,6 +26,15 @@ export const indianMobile = z.string().transform((v, ctx) => {
 
 const text = (min: number, max: number, message: string) => z.string().trim().min(min, message).max(max);
 
+/** A delivery address in India. Shared by checkout and the account page. */
+export const addressSchema = z.object({
+  addressLine1: text(5, 200, "Please enter your house number and street"),
+  addressLine2: z.string().trim().max(200).optional().transform((v) => v || null),
+  city: text(2, 100, "Please enter your city"),
+  state: z.enum(INDIAN_STATES, { message: "Please choose your state" }),
+  pincode: z.string().trim().regex(/^[1-9]\d{5}$/, "Please enter a valid 6-digit PIN code"),
+});
+
 export const checkoutSchema = z.object({
   lines: z
     .array(
@@ -42,11 +51,7 @@ export const checkoutSchema = z.object({
   name: text(2, 100, "Please enter your full name"),
   email: z.string().trim().toLowerCase().pipe(z.email("Please enter a valid email address")),
   phone: indianMobile,
-  addressLine1: text(5, 200, "Please enter your house number and street"),
-  addressLine2: z.string().trim().max(200).optional().transform((v) => v || null),
-  city: text(2, 100, "Please enter your city"),
-  state: z.enum(INDIAN_STATES, { message: "Please choose your state" }),
-  pincode: z.string().trim().regex(/^[1-9]\d{5}$/, "Please enter a valid 6-digit PIN code"),
+  ...addressSchema.shape,
 });
 
 export type CheckoutInput = z.input<typeof checkoutSchema>;

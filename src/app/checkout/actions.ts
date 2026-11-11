@@ -2,6 +2,8 @@
 
 import { checkoutSchema, type CheckoutInput, type FieldErrors } from "@/lib/checkout";
 import { markPaid, placeOrder, type PlaceOrderResult } from "@/lib/orders";
+import { currentCustomer } from "@/lib/customer-auth";
+import { prisma } from "@/lib/prisma";
 import { paymentsEnabled, verifyPaymentSignature } from "@/lib/razorpay";
 
 export type StartCheckoutResult = PlaceOrderResult | { ok: false; error: string; fieldErrors: FieldErrors };
@@ -17,6 +19,15 @@ export async function startCheckout(input: CheckoutInput): Promise<StartCheckout
       fieldErrors[field] ??= issue.message;
     }
     return { ok: false, error: "Please check the highlighted details.", fieldErrors };
+  }
+  // Signed in: remember this address (and the number, if the profile has none)
+  // for next time. Never let this stop the order.
+  const customer = await currentCustomer().catch(() => null);
+  if (customer) {
+    const { addressLine1, addressLine2, city, state, pincode, phone } = parsed.data;
+    await prisma.customer
+      .update({ where: { id: customer.id }, data: { addressLine1, addressLine2, city, state, pincode, phone: customer.phone ?? phone } })
+      .catch((e) => console.error("Could not save the address to the profile", e));
   }
   return placeOrder(parsed.data);
 }

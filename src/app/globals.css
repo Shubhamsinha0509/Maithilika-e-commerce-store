@@ -2743,6 +2743,36 @@ body:has(.hero-photo:not([style*="none"])) .site-header:has(.mega) .header-bar {
 .google-btn:hover {
   border-color: var(--brand);
 }
+/* Account: same cards as checkout, and a clear confirmation with a next step. */
+.account-form fieldset {
+  padding: clamp(18px, 3vw, 26px);
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+}
+.field input.field-readonly {
+  background: transparent;
+  color: var(--muted);
+}
+.account-saved {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 18px 20px;
+  border-radius: 16px;
+  background: #e9f1e4;
+  border: 1px solid #b9cfae;
+  color: #2f4a26;
+}
+.account-saved strong {
+  font-size: 17px;
+}
+.account-next {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 8px;
+}
 .account-request {
   display: flex;
   flex-direction: column;

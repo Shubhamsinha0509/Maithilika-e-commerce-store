@@ -56,7 +56,7 @@ export function CheckoutForm({ paymentsEnabled }: { paymentsEnabled: boolean }) 
         if (!profile || !form.current) return;
         for (const [name, value] of Object.entries(profile)) {
           const input = form.current.elements.namedItem(name);
-          if (value && input instanceof HTMLInputElement && !input.value) input.value = value;
+          if (value && (input instanceof HTMLInputElement || input instanceof HTMLSelectElement) && !input.value) input.value = value;
         }
       })
       .catch(() => {});

@@ -81,7 +81,8 @@ threshold) are constants in code, not tables.
   e.g. the owner's personal Gmail; kept out of the code because the repo is
   public).
 - Customer accounts (2026-11-07, at the owner's request): Google sign-in with
-  a profile at `/account` (name, email, mobile). Required only for custom
+  a profile at `/account` (name, email, mobile, and an optional delivery
+  address that checkout fills in; an address typed at checkout is saved back). Required only for custom
   orders; buying stays open to guests, and checkout fills in the details of
   anyone signed in. Orders aren't linked to accounts yet, so there's no order
   history. Off until the three Google variables are set; until then
